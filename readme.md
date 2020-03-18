@@ -1,6 +1,6 @@
 ## Setup and deploy application Platform as a Service to AWS Lightsail
 
-![x](/.assets/paas-2.jpg)
+![x](/.assets/paas.jpg)
 
 <br />
 Required to complete.

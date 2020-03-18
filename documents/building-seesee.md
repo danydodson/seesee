@@ -2,7 +2,7 @@
 
 <br />
 
-![x](paas.jpg)
+![x](paas.png)
 
 <br />
 Required to complete.

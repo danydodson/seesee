@@ -2,8 +2,7 @@
 
 <br />
 
-![x](/assets/paas.jpg)
-
+![x](paas.jpg)
 
 <br />
 Required to complete.

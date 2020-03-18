@@ -1,6 +1,6 @@
 ## Setup and deploy application Platform as a Service to AWS Lightsail
 
-![x](/.assets/paas.jpg)
+![x](/.assets/paas-2.jpg)
 
 <br />
 Required to complete.
@@ -12,7 +12,7 @@ Required to complete.
 
 
 
-### :one: Start the nginx reverse proxy container.
+### :point_right: Start the nginx reverse proxy container.
 ##
 
 Run the [nginx-proxy](https://hub.docker.com/r/jwilder/nginx-proxy/dockerfile/ ) :package: .
@@ -53,7 +53,7 @@ sudo docker run --detach \
 
 <br />
 
-### :two: Setup testing under a subdomain.
+### :point_right: Setup testing under a subdomain.
 ##
 
 Clone [nginx-local-tunnel](https://github.com/danydodson/nginx-local-tunnel) :file_folder: to local pc.
@@ -101,7 +101,7 @@ Point :computer: to [https://dev.foo.bar](https://dev.foo.bar).
 
 <br />
 
-### :three: Setup automatic deploy.
+### :point_right: Setup automatic deploy.
 ## 
 
 Clone this sample [express-hello](https://github.com/danydodson/express-hello) :file_folder: to local pc.
@@ -135,7 +135,7 @@ docker run -d \
   app
 ```
 
-### :four: Summary
+### :point_right: Summary
 ##
 
 Our PaaS is now complete!  
@@ -146,6 +146,7 @@ we can test Alexa Skills, GitHub Webhooks, CORS settings, PWAs, and anything els
 with our changes, a git commit will trigger an automated rebuild  of our docker image, which gets automatically redeployed  
 by Watchtower.
 
+### :point_right: Contact
 ## 
 
 :globe_with_meridians: [dany.codes](https://dany.codes "Blog/Portfolio of Dany Dodson")  

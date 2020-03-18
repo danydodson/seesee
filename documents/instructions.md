@@ -20,7 +20,7 @@ Required to complete.
 
 Run the [nginx-proxy](https://hub.docker.com/r/jwilder/nginx-proxy/dockerfile/ ) :package: .
 
-```sh
+```shell
 sudo docker run --detach \
   --name nginx-proxy \
   --publish 80:80 \
@@ -35,7 +35,7 @@ sudo docker run --detach \
 
 Start the [letsencrypt companion ](https://hub.docker.com/r/jrcs/letsencrypt-nginx-proxy-companion/) :package: .
 
-```sh
+```shell
 sudo docker run --detach \
   --name nginx-proxy-letsencrypt \
   --volumes-from nginx-proxy \
@@ -46,7 +46,7 @@ sudo docker run --detach \
 
 Start a demo  server under a subdomain.
 
-```sh
+```shell
 sudo docker run --detach \
   --name nginx \
   --env "VIRTUAL_HOST=test.foo.bar>" \
@@ -61,25 +61,25 @@ sudo docker run --detach \
 
 Clone [nginx-local-tunnel](https://github.com/danydodson/nginx-local-tunnel) :file_folder: to local pc.
 
-```sh
+```shell
 git clone https://github.com/danydodson/nginx-local-tunnel
 ```
 
 Change directory to cloned repo.
 
-```sh
+```shell
 cd nginx-local-tunnel
 ```
 
 Build the dev-proxy container.
 
-```sh
+```shell
 docker build -t danydodson/dev-proxy:0.1 . --build-arg ROOTPW=<PASSWORD>
 ```
 
 Start the proxy container. Note <span style="color:green">**2222**</span> is the port we opened on the instance earlier.
 
-```sh
+```shell
 docker run --detach -p 2222:22 \
   --name dev-proxy \
   --env "VIRTUAL_HOST=dev.foo.bar" \
@@ -109,7 +109,7 @@ Point :computer: to [https://dev.foo.bar](https://dev.foo.bar).
 
 Clone this sample [express-hello](https://github.com/danydodson/express-hello) :file_folder: to local pc.
 
-```sh
+```shell
 git clone https://github.com/danydodson/express-hello
 ```
 
@@ -119,7 +119,7 @@ Once complete docker will watch for commits to this repo and build a new image w
 
 Once the image is available. Start the container like so:
 
-```sh
+```shell
 docker run --detach \
   --name app \
   --env "VIRTUAL_HOST=app.seesee.space" \
@@ -129,7 +129,7 @@ docker run --detach \
 
 Lastly, Use [watchtower](https://hub.docker.com/r/containrrr/watchtower) to poll dockerhub and update the <span style="color:green">'app'</span> container whenever a new image is detected:
 
-```sh
+```shell
 docker run -d \
   --name watchtower \
   -v /var/run/docker.sock:/var/run/docker.sock \

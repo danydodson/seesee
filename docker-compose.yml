@@ -1,0 +1,73 @@
+version: '3'
+services:
+  api-gateway:
+    build:
+      context: '.'
+      dockerfile: './api-gateway/Dockerfile'
+    depends_on:
+      - listings-service
+      - users-service
+    environment:
+      - LISTINGS_SERVICE_URI=http://listings-service:7100
+      - USERS_SERVICE_URI=http://users-service:7101
+    ports:
+      - '7000:7000'
+    volumes:
+      - ./api-gateway:/opt/seesee-platform
+
+  listings-service:
+    - build:
+        - context: '.'
+        - dockerfile: './listings-service/Dockerfile'
+    - ports:
+        - 1080:1080
+    - volumes:
+        - ../:/var/www
+        - ../public/:/var/www/html
+    - environment:
+        - VIRTUAL_HOST=app.seesee.space
+        - LETSENCRYPT_HOST=app.seesee.space
+    - networks:
+        - my-network-name
+
+  nginx-proxy:
+    - name: nginx-proxy
+    - image: jwilder/nginx-proxy
+    - ports:
+        - '80:80'
+        - '443:443'
+    - volumes:
+        - /etc/nginx/certs
+        - /etc/nginx/vhost.d
+        - /usr/share/nginx/html
+        - /var/run/docker.sock:/tmp/docker.sock:ro
+    - networks:
+        - my-network-name
+        
+  nginx-proxy-letsencrypt:
+    build:
+      - name: nginx-proxy-letsencrypt
+      - image: jrcs/letsencrypt-nginx-proxy-companion
+      - volumes:
+          - /var/run/docker.sock:/tmp/docker.sock:ro
+      - environment:
+          - DEFAULT_EMAIL=dany@dany.codes
+      - depends_on:
+          - nginx-proxy
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./seesee-client/build:/opt/seesee-platform/seesee-client
+      # - ./seesee-client/build:/srv/www/static
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - api-gateway
+      - listings-service
+
+networks:
+  default:
+    external:
+      name: nginx-proxy

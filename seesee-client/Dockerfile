@@ -1,13 +1,19 @@
-FROM node:12
+FROM node:latest
 
-WORKDIR /opt/seesee-platform
+USER root
 
-COPY {package.json,yarn.lock} seesee-client/
+RUN apt-get update && apt-get install -y ranger vim
 
-RUN yarn
+USER node
 
-COPY . seesee-client/
+RUN mkdir -p /home/node/listings-service && chown -R node:node /home/node/listings-service
+
+WORKDIR /home/node/listings-service
+
+COPY . .
+
+RUN yarn install --production
 
 EXPOSE 3000
 
-CMD ["yarn" "start"]
+CMD yarn start

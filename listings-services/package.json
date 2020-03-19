@@ -1,0 +1,7 @@
+{
+  "name": "listings-service",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "echo 'Hello from listings service!'"
+  }
+}

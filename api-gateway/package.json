@@ -5,10 +5,10 @@
   "scripts": {
     "start": "node src/index.js"
   },
-  "author": "",
-  "description": "",
-  "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
-  }
+  },
+  "author": "Dany Dodson",
+  "description": "api gateway for seesee.space",
+  "license": "ISC"
 }

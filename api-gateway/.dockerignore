@@ -1,0 +1,13 @@
+
+.git
+.gitignore
+.gitlab-ci.yml
+
+.dockerignore
+docker-compose.yml
+Dockerfile
+
+**/node_modules
+node_modules
+
+package-lock.json

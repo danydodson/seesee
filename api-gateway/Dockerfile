@@ -1,13 +1,19 @@
-FROM node:12
+FROM node:latest
 
-COPY {package.json,yarn.lock} /opt/seesee-platform/api-gateway
+USER root
 
-WORKDIR /opt/seesee-platform
+RUN apt-get update && apt-get install -y ranger vim
 
-RUN yarn
+USER node
 
-COPY . api-gateway/
+RUN mkdir -p /home/node/seesee-platform && chown -R node:node /home/node/seesee-platform
 
-EXPOSE 3000
+WORKDIR /home/node/seesee-platform
 
-CMD ["yarn" "watch"]
+COPY . .
+
+RUN yarn install --production
+
+EXPOSE 7000
+
+CMD yarn start

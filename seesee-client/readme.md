@@ -1,1 +1,1 @@
-# React app web client for seesee.space
+# react web client for seesee.space

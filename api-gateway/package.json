@@ -1,0 +1,7 @@
+{
+  "name": "api-gateway",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "echo 'Hello from api-gateway !'"
+  }
+}

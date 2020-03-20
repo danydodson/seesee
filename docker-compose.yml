@@ -1,73 +1,57 @@
-version: '3'
+version: '2.1'
 services:
   api-gateway:
-    build:
-      context: '.'
-      dockerfile: './api-gateway/Dockerfile'
+    container_name: api-gateway
+    build: './api-gateway'
+    ports:
+      - '3002:3000'
     depends_on:
       - listings-service
-      - users-service
-    environment:
-      - LISTINGS_SERVICE_URI=http://listings-service:7100
-      - USERS_SERVICE_URI=http://users-service:7101
-    ports:
-      - '7000:7000'
-    volumes:
-      - ./api-gateway:/opt/seesee-platform
+    networks:
+      - platform-network
 
   listings-service:
-    - build:
-        - context: '.'
-        - dockerfile: './listings-service/Dockerfile'
-    - ports:
-        - 1080:1080
-    - volumes:
-        - ../:/var/www
-        - ../public/:/var/www/html
-    - environment:
-        - VIRTUAL_HOST=app.seesee.space
-        - LETSENCRYPT_HOST=app.seesee.space
-    - networks:
-        - my-network-name
-
-  nginx-proxy:
-    - name: nginx-proxy
-    - image: jwilder/nginx-proxy
-    - ports:
-        - '80:80'
-        - '443:443'
-    - volumes:
-        - /etc/nginx/certs
-        - /etc/nginx/vhost.d
-        - /usr/share/nginx/html
-        - /var/run/docker.sock:/tmp/docker.sock:ro
-    - networks:
-        - my-network-name
-        
-  nginx-proxy-letsencrypt:
-    build:
-      - name: nginx-proxy-letsencrypt
-      - image: jrcs/letsencrypt-nginx-proxy-companion
-      - volumes:
-          - /var/run/docker.sock:/tmp/docker.sock:ro
-      - environment:
-          - DEFAULT_EMAIL=dany@dany.codes
-      - depends_on:
-          - nginx-proxy
+    container_name: listings-service
+    build: './listings-service'
+    environment:
+      - MONGO_DB_URI=mongodb://db/seesee-listings
+    depends_on:
+      - db
+    ports:
+      - '7100:7100'
+    networks:
+      - platform-network
 
   nginx:
-    image: nginx:latest
-    ports:
-      - '8080:8080'
+    container_name: nginx
+    image: nginx
     volumes:
-      - ./seesee-client/build:/opt/seesee-platform/seesee-client
-      # - ./seesee-client/build:/srv/www/static
-      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - ./seesee-client/public:/usr/share/nginx/html:ro
+      # - ./default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - platform-network
+
+  nginx-proxy:
+    container_name: nginx-proxy
+    image: jwilder/nginx-proxy
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - /etc/nginx/certs
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
     depends_on:
-      - api-gateway
-      - listings-service
+      - nginx
+    networks:
+      - platform-network
+
+  db:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - '27017:27017'
 
 networks:
-  default:
-    external:
-      name: nginx-proxy
+  platform-network:

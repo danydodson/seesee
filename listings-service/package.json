@@ -1,0 +1,14 @@
+{
+  "name": "listings-service",
+  "version": "0.1.0",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "author": "Dany Dodson",
+  "description": "listings service for seesee.space",
+  "license": "ISC"
+}

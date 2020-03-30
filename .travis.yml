@@ -9,17 +9,17 @@ script:
   - docker run danydodson/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t danydodson/seesee-seesee-client ./seesee-client
-  - docker build -t danydodson/seesee-nginx-service ./nginx-service
-  - docker build -t danydodson/seesee-server-service ./server-service
-  - docker build -t danydodson/seesee-redis-service ./redis-service
+  - docker build -t danydodson/seesee-client ./seesee-client
+  - docker build -t danydodson/seesee-nginx ./nginx-service
+  - docker build -t danydodson/seesee-api ./server-service
+  - docker build -t danydodson/seesee-worker ./redis-service
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push danydodson/seesee-seesee-client
-  - docker push danydodson/seesee-nginx-service
-  - docker push danydodson/seesee-server-service
-  - docker push danydodson/seesee-redis-service
+  - docker push danydodson/seesee-client
+  - docker push danydodson/seesee-nginx
+  - docker push danydodson/seesee-api
+  - docker push danydodson/seesee-worker
 
 deploy:
   provider: elasticbeanstalk

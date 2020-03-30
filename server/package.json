@@ -1,7 +1,4 @@
 {
-  "name": "server-service",
-  "version": "0.1.0",
-  "main": "index.js",
   "scripts": {
     "dev": "nodemon",
     "start": "node index.js"
@@ -13,8 +10,5 @@
     "cors": "2.8.4",
     "nodemon": "1.18.3",
     "body-parser": "*"
-  },
-  "author": "Dany Dodson",
-  "description": "server service for seesee.space",
-  "license": "ISC"
+  }
 }

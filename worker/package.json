@@ -1,7 +1,4 @@
 {
-  "name": "redis-service",
-  "version": "0.1.0",
-  "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon"
@@ -9,8 +6,5 @@
   "dependencies": {
     "nodemon": "1.18.3",
     "redis": "2.8.0"
-  },
-  "author": "Dany Dodson",
-  "description": "redis service for seesee.space",
-  "license": "ISC"
+  }
 }

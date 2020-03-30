@@ -10,15 +10,15 @@ services:
     container_name: nginx
     restart: always
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
       context: ./nginx
     ports:
       - '3050:80'
   api:
     container_name: api
     build:
-      dockerfile: Dockerfile.dev
-      context: ./server
+      dockerfile: Dockerfile
+      context: ./api
     volumes:
       - /app/node_modules
       - ./api:/app
@@ -28,13 +28,12 @@ services:
       - PGUSER=postgres
       - PGHOST=postgres
       - PGDATABASE=postgres
-      - PGPASSWORD=password
+      - PGPASSWORD=
       - PGPORT=5432
-      - POSTGRES_HOST_AUTH_METHOD=trust
   client:
     container_name: client
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
       context: ./client
     volumes:
       - /app/node_modules
@@ -45,7 +44,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
       context: ./worker
     volumes:
       - /app/node_modules

@@ -2,48 +2,43 @@ version: '3'
 services:
   postgres:
     container_name: postgres
-    image: 'postgres'
-
+    image: 'postgres:latest'
   redis:
-    image: 'redis'
-
+    container_name: redis
+    image: 'redis:latest'
   nginx:
     container_name: nginx
     restart: always
     build:
       dockerfile: Dockerfile.dev
-      context: ./nginx-service
+      context: ./nginx
     ports:
       - '3050:80'
-
   api:
     container_name: api
     build:
       dockerfile: Dockerfile.dev
-      context: ./server-service
+      context: ./server
     volumes:
       - /app/node_modules
       - ./api:/app
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - POSTGRES_HOST_AUTH_METHOD=trust
-      - POSTGRES_PASSWORD=password
       - PGUSER=postgres
       - PGHOST=postgres
       - PGDATABASE=postgres
       - PGPASSWORD=password
       - PGPORT=5432
-
+      - POSTGRES_HOST_AUTH_METHOD=trust
   client:
     container_name: client
     build:
       dockerfile: Dockerfile.dev
-      context: ./seesee-client
+      context: ./client
     volumes:
       - /app/node_modules
       - ./client:/app
-
   worker:
     container_name: worker
     environment:
@@ -51,7 +46,7 @@ services:
       - REDIS_PORT=6379
     build:
       dockerfile: Dockerfile.dev
-      context: ./redis-service
+      context: ./worker
     volumes:
       - /app/node_modules
       - ./worker:/app

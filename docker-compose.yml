@@ -2,10 +2,10 @@ version: '3'
 services:
   postgres:
     container_name: postgres
-    image: 'postgres:latest'
+    image: 'postgres'
 
   redis:
-    image: 'redis:latest'
+    image: 'redis'
 
   nginx:
     container_name: nginx
@@ -16,14 +16,14 @@ services:
     ports:
       - '3050:80'
 
-  server-service:
-    container_name: server-service
+  api:
+    container_name: api
     build:
       dockerfile: Dockerfile.dev
       context: ./server-service
     volumes:
       - /app/node_modules
-      - ./server-service:/app
+      - ./api:/app
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -35,17 +35,17 @@ services:
       - PGPASSWORD=password
       - PGPORT=5432
 
-  seesee-client:
-    container_name: seesee-client
+  client:
+    container_name: client
     build:
       dockerfile: Dockerfile.dev
       context: ./seesee-client
     volumes:
       - /app/node_modules
-      - ./seesee-client:/app
+      - ./client:/app
 
-  redis-service:
-    container_name: redis-service
+  worker:
+    container_name: worker
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -54,4 +54,4 @@ services:
       context: ./redis-service
     volumes:
       - /app/node_modules
-      - ./redis-service:/app
+      - ./worker:/app

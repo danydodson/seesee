@@ -1,0 +1,11 @@
+*.log
+*.log*
+
+build
+
+node_modules
+
+*.env
+!.env.local
+!.env.test
+!.env.development

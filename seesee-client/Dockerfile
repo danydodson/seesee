@@ -1,19 +1,19 @@
-FROM node:latest
+FROM node:alpine as builder
 
-USER root
+WORKDIR '/app'
 
-RUN apt-get update && apt-get install -y ranger vim
+COPY ./package.json ./
 
-USER node
-
-RUN mkdir -p /home/node/listings-service && chown -R node:node /home/node/listings-service
-
-WORKDIR /home/node/listings-service
+RUN npm install
 
 COPY . .
 
-RUN yarn install --production
+RUN npm run build
+
+FROM nginx
 
 EXPOSE 3000
 
-CMD yarn start
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+
+COPY --from=builder /app/build /usr/share/nginx/html

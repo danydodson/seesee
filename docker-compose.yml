@@ -1,20 +1,23 @@
 version: '3'
 services:
   postgres:
+    container_name: postgres
     image: 'postgres:latest'
 
   redis:
     image: 'redis:latest'
 
   nginx:
+    container_name: nginx
     restart: always
     build:
       dockerfile: Dockerfile.dev
-      context: ./nginx
+      context: ./nginx-service
     ports:
       - '3050:80'
 
   server-service:
+    container_name: server-service
     build:
       dockerfile: Dockerfile.dev
       context: ./server-service
@@ -24,6 +27,8 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_PASSWORD=password
       - PGUSER=postgres
       - PGHOST=postgres
       - PGDATABASE=postgres
@@ -31,6 +36,7 @@ services:
       - PGPORT=5432
 
   seesee-client:
+    container_name: seesee-client
     build:
       dockerfile: Dockerfile.dev
       context: ./seesee-client
@@ -39,6 +45,7 @@ services:
       - ./seesee-client:/app
 
   redis-service:
+    container_name: redis-service
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379

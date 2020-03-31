@@ -1,5 +1,16 @@
 version: '3'
 services:
+  web-client:
+    container_name: web-client
+    build:
+      context: ./web-client
+      dockerfile: Dockerfile
+    volumes:
+      - /opt/web-client/node_modules
+      - ./web-client:/opt/web-client
+    networks:
+      - frontend
+
   demo-service:
     container_name: demo-service
     build:
@@ -39,17 +50,6 @@ services:
     volumes:
       - /opt/redis-worker/node_modules
       - ./redis-worker:/opt/redis-worker
-    networks:
-      - frontend
-
-  web-client:
-    container_name: web-client
-    build:
-      context: ./web-client
-      dockerfile: Dockerfile
-    volumes:
-      - /opt/web-client/node_modules
-      - ./web-client:/opt/web-client
     networks:
       - frontend
 

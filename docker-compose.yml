@@ -22,6 +22,7 @@ services:
       - ./demo-service:/opt/demo-service
       - database:/var/lib/postgresql/data
     environment:
+      - MONGO_URI=mongodb://mongodb-server/demo-service
       - POSTGRES_USER='postgres'
       - POSTGRES_PASSWORD='postgres'
       - POSTGRES_DB='values'
@@ -41,6 +42,20 @@ services:
     networks:
       - frontend
 
+  # nginx-proxy:
+  #   container_name: nginx-proxy
+  #   image: jwilder/nginx-proxy
+  #   ports:
+  #     - '80:80'
+  #     - '443:443'
+  #   volumes:
+  #     - /etc/nginx/certs
+  #     - /etc/nginx/vhost.d
+  #     - /usr/share/nginx/html
+  #     - /var/run/docker.sock:/tmp/docker.sock:ro
+  #   networks:
+  #     - frontend
+
   redis-worker:
     container_name: redis-worker
     build:
@@ -59,6 +74,12 @@ services:
     restart: on-failure
     networks:
       - frontend
+
+  mongodb-server:
+    container_name: mongodb-server
+    image: mongo
+    ports:
+      - '27017:27017'
 
   postgres-server:
     container_name: postgres-server

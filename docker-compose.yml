@@ -1,34 +1,5 @@
 version: '3'
 services:
-  postgres-server:
-    container_name: postgres-server
-    image: 'postgres'
-    restart: on-failure
-    environment:
-      - POSTGRES_USER='postgres'
-      - POSTGRES_PASSWORD='postgres'
-      - POSTGRES_DB='values'
-    networks:
-      - frontend
-
-  redis-server:
-    container_name: redis-server
-    image: 'redis'
-    restart: on-failure
-    networks:
-      - frontend
-
-  nginx-service:
-    container_name: nginx-service
-    build:
-      context: ./nginx-service
-      dockerfile: Dockerfile
-    restart: always
-    ports:
-      - '3050:80'
-    networks:
-      - frontend
-
   demo-service:
     container_name: demo-service
     build:
@@ -47,14 +18,14 @@ services:
     networks:
       - frontend
 
-  web-client:
-    container_name: web-client
+  nginx-service:
+    container_name: nginx-service
     build:
-      context: ./web-client
+      context: ./nginx-service
       dockerfile: Dockerfile
-    volumes:
-      - /opt/web-client/node_modules
-      - ./web-client:/opt/web-client
+    restart: always
+    ports:
+      - '3050:80'
     networks:
       - frontend
 
@@ -67,6 +38,35 @@ services:
     volumes:
       - /opt/redis-worker/node_modules
       - ./redis-worker:/opt/redis-worker
+    networks:
+      - frontend
+
+  web-client:
+    container_name: web-client
+    build:
+      context: ./web-client
+      dockerfile: Dockerfile
+    volumes:
+      - /opt/web-client/node_modules
+      - ./web-client:/opt/web-client
+    networks:
+      - frontend
+
+  redis-server:
+    container_name: redis-server
+    image: 'redis'
+    restart: on-failure
+    networks:
+      - frontend
+
+  postgres-server:
+    container_name: postgres-server
+    image: 'postgres'
+    restart: on-failure
+    environment:
+      - POSTGRES_USER='postgres'
+      - POSTGRES_PASSWORD='postgres'
+      - POSTGRES_DB='values'
     networks:
       - frontend
 

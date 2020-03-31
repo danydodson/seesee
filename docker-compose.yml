@@ -5,6 +5,7 @@ services:
     build:
       context: ./demo-service
       dockerfile: Dockerfile
+    restart: on-failure
     volumes:
       - /opt/demo-service/node_modules
       - ./demo-service:/opt/demo-service

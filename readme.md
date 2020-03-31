@@ -1,6 +1,7 @@
 # :art: seesee.space 
 
 [![Build Status](https://travis-ci.com/danydodson/seesee.svg?branch=master)](https://travis-ci.com/danydodson/seesee)
+[![time tracker](https://wakatime.com/badge/github/danydodson/seesee.svg)](https://wakatime.com/badge/github/danydodson/seesee)
 
 ### Social media and classifieds for local artists.
 

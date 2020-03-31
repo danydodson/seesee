@@ -1,37 +1,9 @@
-# sudo: required
-
+sudo: required
 services:
   - docker
 
 before_install:
-  - docker build -t danydodson/seesee-web-client-test -f ./web-client/Dockerfile.dev ./web-client
+  - docker build -t danydodson/seesee-test -f ./web-client/Dockerfile.dev ./web-client
 
 script:
-  - docker run danydodson/seesee-web-client-test yarn test -- --coverage
-
-after_success:
-  # build images
-  - docker build -t danydodson/seesee-demo-service ./demo-service
-  - docker build -t danydodson/seesee-web-client ./web-client
-  - docker build -t danydodson/seesee-nginx-service ./nginx-service
-  - docker build -t danydodson/seesee-redis-worker ./redis-worker
-  # log in to the docker cli
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  # push new images to docker hub
-  - docker push danydodson/seesee-demo-service
-  - docker push danydodson/seesee-web-client
-  - docker push danydodson/seesee-nginx-service
-  - docker push danydodson/seesee-redis-worker
-  # clean up local dirs
-# deploy:
-#   provider: elasticbeanstalk
-#   region: us-west-1
-#   app: multi-docker
-#   env: MultiDocker-env
-#   bucket_name: elasticbeanstalk-us-west-1-306476627547
-#   bucket_path: docker-multi
-#   on:
-#     branch: master
-#   access_key_id: $AWS_ACCESS_KEY
-#   secret_access_key:
-#     secure: $AWS_SECRET_KEY
+  - docker run danydodson/seesee-test yarn test -- --coverage

@@ -1,4 +1,5 @@
-sudo: required
+language: node
+
 services:
   - docker
 
@@ -6,4 +7,4 @@ before_install:
   - docker build -t danydodson/seesee-test -f ./web-client/Dockerfile.dev ./web-client
 
 script:
-  - docker run danydodson/seesee-test npm test -- --coverage
+  - docker run danydodson/seesee-test yarn test

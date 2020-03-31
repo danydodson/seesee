@@ -25,8 +25,8 @@ pgClient
 // Redis Client Setup
 const redis = require('redis')
 const redisClient = redis.createClient({
-  host: keys.redisHost,
-  port: keys.redisPort,
+  host: 'redis-server',
+  port: 6379,
   retry_strategy: () => 1000
 })
 

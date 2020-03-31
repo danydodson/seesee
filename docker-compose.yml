@@ -3,64 +3,75 @@ services:
   postgres-server:
     container_name: postgres-server
     image: 'postgres'
+    restart: on-failure
+    environment:
+      - POSTGRES_USER='postgres'
+      - POSTGRES_PASSWORD='postgres'
+      - POSTGRES_DB='values'
     networks:
-      - seesee-platform
+      - frontend
 
   redis-server:
     container_name: redis-server
     image: 'redis'
+    restart: on-failure
     networks:
-      - seesee-platform
+      - frontend
 
-  nginx:
-    container_name: nginx
-    restart: always
+  nginx-service:
+    container_name: nginx-service
     build:
+      context: ./nginx-service
       dockerfile: Dockerfile
-      context: ./nginx
+    restart: always
     ports:
       - '3050:80'
     networks:
-      - seesee-platform
+      - frontend
 
-  api:
-    container_name: api
+  demo-service:
+    container_name: demo-service
     build:
+      context: ./demo-service
       dockerfile: Dockerfile
-      context: ./server
     volumes:
-      - /app/node_modules
-      - ./server:/app
+      - /opt/demo-service/node_modules
+      - ./demo-service:/opt/demo-service
+      - database:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER='postgres'
       - POSTGRES_PASSWORD='postgres'
-      - POSTGRES_DB='postgres'
+      - POSTGRES_DB='values'
       - REDIS_HOST='redis-server'
       - REDIS_PORT=6379
     networks:
-      - seesee-platform
+      - frontend
 
-  client:
-    container_name: client
+  web-client:
+    container_name: web-client
     build:
+      context: ./web-client
       dockerfile: Dockerfile
-      context: ./client
     volumes:
-      - /app/node_modules
-      - ./client:/app
+      - /opt/web-client/node_modules
+      - ./web-client:/opt/web-client
     networks:
-      - seesee-platform
+      - frontend
 
-  worker:
-    container_name: worker
+  redis-worker:
+    container_name: redis-worker
     build:
+      context: ./redis-worker
       dockerfile: Dockerfile
-      context: ./worker
+    restart: on-failure
     volumes:
-      - /app/node_modules
-      - ./worker:/app
+      - /opt/redis-worker/node_modules
+      - ./redis-worker:/opt/redis-worker
     networks:
-      - seesee-platform
+      - frontend
 
 networks:
-  seesee-platform:
+  frontend:
+
+volumes:
+  database:

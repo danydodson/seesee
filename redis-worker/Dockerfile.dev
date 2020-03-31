@@ -1,11 +1,11 @@
 FROM node:alpine
 
-WORKDIR "/app"
+WORKDIR "/opt/redis-worker"
 
 COPY package.json .
 
-RUN npm install
+RUN yarn
 
 COPY . .
 
-CMD ["npm", "start"]
+CMD yarn dev

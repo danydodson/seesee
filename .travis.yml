@@ -6,3 +6,16 @@ before_install:
 
 script:
   - docker run danydodson/seesee-test yarn test --watchAll=false
+
+after_success:
+  - docker build -t danydodson/demo-service ./demo-service
+  - docker build -t danydodson/web-client ./web-client
+  - docker build -t danydodson/nginx-service ./nginx-service
+  - docker build -t danydodson/redis-worker ./redis-worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push danydodson/multi-client
+  - docker push danydodson/multi-nginx
+  - docker push danydodson/multi-server
+  - docker push danydodson/multi-worker

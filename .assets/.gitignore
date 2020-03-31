@@ -1,5 +1,3 @@
-seesee.pem
-
-old*
-
-*.code-workspace
+*
+!*.png
+!*.md

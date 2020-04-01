@@ -1,45 +1,99 @@
 version: '3'
+
 services:
-  web-client:
-    container_name: web-client
-    build:
-      context: ./web-client
-      dockerfile: Dockerfile
-    volumes:
-      - /opt/web-client/node_modules
-      - ./web-client:/opt/web-client
-    networks:
-      - frontend
+  # web-client:
+  #   container_name: web-client
+  #   build:
+  #     context: ./web-client
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - /opt/web-client/node_modules
+  #     - ./web-client:/opt/web-client
+  #   networks:
+  #     - frontend
 
-  demo-service:
-    container_name: demo-service
+  trello-service:
+    container_name: trello-service
+    image: danydodson/trello-service
     build:
-      context: ./demo-service
+      context: ./trello-service
       dockerfile: Dockerfile
-    restart: on-failure
-    volumes:
-      - /opt/demo-service/node_modules
-      - ./demo-service:/opt/demo-service
-      - postsql-db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER='postgres'
-      - POSTGRES_PASSWORD='postgres'
-      - POSTGRES_DB='values'
-      - REDIS_HOST='redis-server'
-      - REDIS_PORT=6379
-    networks:
-      - frontend
-
-  nginx-service:
-    container_name: nginx-service
-    build:
-      context: ./nginx-service
-      dockerfile: Dockerfile
-    restart: always
     ports:
-      - '3050:80'
+      - '3001:3001'
     networks:
-      - frontend
+      - trelloandusers
+      - trello
+    depends_on:
+      - users-service
+      - trellodb
+    restart: always
+
+  trellodb:
+    container_name: trello-db
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - trellodbvol:/data/db
+    networks:
+      - trello
+    restart: always
+
+  users-service:
+    container_name: users-service
+    image: danydodson/users-service
+    build:
+      context: ./users-service
+      dockerfile: Dockerfile
+    ports:
+      - '3002:3002'
+    networks:
+      - trelloandusers
+      - users
+    depends_on:
+      - usersdb
+    restart: always
+
+  usersdb:
+    container_name: users-db
+    image: mongo
+    ports:
+      - '27018:27017'
+    volumes:
+      - usersdbvol:/data/db
+    networks:
+      - users
+    restart: always
+
+  # demo-service:
+  #   container_name: demo-service
+  #   build:
+  #     context: ./demo-service
+  #     dockerfile: Dockerfile
+  #   restart: on-failure
+  #   volumes:
+  #     - /opt/demo-service/node_modules
+  #     - ./demo-service:/opt/demo-service
+  #     - postsql-db:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_USER='postgres'
+  #     - POSTGRES_PASSWORD='postgres'
+  #     - POSTGRES_DB='values'
+  #     - REDIS_HOST='redis-server'
+  #     - REDIS_PORT=6379
+  #   networks:
+  #     - frontend
+
+  # nginx-service:
+  #   container_name: nginx-service
+  #   build:
+  #     context: ./nginx-service
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   ports:
+  #     - '3050:80'
+  #   networks:
+  #     - frontend
 
   # nginx-proxy:
   #   container_name: nginx-proxy
@@ -55,53 +109,43 @@ services:
   #   networks:
   #     - frontend
 
-  redis-worker:
-    container_name: redis-worker
-    build:
-      context: ./redis-worker
-      dockerfile: Dockerfile
-    restart: on-failure
-    volumes:
-      - /opt/redis-worker/node_modules
-      - ./redis-worker:/opt/redis-worker
-    networks:
-      - frontend
+  # redis-worker:
+  #   container_name: redis-worker
+  #   build:
+  #     context: ./redis-worker
+  #     dockerfile: Dockerfile
+  #   restart: on-failure
+  #   volumes:
+  #     - /opt/redis-worker/node_modules
+  #     - ./redis-worker:/opt/redis-worker
+  #   networks:
+  #     - frontend
 
-  redis-server:
-    container_name: redis-server
-    image: 'redis'
-    restart: on-failure
-    networks:
-      - frontend
+  # redis-server:
+  #   container_name: redis-server
+  #   image: 'redis'
+  #   restart: on-failure
+  #   networks:
+  #     - frontend
 
-  mongodb-server:
-    container_name: mongodb-server
-    image: mongo
-    restart: unless-stopped
-    ports:
-      - '27017:27017'
-    volumes:
-      - mongo-db:/data/db
-    networks:
-      - frontend
-
-  postgres-server:
-    container_name: postgres-server
-    image: 'postgres'
-    environment:
-      - POSTGRES_USER='postgres'
-      - POSTGRES_PASSWORD='postgres'
-      - POSTGRES_DB='values'
-    networks:
-      - frontend
+  # postgres-server:
+  #   container_name: postgres-server
+  #   image: 'postgres'
+  #   environment:
+  #     - POSTGRES_USER='postgres'
+  #     - POSTGRES_PASSWORD='postgres'
+  #     - POSTGRES_DB='values'
+  #   networks:
+  #     - frontend
 
 networks:
-  frontend:
-    driver: bridge
-  backend:
-    driver: bridge
+  # frontend:
+  trelloandusers:
+  trello:
+  users:
 
 volumes:
-  node_modules:
-  mongo-db:
-  postsql-db:
+  usersdbvol:
+  trellodbvol:
+  # node_modules:
+  # postsql-db:

@@ -1,0 +1,169 @@
+.Boards-Board-Item {
+	width: 25%;
+	padding: 0 16px 16px 0;
+}
+
+.Boards-Board-Item-Tile {
+	color: #fff;
+	display: block;
+	line-height: 20px;
+	padding: 8px 12px;
+	border-radius: 3px;
+	position: relative;
+	background-size: cover;
+	background-position: center center;
+}
+
+.Boards-Board-Item-Tile {
+	background-color: #0067A3;
+}
+
+.Boards-Board-Item-Tile:hover,
+.Boards-Board-Item-Tile-Add:hover {
+	cursor: pointer;
+}
+
+.Boards-Board-Item-Tile:hover {
+	background-color: rgb(0, 92, 145);
+}
+
+.Boards-Board-Item-Tile-Add:hover {
+	background-color: #d6d9db;
+}
+
+.Boards-Board-Item-Tile-Add {
+  display: flex;
+	height: 100%;
+	min-height: 96px;
+  font-weight: 400;
+  color: #8c8c8c;
+	align-items: center;
+	justify-content: center;
+	background-color: #E2E4E6;
+}
+
+.Boards-Board-Item-Tile-Title {
+	display: block;
+	min-height: 5pc;
+	position: relative;
+	padding: 0 36px 20px 0;
+}
+
+.Boards-Board-Item-Tile-Title-Name {
+	font-size: 1pc;
+	font-weight: 700;
+	overflow: hidden;
+	max-height: 40px;
+	display: inline-block;
+}
+
+.Boards-Board-Item-Tile-Title-SubName {
+	color: rgba(255,255,255,.65);
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.Boards-Board-Item-Tile-Option {    
+	width: 20px;
+	height: 20px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	position: absolute;
+	top: 8px;
+	right: -20px;
+	opacity: 0;
+	transition: opacity 1.5s;
+}
+
+.BoardsMenu-Boards-Board-Item-Tile-Option {
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	right: -20px;
+	opacity: 0;
+	transition: opacity 0.5s;
+}
+
+.BoardsMenu-Boards-Board-Item-Tile-Starred,
+.Boards-Board-Item-Tile-Starred {
+	color: #E6C60D;
+}
+
+.BoardsMenu-Boards-Board-Item-Tile-Starred:hover {
+	color: black;
+}
+
+.BoardsMenu-Boards-Board-Item-Tile-Starred,
+.Boards-Board-Item-Tile-Starred,
+.BoardsMenu-Boards-Board-Item-Tile:hover .BoardsMenu-Boards-Board-Item-Tile-Option,
+.Boards-Board-Item-Tile:hover .Boards-Board-Item-Tile-Option {
+	font-weight: 700;
+	right: 8px;
+	opacity: 1;
+}
+
+.Boards-Board-Item-Tile-Option:hover {   
+	font-size: 20px;
+}
+
+.BoardsMenu-Boards-Board-Item {
+	list-style: none;
+	padding-bottom: 4px;
+	padding-right: 4px;
+}
+
+.BoardsMenu-Boards-Board-Item-Tile {
+	padding: 0px 10px 0px 0px;
+	height: 36px;
+	background-color: #E1EFF7;
+	display: flex;
+	align-items: center;
+	border-radius: 3px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.BoardsMenu-Boards-Board-Item-Tile-Title{
+	padding: 0px 10px;
+}
+
+.BoardsMenu-Boards-Board-Item-Tile-Title-Name {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding-right: 10px;
+	width: 100%;
+}
+
+.BoardsMenu-Boards-Board-Item-Tile:hover {
+	cursor: pointer;
+	background-color: #C7E2F1;
+}
+
+.BoardsMenu-Boards-Board-Item-Tile:hover .BoardsMenu-Boards-Board-Item-Thumbnail{
+	background-color: #0079BF;
+}
+
+.BoardsMenu-Boards-Board-Item-Tile-Title {
+	font-weight: bold;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	align-items: baseline;
+	flex: 1;
+}
+
+.BoardsMenu-Boards-Board-Item-Tile-Title-SubName {
+	font-weight: 400;
+	font-size: 9px;
+}
+
+.BoardsMenu-Boards-Board-Item-Thumbnail {
+	width: 36px;
+	height: 36px;
+	background-color: #449DD0;
+}

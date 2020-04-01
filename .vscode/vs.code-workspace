@@ -5,17 +5,20 @@
       "path": ".."
     },
     {
-      "name": "docs",
+      "name": "documents",
       "path": "../../seesee-docs"
     },
     {
       "name": "mongodb",
-      "path": "../../../docker/node-mongo"
+      // "path": "../../../docker/node-mongo"
     },
     {
-      "name": "madclones",
-      "path": "../../../docker/madclones"
+      "name": "mclones",
+      // "path": "../../../docker/mad-clones"
     }
   ],
+  "settings": {
+    // "files.exclude": {},
+  },
   "remoteAuthority": "wsl+Ubuntu",
 }

@@ -1,0 +1,31 @@
+.Card-Items {
+  padding: 0 4px;
+  margin: 0 4px 4px 4px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 33px;
+}
+
+.Card-Items div:last-child {
+  margin-bottom: 0;
+}
+
+.Card-Items::-webkit-scrollbar {
+  display: block;
+  height: 9px;
+  width: 9px;
+  background-color: #D6DADC;
+  border-radius: 4px;
+}
+
+.Card-Items::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #C4C9CC;
+}
+
+.Card-Items-Placeholder {
+  background: #8C8C8C;
+  margin-bottom: 6px;
+  height: 33px;
+  max-width: 300px;
+}

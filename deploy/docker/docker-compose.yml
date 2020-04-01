@@ -1,0 +1,57 @@
+version: "2"
+
+services:
+  trellomicroservice:
+    image: madmous/trellomicroservice
+    build:
+      context: ../../trello-microservice/
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    networks:
+      - trelloandusers
+      - trello
+    restart: always
+    depends_on:
+      - usersmicroservice
+      - trellodb
+  trellodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - trellodbvol:/data/db
+    networks:
+      - trello
+    restart: always
+  usersmicroservice:
+    image: madmous/usersmicroservice
+    build:
+      context: ../../users-microservice/
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    networks:
+      - trelloandusers
+      - users
+    depends_on:
+      - usersdb
+    restart: always
+  usersdb:
+    image: mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - usersdbvol:/data/db
+    networks:
+      - users
+    restart: always
+
+volumes:
+  trellodbvol:
+  usersdbvol:
+
+networks:
+  trelloandusers:
+  trello:
+  users:

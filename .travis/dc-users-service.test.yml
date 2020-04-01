@@ -1,0 +1,22 @@
+version: "2"
+services:
+  usersmicroservice:
+    image: userstest
+    build:
+      context: ./server/users-microservice
+      dockerfile: Dockerfile.test
+    ports:
+      - "3001:3001"
+    networks:
+      - users
+    depends_on:
+      - usersdb
+  usersdb:
+    image: mongo
+    ports:
+      - "27017"
+    networks:
+      - users
+
+networks:
+  users:

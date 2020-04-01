@@ -1,0 +1,29 @@
+version: "2"
+services:
+  usersmicroservice:
+    image: madmous/usersmicroservice
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    networks:
+      - users
+    depends_on:
+      - usersdb
+    restart: always
+  usersdb:
+    image: mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - usersdbvol:/data/db
+    networks:
+      - users
+    restart: always
+
+volumes:
+  usersdbvol:
+
+networks:
+  users:

@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+spec:
+  rules:
+  - host: madmous-madclones-server.com
+    http:
+      paths:
+      - path: /trello
+        backend:
+          serviceName: trellomicroservice
+          servicePort: http
+      - path: /users
+        backend:
+          serviceName: usersmicroservice
+          servicePort: http

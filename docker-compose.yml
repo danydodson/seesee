@@ -20,9 +20,8 @@ services:
     volumes:
       - /opt/demo-service/node_modules
       - ./demo-service:/opt/demo-service
-      - database:/var/lib/postgresql/data
+      - postsql-db:/var/lib/postgresql/data
     environment:
-      - MONGO_URI=mongodb://mongodb-server/demo-service
       - POSTGRES_USER='postgres'
       - POSTGRES_PASSWORD='postgres'
       - POSTGRES_DB='values'
@@ -78,13 +77,17 @@ services:
   mongodb-server:
     container_name: mongodb-server
     image: mongo
+    restart: unless-stopped
     ports:
       - '27017:27017'
+    volumes:
+      - mongo-db:/data/db
+    networks:
+      - frontend
 
   postgres-server:
     container_name: postgres-server
     image: 'postgres'
-    restart: on-failure
     environment:
       - POSTGRES_USER='postgres'
       - POSTGRES_PASSWORD='postgres'
@@ -94,6 +97,11 @@ services:
 
 networks:
   frontend:
+    driver: bridge
+  backend:
+    driver: bridge
 
 volumes:
-  database:
+  node_modules:
+  mongo-db:
+  postsql-db:

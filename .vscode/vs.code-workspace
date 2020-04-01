@@ -1,0 +1,21 @@
+{
+  "folders": [
+    {
+      "name": "seesee",
+      "path": ".."
+    },
+    {
+      "name": "docs",
+      "path": "../../seesee-docs"
+    },
+    {
+      "name": "mongodb",
+      "path": "../../../docker/node-mongo"
+    },
+    {
+      "name": "madclones",
+      "path": "../../../docker/madclones"
+    }
+  ],
+  "remoteAuthority": "wsl+Ubuntu",
+}

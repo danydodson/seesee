@@ -1,9 +1,10 @@
 {
   "name": "seesee-users-service",
   "version": "0.1.0",
-  "author": "Dany Dodson",
-  "main": "src/index.js",
   "private": true,
+  "author": "Dany Dodson",
+  "description": "users microservice for seesee platform",
+  "main": "src/index.js",
   "scripts": {
     "build": "webpack --progress",
     "deploy": "node-deploy $(pwd)",
@@ -21,16 +22,12 @@
     "@babel/core": "^7.9.0",
     "@babel/polyfill": "^7.8.7",
     "@babel/preset-env": "^7.9.0",
-    "babel-jest": "^25.2.6",
     "babel-loader": "^8.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-watch": "^7.0.0",
     "cross-env": "^7.0.2",
-    "eslint": "^6.8.0",
-    "jest": "^25.2.7",
     "nodemon": "^2.0.2",
     "rimraf": "^3.0.2",
-    "supertest": "^4.0.2",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-node-externals": "^1.7.2",
@@ -46,19 +43,9 @@
     "nodejs",
     "services"
   ],
-  "lint-staged": {
-    "*.{js,md,css,html}": []
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ]
-  },
   "license": "ISC",
   "repository": "github:user/seesee",
   "homepage": "github:user/seesee#readme",
-  "description": "users microservice for seesee platform",
   "bugs": {
     "url": "github:user/seesee/issues",
     "email": "dany@dany.codes"

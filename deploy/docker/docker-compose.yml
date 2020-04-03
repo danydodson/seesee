@@ -1,57 +1,57 @@
-version: "2"
+# Base
+version: '3.4'
 
 services:
-  trellomicroservice:
-    image: madmous/trellomicroservice
+  cart-api:
+    image: seesee/cart-api:${TAG:-latest}
     build:
-      context: ../../trello-microservice/
-      dockerfile: Dockerfile
-    ports:
-      - "3001:3001"
-    networks:
-      - trelloandusers
-      - trello
-    restart: always
+      context: .
+      dockerfile: src/Services/Cart/Cart.API/Dockerfile
     depends_on:
-      - usersmicroservice
-      - trellodb
-  trellodb:
-    image: mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - trellodbvol:/data/db
-    networks:
-      - trello
-    restart: always
-  usersmicroservice:
-    image: madmous/usersmicroservice
+      - cartdata
+      - identity-api
+      - rabbitmq
+
+  listings-api:
+    image: seesee/listings-api:${TAG:-latest}
     build:
-      context: ../../users-microservice/
-      dockerfile: Dockerfile
-    ports:
-      - "3002:3002"
-    networks:
-      - trelloandusers
-      - users
+      context: .
+      dockerfile: src/Services/Listings/Listings.API/Dockerfile
     depends_on:
-      - usersdb
-    restart: always
-  usersdb:
+      - sqldata
+      - rabbitmq
+
+  marketing-api:
+    image: seesee/marketing-api:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/Services/Marketing/Marketing.API/Dockerfile
+    depends_on:
+      - sqldata
+      - nosqldata
+      - identity-api
+      - rabbitmq
+
+  webmvc:
+    image: seesee/webmvc:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/Web/WebMVC/Dockerfile
+    depends_on:
+      - listings-api
+      - ordering-api
+      - identity-api
+      - cart-api
+      - marketing-api
+
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
+  nosqldata:
     image: mongo
-    ports:
-      - "27018:27017"
-    volumes:
-      - usersdbvol:/data/db
-    networks:
-      - users
-    restart: always
 
-volumes:
-  trellodbvol:
-  usersdbvol:
+  cartdata:
+    image: redis
 
-networks:
-  trelloandusers:
-  trello:
-  users:
+  rabbitmq:
+    image: rabbitmq:3-management

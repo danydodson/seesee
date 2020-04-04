@@ -1,3 +1,5 @@
+FROM node:alpine as builder
+
 FROM node:12
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /app/node/app
@@ -6,12 +8,12 @@ WORKDIR '/home/node/app'
 
 COPY package*.json .
 
-USER node
-
 RUN npm install
+
+USER node
 
 COPY --chown=node:node . .
 
-EXPOSE 7000
+COPY . .
 
-CMD ['npm', 'run', 'start']
+CMD ["npm", "run", "start"]

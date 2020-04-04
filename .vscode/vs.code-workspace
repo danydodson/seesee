@@ -4,17 +4,16 @@
       "name": "seesee",
       "path": ".."
     },
-    // {
-    // "name": "visitors app",
-    // "path": "../../../docker/visitors-app"
-    // },
-    // {
-    // "name": "seesee-micros",
-    // "path": "../../seesee-micros"
-    // },
-    // {
-    // "name": "docker mongo",
-    // "path": "../../../docker/node-mongo"
-    // }
+    {
+      "name": "seesee-micros",
+      "path": "../../seesee-micros"
+    },
+    {
+      "name": "docker mongo",
+      "path": "../../../docker/node-mongo"
+    },
+    {
+      "path": "../../docker-multi"
+    }
   ],
 }

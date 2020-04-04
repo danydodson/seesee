@@ -1,11 +1,17 @@
 FROM node:12
 
-WORKDIR '/opt/users-api'
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
-COPY package.json .
+WORKDIR '/home/node/app'
+
+COPY package*.json .
 
 RUN npm install
 
-COPY . .
+USER node
+
+COPY --chown=node:node . .
+
+EXPOSE 5000
 
 CMD ['npm', 'run', 'start']

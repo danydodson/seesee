@@ -1,6 +1,23 @@
 {
-  "files.exclude": {
-    ".vscode": true
-  },
-  "eslint.enable": true
+  "files.exclude": {},
+  // "javascript.validate.enable": false,
+  // "typescript.tsdk": "node_modules/typescript/lib",
+  // "files.trimTrailingWhitespace": true,
+  // "editor.insertSpaces": true,
+  // "editor.tabSize": 2,
+  // "editor.detectIndentation": false,
+  // "debug.node.autoAttach": "off",
+  // "typescript.preferences.quoteStyle": "single",
+  // "eslint.validate": [
+  //   "javascript",
+  //   "javascriptreact",
+  //   "typescript"
+  // ],
+  // "search.exclude": {
+  //   "**/testdata": true,
+  //   "**/testWorkspace": true
+  // },
+  // "[typescript]": {
+    // "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
 }

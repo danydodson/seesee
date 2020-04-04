@@ -6,7 +6,9 @@
   "description": "users microservice for seesee platform",
   "main": "src/index.js",
   "scripts": {
-    "build": "webpack --progress",
+    "clean": "rimraf dist",
+    "install": "npm install",
+    "build": "npm run clean && webpack --progress",
     "deploy": "node-deploy $(pwd)",
     "linkall": "yarn link node-deploy",
     "watch": "babel-watch -L src/index.js",

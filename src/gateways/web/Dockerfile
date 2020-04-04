@@ -1,11 +1,17 @@
 FROM node:12
 
-COPY . /opt/app
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /app/node/app
 
-WORKDIR /opt/app/api-gateway
+WORKDIR '/home/node/app'
 
-RUN yarn
+COPY package*.json .
 
-EXPOSE 3000
+USER node
 
-CMD yarn watch
+RUN npm install
+
+COPY --chown=node:node . .
+
+EXPOSE 7000
+
+CMD ['npm', 'run', 'start']

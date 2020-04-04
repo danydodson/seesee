@@ -1,4 +1,4 @@
-import UsersService from "#root/adapters/UsersService"
+import UsersService from '#root/adapters/UsersService'
 
 const injectSession = async (req, res, next) => {
   if (req.cookies.userSessionId) {

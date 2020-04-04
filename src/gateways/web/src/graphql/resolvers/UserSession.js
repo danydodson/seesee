@@ -1,4 +1,4 @@
-import UsersService from "#root/adapters/UsersService"
+import UsersService from '#root/adapters/UsersService'
 
 const UserSession = {
   user: async userSession => {

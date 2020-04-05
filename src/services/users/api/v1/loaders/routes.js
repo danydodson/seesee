@@ -1,7 +1,7 @@
 import {
   testingCtrl,
   signUpCtrl,
-} from '../controllers/v1/controllers'
+} from '../controllers'
 
 import { Router } from 'express'
 

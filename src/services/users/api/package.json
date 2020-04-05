@@ -4,13 +4,13 @@
   "private": true,
   "author": "Dany Dodson",
   "description": "users microservice for seesee platform",
-  "main": "src/index.js",
+  "main": "v1/index.js",
   "scripts": {
     "clean": "rimraf build",
-    "build": "npm run clean && webpack --progress",
+    "build": "webpack --progress",
     "deploy": "node-deploy $(pwd)",
     "linkall": "npm link node-deploy",
-    "watch": "babel-watch -L src/index.js",
+    "watch": "babel-watch -L v1/index.js",
     "test": "cross-env NODE_ENV=test jest --detectOpenHandles"
   },
   "dependencies": {

@@ -21,7 +21,12 @@ export default {
 
   mongo:
     process.env.NODE_ENV === 'production'
-      ? process.env.MONGO_PROD_URI
-      : process.env.MONGO_DEV_URI,
+      ? 'mongodb://usersdb:27017'
+      : process.env.MONGO_USERSDB_DEV_URI
+
+  // mongo:
+  //   process.env.NODE_ENV === 'production'
+  //     ? process.env.MONGO_USERSDB_PROD_URI
+  //     : process.env.MONGO_USERSDB_DEV_URI,
 
 }

@@ -1,4 +1,4 @@
-import userModel from '../models/models'
+import userModel from '../models/User'
 
 /**
  * @desc testingService

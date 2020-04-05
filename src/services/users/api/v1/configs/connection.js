@@ -8,7 +8,7 @@ const mongoConnection = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
-    return logger.info('⭐ mongodb loaded and connected!')
+    return logger.info(`?? ? mongodb loaded and connected!`)
   } catch (err) {
     logger.error(err)
   }

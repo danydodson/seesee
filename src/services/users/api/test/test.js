@@ -1,6 +1,6 @@
 import request from 'supertest'
-import app from '../src/server/start'
-import mongoDB from '../src/db/connection'
+import app from '../v1/server/start'
+import mongoDB from '../v1/db/connection'
 
 // const request = supertest()
 

@@ -1,5 +1,5 @@
-import { testingService } from '../../loaders/services'
-import { signUpService } from '../../loaders/services'
+import { testingService } from '../loaders/services'
+import { signUpService } from '../loaders/services'
 
 /**
  * @desc auth test route

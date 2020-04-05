@@ -1,0 +1,55 @@
+{
+  "name": "seesee-users-service",
+  "version": "0.1.0",
+  "private": true,
+  "author": "Dany Dodson",
+  "description": "users microservice for seesee platform",
+  "main": "src/index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "install": "npm install",
+    "build": "npm run clean && webpack --progress",
+    "deploy": "node-deploy $(pwd)",
+    "linkall": "yarn link node-deploy",
+    "watch": "babel-watch -L src/index.js",
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/polyfill": "^7.8.7",
+    "@babel/preset-env": "^7.9.0",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-watch": "^7.0.0",
+    "cross-env": "^7.0.2",
+    "nodemon": "^2.0.2",
+    "rimraf": "^3.0.2",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-node-externals": "^1.7.2",
+    "winston": "^3.2.1"
+  },
+  "keywords": [
+    "distributed-systems",
+    "docker",
+    "express",
+    "gateway",
+    "javascript",
+    "microservices",
+    "nodejs",
+    "services"
+  ],
+  "license": "ISC",
+  "repository": "github:user/seesee",
+  "homepage": "github:user/seesee#readme",
+  "bugs": {
+    "url": "github:user/seesee/issues",
+    "email": "dany@dany.codes"
+  }
+}

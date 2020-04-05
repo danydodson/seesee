@@ -1,0 +1,48 @@
+version: '3'
+services:
+  #
+  usersapi:
+    image: danydodson/usersapi
+    container_name: usersapi
+    build:
+      context: .
+      dockerfile: 'Dockerfile'
+    env_file: .develop.env
+    environment:
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=usersdb
+      - MONGO_DB=$MONGO_DB
+    ports:
+      - '80:5000'
+    depends_on:
+      - usersdb
+    volumes:
+      - .:/home/node/app
+      - node_modules:/home/node/app/node_modules
+    networks:
+      - usersnetwork
+    command: ./wait-for.sh usersdb:27017 -- /home/node/app/node_modules/.bin/nodemon src/index.js
+
+  usersdb:
+    image: mongo
+    container_name: usersdb
+    restart: unless-stopped
+    env_file: .develop.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:
+      - userdbvol:/data/db
+    ports:
+      - '27018:27017'
+    networks:
+      - usersnetwork
+
+networks:
+  usersnetwork:
+    driver: bridge
+
+volumes:
+  userdbvol:
+  node_modules:

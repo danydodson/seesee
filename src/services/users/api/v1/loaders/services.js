@@ -12,10 +12,10 @@ export const testingService = () => {
 /**
  * @desc signUpService
  */
-export const signUpService = () => {
+export const signUpService = (name) => {
 
   let person = new userModel({
-    name: 'dany'
+    name: name.name
   })
 
   person

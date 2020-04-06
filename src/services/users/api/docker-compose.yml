@@ -1,12 +1,12 @@
 version: '3'
 services:
   #
-  usersapi:
-    image: danydodson/usersapi
-    container_name: usersapi
+  users_api:
+    container_name: users_api
+    image: danydodson/users_api:latest
     build:
       context: .
-      dockerfile: 'Dockerfile.dev'
+      dockerfile: 'Dockerfile'
     env_file: .env
     environment:
       - MONGO_USERNAME=$MONGO_USERNAME
@@ -14,35 +14,36 @@ services:
       - MONGO_HOSTNAME=usersdb
       - MONGO_DB=$MONGO_DB
     ports:
-      - '80:5000'
+      - '5000:5000'
     depends_on:
-      - usersdb
+      - users_db
     volumes:
-      - ./:/home/node/app
-      - ./node_modules:/home/node/app/node_modules
+      - .:/home/node/app
+      - node_modules:/home/node/app/node_modules
     networks:
-      - usersnetwork
-    # command: ./wait-for.sh usersdb:27017 -- /home/node/app/node_modules/.bin/nodemon v1/index.js
-
-  usersdb:
-    image: mongo
-    container_name: usersdb
+      - users_network
+    command: ./wait-for.sh users_db:27017
+    # command: ./wait-for.sh users_db:27017 -- /home/node/app/node_modules/.bin/nodemon v1/index.js
+  #
+  users_db:
+    container_name: users_db
+    image: mongo:latest
     restart: unless-stopped
     env_file: .env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
       - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
     volumes:
-      - userdbvol:/data/db
+      - users_db_vol:/data/db
     ports:
-      - '27018:27017'
+      - '27017:27017'
     networks:
-      - usersnetwork
-
+      - users_network
+#
 networks:
-  usersnetwork:
+  users_network:
     driver: bridge
-
+#
 volumes:
-  userdbvol:
+  users_db_vol:
   node_modules:

@@ -1,9 +1,9 @@
 {
-  "name": "seesee-users-service",
+  "name": "seesee-gallery-service",
   "version": "0.1.0",
   "private": true,
   "author": "Dany Dodson",
-  "description": "users microservice for seesee platform",
+  "description": "gallery microservice for seesee",
   "main": "src/index.js",
   "scripts": {
     "clean": "rimraf dist",

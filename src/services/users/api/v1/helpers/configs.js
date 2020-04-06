@@ -1,17 +1,11 @@
 export default {
   app: {
     apiPrefix: '/api',
-    env: process.env.NODE_ENV,
     port: parseInt(process.env.PORT, 10),
   },
 
   logs: {
     level: process.env.LOG_LEVEL || 'silly',
-  },
-
-  jwt: {
-    jwtSecret: process.env.JWT_SECRET,
-    jwtExpiration: Math.floor(Date.now() / 1000) + 60 * 60,
   },
 
   url: {
@@ -21,12 +15,6 @@ export default {
 
   mongo:
     process.env.NODE_ENV === 'production'
-      ? 'mongodb://usersdb:27017'
-      : process.env.MONGO_USERSDB_DEV_URI
-
-  // mongo:
-  //   process.env.NODE_ENV === 'production'
-  //     ? process.env.MONGO_USERSDB_PROD_URI
-  //     : process.env.MONGO_USERSDB_DEV_URI,
-
+      ? 'mongodb://usersdb'
+      : 'mongodb://usersdb'
 }

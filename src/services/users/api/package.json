@@ -6,11 +6,12 @@
   "description": "users microservice for seesee platform",
   "main": "v1/index.js",
   "scripts": {
-    "clean": "rimraf build",
-    "build": "webpack --progress",
+    "build": "webpack --no-progress --mode=production",
+    "start": "nodemon --exec babel-watch v1/index.js",
+    "watch": "babel-watch -L v1/index.js",
     "deploy": "node-deploy $(pwd)",
     "linkall": "npm link node-deploy",
-    "watch": "babel-watch -L v1/index.js",
+    "clean": "rm -rf build node_modules",
     "test": "cross-env NODE_ENV=test jest --detectOpenHandles"
   },
   "dependencies": {

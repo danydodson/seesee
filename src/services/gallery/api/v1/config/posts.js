@@ -25,20 +25,20 @@ import {
 } from '../validation'
 
 import { Router } from 'express'
-import auth from '../middleware/auth'
-import asyncHandler from '../../src/services/gallery/node_modules/express-async-handler'
+// import auth from '../middleware/auth'
+// import asyncHandler from '../../src/services/gallery/node_modules/express-async-handler'
 
 export default (app, route = Router()) => {
 
   app.use('/', route)
 
-  route.get('/see/testing', auth.optional, asyncHandler(testingCtrl))
+  // route.get('/see/testing', auth.optional, asyncHandler(testingCtrl))
 
-  route.get('/see/all', auth.optional, asyncHandler(getAllPostsCtrl))
+  // route.get('/see/all', auth.optional, asyncHandler(getAllPostsCtrl))
 
-  route.post('/see/new', auth.required, validatePost, validateResults, asyncHandler(newPostCtrl))
-  route.get('/see/one/:post_slug', auth.optional, asyncHandler(getPostCtrl))
-  route.put('/see/one/:post_slug', auth.required, validatePost, validateResults, asyncHandler(updatePostCtrl))
+  // route.post('/see/new', auth.required, validatePost, validateResults, asyncHandler(newPostCtrl))
+  // route.get('/see/one/:post_slug', auth.optional, asyncHandler(getPostCtrl))
+  // route.put('/see/one/:post_slug', auth.required, validatePost, validateResults, asyncHandler(updatePostCtrl))
   // route.delete('/delete', auth.required, asyncHandler(delPostCtrl))
 
   // route.put('/see/like/:post_slug', auth.required, asyncHandler(likePostCtrl))

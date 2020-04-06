@@ -17,6 +17,6 @@ export const testingCtrl = (req, res, next) => {
  * @auth public
  * */
 export const signUpCtrl = (req, res, next) => {
-  const { user } = signUpService(req.body)
-  return res.json({ user })
+  const { name } = signUpService(req.body)
+  return res.json({ name })
 }

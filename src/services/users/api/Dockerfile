@@ -1,20 +1,21 @@
-FROM node:12
+FROM node:13.12.0
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+RUN mkdir -p /home/node/app/node_modules && \
+  mkdir -p /home/node/app/build && \
+  chown -R node:node /home/node/app
 
 WORKDIR '/home/node/app'
 
-COPY ./package*.json ./
+COPY package*.json ./
 
-RUN npm install
-RUN npm run build
+RUN npm install --no-progress --ignore-optional
 
 USER node
 
-COPY --chown=node:node ./build ./build
+COPY --chown=node:node . ./
 
-ENV PORT 3001
+RUN npm run build
+
 EXPOSE 5000
-EXPOSE $PORT
 
-CMD ['npm', 'run', 'watch']
+CMD npm start

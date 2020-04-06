@@ -5,6 +5,7 @@ import logger from '../helpers/logger'
 import accessEnv from '#root/helpers/accessEnv'
 import setupRoutes from './routes'
 
+
 const PORT = accessEnv('PORT', 5000)
 
 const app = express()
@@ -36,5 +37,6 @@ app.use((err, req, res, next) => {
 // logger.info(accessEnv('PORT'))
 
 app.listen(PORT, '0.0.0.0', (err) => {
-  logger.info(`⌛ 😂 users service setup and loaded port: ${PORT}`)
+  console.info(' 👉  users service setup and loaded port: ${PORT}')
+  logger.info(' ⌚ ✋  users service setup and loaded port: ${PORT}')
 })

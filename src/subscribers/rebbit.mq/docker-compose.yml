@@ -1,0 +1,6 @@
+version: '3'
+services:
+  #
+  rabbit_mq:
+    image: danydodson/rabbit_mq
+    container_name: rabbit_mq

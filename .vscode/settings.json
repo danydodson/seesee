@@ -1,9 +1,0 @@
-{
-  "docker-compose.projectNames": ["seesee"],
-  // "docker-compose.shell": "sh",
-  "docker-compose.files": [
-    "${workspaceFolder}/src/docker-compose.yml",
-    "${workspaceFolder}/src/services/gallery/api/docker-compose.yml",
-    "${workspaceFolder}/src/services/users/api/docker-compose.yml",
-  ]
-}

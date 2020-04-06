@@ -1,0 +1,31 @@
+{
+	"name": "seesee",
+	"service": "seesee",
+	"dockerComposeFile": "docker-compose.yml",
+	"workspaceFolder": "~/app",
+	"settings": {
+		"terminal.integrated.shell.linux": "/bin/bash"
+	},
+	"extensions": [
+		"dbaeumer.vscode-eslint",
+		"wayou.vscode-icons-mac",
+		"foxundermoon.shell-format",
+		"dunstontc.vscode-docker-syntax",
+		"dunstontc.viml",
+		"redhat.vscode-yaml",
+		"ms-azuretools.vscode-docker",
+		"formulahendry.docker-explorer",
+		"dotiful.dotfiles-syntax-highlighting",
+		"hookyqr.beautify",
+		"knisterpeter.vscode-github",
+		"mutantdino.resourcemonitor",
+		"shawnzhong.system-task-manager",
+	],
+	// "runServices": [],
+	"postCreateCommand": "npm install",
+	"ports": [
+		"3000",
+		"5000"
+	],
+	"remoteUser": "node"
+}

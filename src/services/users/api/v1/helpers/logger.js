@@ -32,9 +32,9 @@ if (process.env.NODE_ENV !== 'development') {
     }),
     new winston.transports.Console({
       format: winston.format.combine(
-        // winston.format.cli(),
-        // winston.format.splat(),
-        // winston.format.json(),
+        winston.format.cli(),
+        winston.format.splat(),
+        winston.format.json(),
       )
     }),
   ]

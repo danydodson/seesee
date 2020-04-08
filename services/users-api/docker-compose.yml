@@ -1,0 +1,59 @@
+version: '3.4'
+services:
+  #
+  users-nginx:
+    image: nginx:1.12
+    container_name: users-nginx
+    volumes:
+      - ./build/:/usr/share/nginx/html/
+    expose:
+      - '80'
+
+  users-api:
+    container_name: users-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - users-db
+    ports:
+      - '5000:5000'
+    networks:
+      - users-network
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    env_file:
+      - .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+    networks:
+      - users-network
+
+  users-db:
+    image: mongo-express
+    container_name: users-db
+    restart: always
+    ports:
+      - 8081:8081
+    env_file:
+      - .env
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ADMIN_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ADMIN_PASSWORD}
+    networks:
+      - users-network
+    volumes:
+      - node_modulea:/home/node/app
+      - users-data:/data/db
+
+volumes:
+  users-data:
+  node_modulea:
+
+networks:
+  users-network:
+    driver: bridge

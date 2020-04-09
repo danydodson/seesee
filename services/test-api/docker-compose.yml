@@ -18,7 +18,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     image: node
-    container_name: flask
+    container_name: react-app
     volumes:
       - ./:/code/
     environment:

@@ -2,7 +2,7 @@
 FROM node:erbium AS base
 
 # install any packages we need from apt here
-RUN apt-get update &&
+RUN apt-get update && \ 
   apt-get install dumb-init
 
 # set entrypoint to `dumb-init` as it handles being pid 1 and forwarding signals
@@ -17,10 +17,10 @@ WORKDIR /app
 FROM base AS dependencies
 
 COPY package*.json ./
-RUN npm set progress=false &&
-  npm config set depth 0 &&
+RUN npm set progress=false && \ 
+  npm config set depth 0 && \ 
   npm i
-COPY ./config-overrides.js ./
+# COPY ./config-overrides.js ./
 COPY ./public ./public
 COPY ./src ./src
 
@@ -47,7 +47,7 @@ EXPOSE 3000
 CMD ["npm", "start"]
 
 # release ready image, devDeps are pruned and tests removed for size control
-FROM development AS release
+# FROM development AS release
 
-RUN npm prune --production \
-  rm -rf lib/**/*.spec.js
+# RUN npm prune --production \
+#   rm -rf lib/**/*.spec.js

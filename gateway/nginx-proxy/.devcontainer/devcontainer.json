@@ -1,11 +1,11 @@
 {
-  "name": "gateway-nginx-proxy",
+  "name": "gateway-web-client",
   "dockerComposeFile": ["../../../docker-compose.yml", ],
-  "service": "gateway-nginx-proxy",
+  "service": "gateway-web-client",
   "workspaceFolder": "/home/node/workspace",
   "settings": { "terminal.integrated.shell.linux": "/bin/zsh" },
   "extensions": ["dbaeumer.vscode-eslint"],
   "shutdownAction": "none",
-  "postCreateCommand": "npm install",
+  "postCreateCommand": "yarn install",
   "remoteUser": "node"
 }

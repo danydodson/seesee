@@ -6,7 +6,7 @@ RUN mkdir -p /home/node/workspace/node_modules && \
 
 WORKDIR '/home/node/workspace'
 
-COPY package.json .
+COPY package*.json .
 
 RUN npm install -s
 
@@ -14,12 +14,6 @@ USER node
 
 COPY --chown=node:node . .
 
-RUN npm run build
+# EXPOSE 7100
 
-FROM nginx:stable-alpine
-
-# EXPOSE 3030
-
-COPY nginx/default.conf /etc/nginx/conf.d/default.conf
-
-COPY --from=builder /home/node/workspace/build/ /usr/share/nginx/html
+CMD ["npm", "run", "start"]

@@ -1,13 +1,16 @@
-#
-FROM nginx:stable-alpine
+FROM nginx:alpine
 
-COPY ./default.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# COPY --from=build /app/build /usr/share/nginx/html
-COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+RUN apk update && apk add bash
 
-#
-EXPOSE 80
+FROM nginx:1.12
 
-# start app
-CMD ["nginx", "-g", "daemon off;"]
+#  default conf for proxy service
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+
+# NOT FOUND response
+# COPY ./backend-not-found.html /var/www/html/backend-not-found.html
+
+# Proxy configurations
+COPY ./includes/ /etc/nginx/includes/

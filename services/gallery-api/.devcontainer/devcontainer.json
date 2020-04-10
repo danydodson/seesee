@@ -1,0 +1,11 @@
+{
+  "name": "services-gallery-api",
+  "dockerComposeFile": ["../../../docker-compose.yml", ],
+  "service": "services-gallery-api",
+  "workspaceFolder": "/home/node/workspace",
+  "settings": { "terminal.integrated.shell.linux": "/bin/zsh" },
+  "extensions": ["dbaeumer.vscode-eslint"],
+  "shutdownAction": "none",
+  "postCreateCommand": "yarn install",
+  "remoteUser": "node"
+}

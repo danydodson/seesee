@@ -1,19 +1,25 @@
 FROM node:alpine as builder
 
-WORKDIR '/home/node/app'
+RUN mkdir -p /home/node/workspace/node_modules && \
+  mkdir -p /home/node/workspace/build && \
+  chown -R node:node /home/node/workspace
+
+WORKDIR '/home/node/workspace'
 
 COPY package.json .
 
-RUN yarn
+RUN npm install -s
 
-COPY . .
+USER node
 
-RUN yarn build
+COPY --chown=node:node . .
 
-FROM nginx
+RUN npm run build
+
+FROM nginx:stable-alpine
 
 EXPOSE 3000
 
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
-COPY --from=builder /home/node/app/build/ /usr/share/nginx/html
+COPY --from=builder /home/node/workspace/build/ /usr/share/nginx/html

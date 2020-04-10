@@ -1,0 +1,11 @@
+{
+  "name": "gateway-nginx-proxy",
+  "dockerComposeFile": ["../../../docker-compose.yml", ],
+  "service": "gateway-nginx-proxy",
+  "workspaceFolder": "/home/node/workspace",
+  "settings": { "terminal.integrated.shell.linux": "/bin/zsh" },
+  "extensions": ["dbaeumer.vscode-eslint"],
+  "shutdownAction": "none",
+  "postCreateCommand": "npm install",
+  "remoteUser": "node"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "subscribers-rabbit-mq",
+  "dockerComposeFile": ["../../../docker-compose.yml", ],
+  "service": "subscribers-rabbit-mq",
+  "workspaceFolder": "/home/node/workspace",
+  "settings": { "terminal.integrated.shell.linux": "/bin/zsh" },
+  "extensions": ["dbaeumer.vscode-eslint"],
+  "shutdownAction": "none",
+  "postCreateCommand": "yarn install",
+  "remoteUser": "node"
+}

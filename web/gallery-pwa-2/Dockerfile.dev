@@ -1,0 +1,11 @@
+FROM node:alpine as builder
+
+WORKDIR '/home/node/workspace'
+
+COPY ./package.json ./
+
+RUN npm i -s
+
+COPY ./ ./
+
+CMD ["npm", "start"]

@@ -1,0 +1,11 @@
+{
+  "name": "web-gallery-pwa",
+  "dockerComposeFile": ["../../../docker-compose.yml", ],
+  "service": "web-gallery-pwa",
+  "workspaceFolder": "/home/node/workspace",
+  "settings": { "terminal.integrated.shell.linux": "/bin/zsh" },
+  "extensions": ["dbaeumer.vscode-eslint"],
+  "shutdownAction": "none",
+  "postCreateCommand": "npm install",
+  "remoteUser": "node"
+}

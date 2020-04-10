@@ -1,0 +1,11 @@
+{
+  "name": "gateway-web-client",
+  "dockerComposeFile": ["../../../docker-compose.yml", ],
+  "service": "gateway-web-client",
+  "workspaceFolder": "/home/node/workspace",
+  "settings": { "terminal.integrated.shell.linux": "/bin/zsh" },
+  "extensions": ["dbaeumer.vscode-eslint"],
+  "shutdownAction": "none",
+  "postCreateCommand": "yarn install",
+  "remoteUser": "node"
+}

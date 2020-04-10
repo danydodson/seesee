@@ -1,0 +1,11 @@
+{
+  "name": "services-auth-api",
+  "dockerComposeFile": ["../../../docker-compose.yml", ],
+  "service": "services-auth-api",
+  "workspaceFolder": "/home/node/workspace",
+  "settings": { "terminal.integrated.shell.linux": "/bin/zsh" },
+  "extensions": ["dbaeumer.vscode-eslint"],
+  "shutdownAction": "none",
+  "postCreateCommand": "yarn install",
+  "remoteUser": "node"
+}

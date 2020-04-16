@@ -1,33 +1,29 @@
 version: '3.7'
 
 services:
-  
+
   gateway-nginx-proxy:
     container_name: gateway-nginx-proxy
-    image: nginx
+    image: gateway-nginx-proxy:prod
     build:
       context: ./gateway/nginx-proxy
       dockerfile: Dockerfile
     ports:
       - '8080:80'
+    depends_on:
+      - services-test-api
+      - gateway-web-client
 
-  # gateway-web-client:
-  #   container_name: gateway-web-client
-  #   image: gateway-web-client:prod
-  #   build:
-  #     context: ./gateway/web-client
-  #     dockerfile: Dockerfile
-    # ports:
-      # - '3030:80'
-
-  # services-gallery-api:
-  #   container_name: services-gallery-api
-  #   image: services-gallery-api:prod
-  #   build:
-  #     context: ./services/gallery-api
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - 6000:6000
+  gateway-web-client:
+    container_name: gateway-web-client
+    image: gateway-web-client:prod
+    build:
+      context: ./gateway/web-client
+      dockerfile: Dockerfile
+    ports:
+      - '3000:80'
+    depends_on:
+      - services-test-api
 
   services-test-api:
     container_name: services-test-api
@@ -35,41 +31,41 @@ services:
     build:
       context: ./services/test-api
       dockerfile: Dockerfile
+    env_file: .env
+    environment:
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=usersdb
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB
     ports:
       - 7100:80
+    depends_on:
+      - usersdb
 
-  # services-users-api:
-  #   container_name: services-users-api
-  #   image: services-users-api:prod
-  #   build:
-  #     context: ./services/users-api
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - 8000:8000
+  usersdb:
+    container_name: usersdb
+    image: mongo-express
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:
+      - testdata:/data/db
+    ports:
+      - 8081:80
 
-  # web-gallery-pwa:
-  #   container_name: web-gallery-pwa
-  #   image: web-gallery-pwa:prod
-  #   build:
-  #     context: ./web/gallery-pwa
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - 3030:80
+  mongo:
+    image: mongo
+    container_name: seesee-mongo
+    restart: always
+    ports:
+      - 27107:80
+    env_file:
+      - .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
 
-  # subscribers-rabbit:
-  #   hostname: rabbit
-  #   image: rabbitmq:latest
-  #   environment:
-  #     - RABBITMQ_DEFAULT_USER=admin
-  #     - RABBITMQ_DEFAULT_PASS=mypass
-  #   ports:
-  #     - '5672:5672'
-
-# networks:
-# seeseenetwork:
-# web-gallery-pwa-network:
-#   external:
-#     name: web-gallery-pwa
-# services-test-api-network:
-#   external:
-#     name: services-test-api
+volumes:
+  testdata:

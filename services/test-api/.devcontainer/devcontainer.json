@@ -3,9 +3,17 @@
   "dockerComposeFile": ["../../../docker-compose.yml", ],
   "service": "services-test-api",
   "workspaceFolder": "/home/node/workspace",
-  "settings": { "terminal.integrated.shell.linux": "/bin/zsh" },
-  "extensions": ["dbaeumer.vscode-eslint"],
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/zsh"
+  },
+  "extensions": [
+    "hookyqr.beautify",
+    "shawnzhong.system-task-manager",
+    "mutantdino.resourcemonitor",
+    "wayou.vscode-icons-mac",
+    "william-voyek.vscode-nginx"
+  ],
   "shutdownAction": "none",
-  "postCreateCommand": "yarn install",
+  // "postCreateCommand": "yarn install",
   "remoteUser": "node"
 }

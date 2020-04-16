@@ -10,9 +10,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - '8080:80'
-    depends_on:
-      - services-test-api
-      - gateway-web-client
+    # depends_on:
+    #   - services-test-api
+    #   - gateway-web-client
+    # command: sleep infinity
+    # links:
+      # - services-test-api
+      # - gateway-web-client
+      # - usersdb
+      # - mongo
 
   gateway-web-client:
     container_name: gateway-web-client

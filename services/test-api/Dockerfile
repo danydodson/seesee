@@ -6,14 +6,14 @@ RUN mkdir -p /home/node/workspace/node_modules && \
 
 WORKDIR '/home/node/workspace'
 
-COPY package*.json .
+COPY ./package.json ./
 
 RUN npm install -s
 
 USER node
 
-COPY --chown=node:node . .
+COPY --chown=node:node ./ ./
 
-# EXPOSE 7100
+RUN npm run build
 
 CMD ["npm", "run", "start"]

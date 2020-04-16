@@ -6,9 +6,35 @@
   "main": "server.js",
   "private": true,
   "scripts": {
-    "start": "node server.js"
+    "build": "webpack --no-progress --mode=production",
+    "start": "node build/index.js",
+    "babel:watch": "babel-watch -L v1/index.js",
+    "babel:node": "nodemon --exec babel-node v1/index.js",
+    "deploy": "node-deploy $(pwd)",
+    "linkall": "npm link node-deploy",
+    "clean": "rm -rf build node_modules",
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles"
   },
   "dependencies": {
-    "express": "^4.16.1"
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/polyfill": "^7.8.7",
+    "@babel/preset-env": "^7.9.0",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-watch": "^7.0.0",
+    "cross-env": "^7.0.2",
+    "nodemon": "^2.0.2",
+    "rimraf": "^3.0.2",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-node-externals": "^1.7.2",
+    "winston": "^3.2.1"
   }
 }

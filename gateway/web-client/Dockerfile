@@ -4,7 +4,7 @@ RUN mkdir -p /home/node/workspace/node_modules && \
   mkdir -p /home/node/workspace/build && \
   chown -R node:node /home/node/workspace
 
-WORKDIR /home/node/workspace
+WORKDIR '/home/node/workspace'
 
 COPY package.json .
 
@@ -18,9 +18,8 @@ RUN npm run build
 
 FROM nginx:stable-alpine
 
-# EXPOSE 3030
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
+# EXPOSE 80
 
-COPY --from=builder /workspace/build /usr/share/nginx/html
-
+COPY --from=builder /home/node/workspace/build/ /usr/share/nginx/html

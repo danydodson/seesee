@@ -1,7 +1,7 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import registerServiceWorker from "./serviceWorker";
+import React from 'react'
+import { hydrate } from 'react-dom'
+import App from './App'
+import registerServiceWorker from "./serviceWorker"
 
-ReactDOM.render(<App />, document.getElementById("root"));
-registerServiceWorker();
+hydrate(<App />, document.getElementById('root'))
+registerServiceWorker()

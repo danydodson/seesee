@@ -1,77 +1,86 @@
-version: '3.7'
+version: "3.7"
 
 services:
 
   gateway-nginx-proxy:
     container_name: gateway-nginx-proxy
-    image: gateway-nginx-proxy:prod
     build:
       context: ./gateway/nginx-proxy
       dockerfile: Dockerfile
+    # volumes:
+      #  - $PWD/nginx/nginx.conf:/etc/nginx/nginx.conf
+      # - ./gateway/nginx-proxy/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - '8080:80'
-    # depends_on:
-    #   - services-test-api
-    #   - gateway-web-client
-    # command: sleep infinity
-    # links:
-      # - services-test-api
-      # - gateway-web-client
-      # - usersdb
-      # - mongo
+      - 80:80
+    # networks:
+    #   - test-network
+    depends_on:
+      - gateway-web-client
+      - services-test-api
 
   gateway-web-client:
     container_name: gateway-web-client
-    image: gateway-web-client:prod
     build:
       context: ./gateway/web-client
       dockerfile: Dockerfile
+    # volumes:
+      # - ./gateway/web-client:/home/node/workspace
+      # - node_modules:/home/node/workspace/node_modules
     ports:
-      - '3000:80'
-    depends_on:
-      - services-test-api
+      - 3000:3000
+    # networks:
+    #   - test-network
 
   services-test-api:
     container_name: services-test-api
-    image: services-test-api:prod
     build:
       context: ./services/test-api
       dockerfile: Dockerfile
+    # volumes:
+      # - ./services/test-api:/home/node/workspace
+      # - node_modules:/home/node/workspace/node_modules
+    ports:
+      - 7000:7000
     env_file: .env
     environment:
       - MONGO_USERNAME=$MONGO_USERNAME
       - MONGO_PASSWORD=$MONGO_PASSWORD
-      - MONGO_HOSTNAME=usersdb
+      - MONGO_HOSTNAME=services-test-data
       - MONGO_PORT=$MONGO_PORT
       - MONGO_DB=$MONGO_DB
-    ports:
-      - 7100:80
+    # networks:
+    #   - test-network
     depends_on:
-      - usersdb
+      - services-test-data
 
-  usersdb:
-    container_name: usersdb
-    image: mongo-express
-    restart: unless-stopped
+  services-test-data:
+    container_name: services-test-data
+    image: mongo
+    # restart: unless-stopped
+    env_file: .env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
       - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
     volumes:
-      - testdata:/data/db
-    ports:
-      - 8081:80
+      - test-db:/data/db
+    # networks:
+    #   - test-network
 
-  mongo:
-    image: mongo
-    container_name: seesee-mongo
-    restart: always
-    ports:
-      - 27107:80
-    env_file:
-      - .env
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+  # web-gallery-pwa:
+  #   build:
+  #     context: ./web/gallery-pwa/.devcontainer
+  #     dockerfile: Dockerfile.dev
+  #   image: web-gallery-pwa:development
+  #   volumes:
+  #     - ./web/gallery-pwa:/home/node/workspace
+  #     - ~/.gitconfig:/home/node/.gitconfig
+  #   ports:
+  #     - 3000:3000
+  #   command: sleep infinity
+  #   container_name: web-gallery-pwa
 
 volumes:
-  testdata:
+  test-db:
+
+# networks:
+#   test-network:

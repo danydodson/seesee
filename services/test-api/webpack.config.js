@@ -1,21 +1,25 @@
 const path = require('path')
 const webpackNodeExternals = require('webpack-node-externals')
+const CURRENT_WORKING_DIR = process.cwd()
 
 module.exports = {
-  entry: './v1/index.js',
+  name: 'server',
+  mode: 'development',
+  entry: [path.join(CURRENT_WORKING_DIR, './v2/server.js')],
+  target: 'node',
+  output: {
+    path: path.join(CURRENT_WORKING_DIR, '/build/'),
+    filename: 'index.js',
+    publicPath: '/build/',
+  },
   externals: [webpackNodeExternals()],
-  mode: 'production',
   module: {
     rules: [
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         use: 'babel-loader'
       }
     ]
   },
-  output: {
-    filename: 'index.js',
-    path: path.resolve(__dirname, './build')
-  },
-  target: 'node'
 }

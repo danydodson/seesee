@@ -1,5 +1,0 @@
-{
-  "verbose": false,
-  "watch": ["./v2"],
-  "exec": "babel-node v2/index.js"
-}

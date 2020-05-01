@@ -1,7 +1,0 @@
-{
-  "settings": {
-    "docker-compose.files": [
-      "../docker-compose.yml"
-    ]
-  }
-}

@@ -1,0 +1,19 @@
+LABEL name="users-api-service-test"
+LABEL maintainer="dany@dany.codes"
+LABEL description="users service api test"
+LABEL version="1.0"
+
+FROM node:14.1.0
+
+RUN mkdir -p /home/node/workspace/node_modules && \
+  mkdir -p /home/node/workspace/build && \
+  chown -R node:node /home/node/workspace
+
+WORKDIR /home/node/workspace
+COPY package.json .
+COPY . .
+
+RUN npm install
+RUN npm run build
+
+CMD ["npm", "run", "docker-test"]

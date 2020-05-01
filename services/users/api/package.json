@@ -1,0 +1,54 @@
+{
+  "name": "seesee-users-service",
+  "version": "1.0.0",
+  "author": "Dany Dodson",
+  "description": "Users service for seesee",
+  "main": "v1/index.js",
+  "scripts": {
+    "build": "webpack --no-progress --mode=production --config webpack.config.prod.js",
+    "watch": "nodemon --exec babel-node v1/index.js",
+    "start": "NODE_ENV=production node build/index.js",
+    "linkall": "npm link node-deploy",
+    "clean": "rm -rf build",
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles"
+  },
+  "engines": {
+    "node": ">=14.1.0",
+    "npm": ">=6.14.4"
+  },
+  "dependencies": {
+    "compression": "1.7.4",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-jwt": "^5.3.3",
+    "helmet": "^3.22.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "mongoose": "^5.9.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/node": "^7.8.7",
+    "@babel/polyfill": "^7.8.7",
+    "@babel/preset-env": "^7.9.0",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "cross-env": "^7.0.2",
+    "nodemon": "^2.0.2",
+    "rimraf": "^3.0.2",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-node-externals": "^1.7.2",
+    "winston": "^3.2.1"
+  },
+  "private": true,
+  "license": "ISC",
+  "repository": "github:user/seesee",
+  "homepage": "github:user/seesee#readme",
+  "bugs": {
+    "url": "github:user/seesee/issues",
+    "email": "dany@dany.codes"
+  }
+}

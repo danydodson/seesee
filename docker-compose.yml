@@ -1,5 +1,4 @@
 version: "3.7"
-
 services:
 
   gateway-nginx-proxy:
@@ -10,53 +9,88 @@ services:
     ports:
       - 80:80
       - 443:443
+    volumes:
+      - /etc/nginx/conf.d
     depends_on:
       - gateway-web-client
-      - services-test-api
+      - users_service
+    networks:
+      - network
 
   gateway-web-client:
     build:
       context: ./gateway/web-client
       dockerfile: Dockerfile
     container_name: gateway-web-client
-    expose:
-      - 3000
+    ports:
+      - 3000:3000
+    volumes:
+      - ./gateway/web-client/node_modules
+      - ./gateway/web-client:/home/node/workspace
+    networks:
+      - network
 
-  services-test-api:
-    container_name: services-test-api
+  users_service:
+    container_name: users_service
     build:
-      context: ./services/test-api
+      context: ./services/users/api
       dockerfile: Dockerfile
-    expose:
-      - 7000
-    env_file: ./services/test-api/docker.env
+    env_file: ./services/users/api/.env
     environment:
-      - MONGO_USERNAME=$MONGO_USERNAME
-      - MONGO_PASSWORD=$MONGO_PASSWORD
-      - MONGO_HOSTNAME=services-test-data
-      - MONGO_PORT=$MONGO_PORT
-      - MONGO_DB=$MONGO_DB
+      - MONGO_USERNAME=dany
+      - MONGO_PASSWORD=dany
+      - MONGO_HOSTNAME=users_data
+      - MONGO_PORT=27017
+      - MONGO_DB=usersdatabase
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    ports:
+      - 7000:7000
+    volumes:
+      - /home/node/workspace/node_modules
+      - ./services/users/api:/home/node/workspace
+    networks:
+      - network
+      - users_network
     depends_on:
-      - services-test-data
+      - users_data
 
-  services-test-data:
-    container_name: services-test-data
+  users_data:
+    container_name: users_data
     image: mongo
     restart: unless-stopped
-    env_file: ./services/test-api/docker.env
+    env_file: ./services/users/api/.env
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+      - MONGO_INITDB_ROOT_USERNAME=dany
+      - MONGO_INITDB_ROOT_PASSWORD=dany
     volumes:
-      - test-db:/data/db
+      - users_db_vol:/data/db
     ports:
       - 0.0.0.0:27107:7000
+    networks:
+      - network
+      - users_network
+
+  redis:
+    container_name: redis
+    image: 'redis:latest'
+
+  redis_worker:
+    container_name: redis_worker
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    build:
+      context: ./services/redis
+      dockerfile: Dockerfile
+    volumes:
+      - /app/node_modules
+      - ./services/redis:/app
 
 volumes:
-  test-db:
+  users_db_vol:
 
-# networks:
-#   test-network:
-#   auth-network:
-#   users-network:
-#   listings-network:
+networks:
+  network:
+  users_network:
+  listings_network:

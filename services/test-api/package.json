@@ -6,7 +6,7 @@
   "main": "build/index.js",
   "private": true,
   "scripts": {
-    "build": "webpack --no-progress --mode=production --config webpack.config.production.js",
+    "build": "webpack --no-progress --mode=production --config webpack.config.prod.js",
     "watch": "nodemon --exec babel-node v2/index.js",
     "start": "NODE_ENV=production node /home/node/workspace/build/index.js",
     "deploy": "node-deploy $(pwd)",

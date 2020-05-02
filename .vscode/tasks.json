@@ -3,26 +3,23 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "bash: [build] source build/build.sh",
-      "detail": " builds and tags all docker images",
-      "type": "shell",
-      "command": "cd build && source build.sh",
-      "group": "build",
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "shared",
-        "showReuseMessage": true,
-        "clear": false
-      }
+      "label": "start fresh",
+      "detail": "cleans docker and builds new images",
+      "dependsOrder": "sequence",
+      "problemMatcher": [],
+      "dependsOn": [
+        "clean up",
+        "build images",
+        "push images",
+        "lift containers"
+      ],
     },
     {
-      "label": "bash: [clean] source build/clean.sh",
-      "detail": "cleans up app developer objects",
+      "label": "clean up",
       "type": "shell",
-      "command": "cd build && source clean.sh",
-      "group": "build",
+      "detail": "cleans workspace objects",
+      "command": "cd scripts && source clean.sh",
+      "problemMatcher": [],
       "presentation": {
         "echo": true,
         "reveal": "always",
@@ -31,14 +28,13 @@
         "showReuseMessage": true,
         "clear": false
       },
-      "problemMatcher": []
     },
     {
-      "label": "bash: [deploy] source build/deploy.sh",
-      "detail": "lift and detach all docker-compose containers",
+      "label": "build images",
       "type": "shell",
-      "command": "cd build && source deploy.sh",
-      "group": "build",
+      "detail": "builds and tags all docker images",
+      "command": "cd scripts && source build.sh",
+      "problemMatcher": [],
       "presentation": {
         "echo": true,
         "reveal": "always",
@@ -46,7 +42,37 @@
         "panel": "shared",
         "showReuseMessage": true,
         "clear": false
-      }
+      },
+    },
+    {
+      "label": "push images",
+      "type": "shell",
+      "detail": "pushes images to docker hub",
+      "command": "cd scripts && source push.sh",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+    },
+    {
+      "label": "lift containers",
+      "type": "shell",
+      "detail": "lift and detach all docker-compose containers",
+      "command": "cd scripts && source deploy.sh",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
     }
   ]
 }

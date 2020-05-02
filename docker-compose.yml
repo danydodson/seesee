@@ -5,94 +5,102 @@ services:
     ports:
       - 80:80
       - 443:443
-    networks:
-      - back_tier
-    container_name: services:nginx_proxy
+    image: danydodson/seesee_nginx_proxy
+    container_name: nginx_proxy
     volumes:
       - /etc/nginx/conf.d
-    build:
-      dockerfile: Dockerfile
-      context: ./gateway/nginx_proxy
+    # build:
+    #   context: ./services/nginx/proxy
+      # dockerfile: Dockerfile
     depends_on:
       - web_client
       - users_api
+    networks:
+      - back_tier
 
   web_client:
     ports:
       - 3000:3000
-    networks:
-      - front_tier
-    container_name: gateways:web_client
+    image: danydodson/seesee_web_client
+    container_name: web_client
     volumes:
       - ./gateway/web_client/node_modules
       - ./gateway/web_client:/home/node/workspace
-    build:
-      context: ./gateway/web_client
-      dockerfile: Dockerfile
+    # build:
+    #   context: ./gateway/web_client
+    #   dockerfile: Dockerfile
     depends_on:
       - users_api
+    networks:
+      - front_tier
+      - back_tier
 
   users_api:
     ports:
       - 7000:7000
-    networks:
-      - back_tier
-    container_name: services:users_api
+    image: danydodson/seesee_users_api
+    container_name: users_api
     volumes:
-      - /home/node/workspace/node_modules
-      - ./services/users/api:/home/node/workspace
-    env_file: ./services/users/api/.env
+      - /usr/src/app/node_modules
+      - /usr/src/app/build
+      - ./services/users/api:/usr/src/app/
+      # - /home/node/workspace/node_modules
+      # - ./services/users/api:/home/node/workspace
+    # build:
+    #   context: ./services/users/api
+    #   dockerfile: Dockerfile
+    env_file: ./docker.env
     environment:
-      - MONGO_USERNAME=dany
-      - MONGO_PASSWORD=dany
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
       - MONGO_HOSTNAME=users_mongo
-      - MONGO_PORT=27017
-      - MONGO_DB=usersdatabase
-      - REDIS_HOST=redis
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB
+      - REDIS_HOST=users_redis
       - REDIS_PORT=6379
-    build:
-      context: ./services/users/api
-      dockerfile: Dockerfile
+      # - MONGO_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@users_mongo:${MONGO_PORT}/${MONGO_DB}?authSource=admin
     depends_on:
       - users_mongo
+    networks:
+      - back_tier
 
   users_mongo:
     image: mongo
     ports:
-      - 0.0.0.0:27107:7000
+      - 27107:7000
     restart: unless-stopped
-    networks:
-      - back_tier
-    container_name: services:users_mongo
+    container_name: users_mongo
     volumes:
       - users_db:/data/db
-    env_file: ./services/users/api/.env
+    env_file: ./docker.env
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=dany
-      - MONGO_INITDB_ROOT_PASSWORD=dany
-
-  users_redis:
-    image: 'redis:latest'
-    restart: unless-stopped
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
     networks:
       - back_tier
-    container_name: services:users_redis
-
+    
   redis_worker:
-    networks:
-      - back_tier
-    container_name: services:redis_worker
+    container_name: redis_worker
     volumes:
-      - /app/node_modules
-      - ./services/redis:/app
+      - /usr/src/app/node_modules
+      - ./services/redis:/usr/src/app
     environment:
-      - REDIS_HOST=redis
+      - REDIS_HOST=users_redis
       - REDIS_PORT=6379
-    build:
-      context: ./services/redis
-      dockerfile: Dockerfile
+    # build:
+    #   context: ./services/redis
+    #   dockerfile: Dockerfile
     depends_on:
       - users_redis
+    networks:
+      - back_tier
+
+  users_redis:
+    image: redis
+    restart: unless-stopped
+    container_name: users_redis
+    networks:
+      - back_tier
 
 volumes:
   users_db:

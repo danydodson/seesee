@@ -1,6 +1,7 @@
 module.exports = {
   plugins: [
     [
+      // 'module-resolver', { alias: { '#root': './' } }
       'module-resolver', { alias: { '#root': './v1' } }
     ]
   ],

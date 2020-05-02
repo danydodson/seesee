@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node index.js",
+    "start": "echo redis worker started !!",
     "dev": "nodemon"
   },
   "dependencies": {

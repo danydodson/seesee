@@ -1,0 +1,52 @@
+{
+  // https://go.microsoft.com/fwlink/?LinkId=733558
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "bash: [build] source build/build.sh",
+      "detail": " builds and tags all docker images",
+      "type": "shell",
+      "command": "cd build && source build.sh",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "bash: [clean] source build/clean.sh",
+      "detail": "cleans up app developer objects",
+      "type": "shell",
+      "command": "cd build && source clean.sh",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "bash: [deploy] source build/deploy.sh",
+      "detail": "lift and detach all docker-compose containers",
+      "type": "shell",
+      "command": "cd build && source deploy.sh",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    }
+  ]
+}

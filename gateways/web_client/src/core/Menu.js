@@ -5,7 +5,7 @@ import Typography from 'material-ui/Typography'
 import IconButton from 'material-ui/IconButton'
 import HomeIcon from 'material-ui-icons/Home'
 import Button from 'material-ui/Button'
-import auth from './../auth/auth-helper'
+import auth from '../auth/auth-helper'
 import {Link, withRouter} from 'react-router-dom'
 
 const isActive = (history, path) => {

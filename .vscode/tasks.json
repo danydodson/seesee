@@ -1,5 +1,5 @@
+// https://go.microsoft.com/fwlink/?LinkId=733558
 {
-  // https://go.microsoft.com/fwlink/?LinkId=733558
   "version": "2.0.0",
   "tasks": [
     {
@@ -7,12 +7,7 @@
       "detail": "cleans docker and builds new images",
       "dependsOrder": "sequence",
       "problemMatcher": [],
-      "dependsOn": [
-        "clean up",
-        "build images",
-        "push images",
-        "lift containers"
-      ],
+      "dependsOn": ["clean up", "build images", "push images", "lift containers"],
     },
     {
       "label": "clean up",
@@ -20,14 +15,15 @@
       "detail": "cleans workspace objects",
       "command": "cd scripts && source clean.sh",
       "problemMatcher": [],
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "shared",
-        "showReuseMessage": true,
-        "clear": false
-      },
+      "presentation": { "echo": true, "reveal": "always", "focus": true, "panel": "shared", "showReuseMessage": true, "clear": false },
+    },
+    {
+      "label": "create secrets",
+      "type": "shell",
+      "detail": "create docker secrets",
+      "command": "cd scripts && source secrets.sh",
+      "problemMatcher": [],
+      "presentation": { "echo": true, "reveal": "always", "focus": true, "panel": "shared", "showReuseMessage": true, "clear": false },
     },
     {
       "label": "build images",
@@ -35,14 +31,7 @@
       "detail": "builds and tags all docker images",
       "command": "cd scripts && source build.sh",
       "problemMatcher": [],
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "shared",
-        "showReuseMessage": true,
-        "clear": false
-      },
+      "presentation": { "echo": true, "reveal": "always", "focus": true, "panel": "shared", "showReuseMessage": true, "clear": false },
     },
     {
       "label": "push images",
@@ -50,14 +39,7 @@
       "detail": "pushes images to docker hub",
       "command": "cd scripts && source push.sh",
       "problemMatcher": [],
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "shared",
-        "showReuseMessage": true,
-        "clear": false
-      },
+      "presentation": { "echo": true, "reveal": "always", "focus": true, "panel": "shared", "showReuseMessage": true, "clear": false },
     },
     {
       "label": "lift containers",
@@ -65,14 +47,15 @@
       "detail": "lift and detach all docker-compose containers",
       "command": "cd scripts && source deploy.sh",
       "problemMatcher": [],
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "shared",
-        "showReuseMessage": true,
-        "clear": false
-      },
+      "presentation": { "echo": true, "reveal": "always", "focus": true, "panel": "shared", "showReuseMessage": true, "clear": false },
+    },
+    {
+      "label": "lightsail",
+      "type": "shell",
+      "detail": "create aws-cli docker containers",
+      "command": "cd scripts && source lightsail.sh",
+      "problemMatcher": [],
+      "presentation": { "echo": true, "reveal": "always", "focus": true, "panel": "shared", "showReuseMessage": true, "clear": false },
     }
   ]
 }

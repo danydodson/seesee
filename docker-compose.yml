@@ -1,110 +1,92 @@
-version: "3.7"
+version: "3.8"
 services:
 
   nginx_proxy:
-    ports:
-      - 80:80
-      - 443:443
-    image: danydodson/seesee_nginx_proxy
     container_name: nginx_proxy
+    # build: ./gateway/nginx_proxy
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
     volumes:
-      - /etc/nginx/conf.d
-    # build:
-    #   context: ./services/nginx/proxy
-      # dockerfile: Dockerfile
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - certs:/etc/nginx/certs:ro
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+    restart: always
+  
+  nginx_letsencrypt:
+    container_name: nginx_letsencrypt
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: unless-stopped
+    volumes:
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - certs:/etc/nginx/certs
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     depends_on:
-      - web_client
-      - users_api
-    networks:
-      - back_tier
+      - nginx_proxy
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx_proxy
 
   web_client:
-    ports:
-      - 3000:3000
-    image: danydodson/seesee_web_client
     container_name: web_client
+    build: ./gateway/web_client
     volumes:
-      - ./gateway/web_client/node_modules
-      - ./gateway/web_client:/home/node/workspace
-    # build:
-    #   context: ./gateway/web_client
-    #   dockerfile: Dockerfile
+      - ./gateway/web_client:/usr/src/app
+    environment:
+      - NODE_ENV=production
+      - VIRTUAL_HOST=example.com
+      - LETSENCRYPT_HOST=example.com
+      - LETSENCRYPT_EMAIL=dany@dany.codes
+    ports:
+      - 3000:80
     depends_on:
       - users_api
-    networks:
-      - front_tier
-      - back_tier
 
   users_api:
+    container_name: users_api
+    build: ./services/users/api
+    restart: unless-stopped
+    volumes:
+      - /usr/src/app/node_modules
+      - ./services/users/api:/usr/src/app
+    environment:
+      - MONGO_USERNAME=root
+      - MONGO_PASSWORD=root
+      - MONGO_DB=seesee-users-data
+      - MONGO_HOSTNAME=users_mongo
     ports:
       - 7000:7000
-    image: danydodson/seesee_users_api
-    container_name: users_api
-    volumes:
-      - /usr/src/app/node_modules
-      - /usr/src/app/build
-      - ./services/users/api:/usr/src/app/
-      # - /home/node/workspace/node_modules
-      # - ./services/users/api:/home/node/workspace
-    # build:
-    #   context: ./services/users/api
-    #   dockerfile: Dockerfile
-    env_file: ./docker.env
-    environment:
-      - MONGO_USERNAME=$MONGO_USERNAME
-      - MONGO_PASSWORD=$MONGO_PASSWORD
-      - MONGO_HOSTNAME=users_mongo
-      - MONGO_PORT=$MONGO_PORT
-      - MONGO_DB=$MONGO_DB
-      - REDIS_HOST=users_redis
-      - REDIS_PORT=6379
-      # - MONGO_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@users_mongo:${MONGO_PORT}/${MONGO_DB}?authSource=admin
+    logging:
+      options:
+        max-size: "4m"
+        max-file: "10"
     depends_on:
       - users_mongo
-    networks:
-      - back_tier
 
   users_mongo:
-    image: mongo
-    ports:
-      - 27107:7000
-    restart: unless-stopped
     container_name: users_mongo
+    image: mongo:latest
+    restart: unless-stopped
     volumes:
       - users_db:/data/db
-    env_file: ./docker.env
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
-    networks:
-      - back_tier
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    ports:
+      - 27107:27107
     
-  redis_worker:
-    container_name: redis_worker
-    volumes:
-      - /usr/src/app/node_modules
-      - ./services/redis:/usr/src/app
-    environment:
-      - REDIS_HOST=users_redis
-      - REDIS_PORT=6379
-    # build:
-    #   context: ./services/redis
-    #   dockerfile: Dockerfile
-    depends_on:
-      - users_redis
-    networks:
-      - back_tier
-
-  users_redis:
-    image: redis
-    restart: unless-stopped
-    container_name: users_redis
-    networks:
-      - back_tier
-
 volumes:
+  conf:
+  vhost:
+  html:
+  certs:
   users_db:
 
 networks:
-  front_tier:
-  back_tier:
+  default:
+    external:
+      name: nginx-proxy

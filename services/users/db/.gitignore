@@ -4,7 +4,7 @@
 
 # webpack
 /build/*
-/data
+data/
 
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
@@ -85,6 +85,7 @@ StyleCopReport.xml
 *.tmp
 *.tmp_proj
 *.log
+!log
 *.vspscc
 *.vssscc
 .builds

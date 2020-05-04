@@ -5,7 +5,7 @@ import config from '../config'
 const mongoConnection = () => {
   connect(config.mongoUri, config.mongoOptions)
     .then(() => {
-      logger.info(` ✨ DB mongodb loaded and connected`)
+      logger.info(` ✨ [Mongo] loaded and connected`)
     }).catch(err => {
       logger.error(` ❗ ${err}`)
     })

@@ -1,7 +1,13 @@
-FROM nginx:alpine
+# Cf., https://github.com/schmunk42/nginx-proxy#proxy-wide
+FROM jwilder/nginx-proxy
 
-RUN rm /etc/nginx/conf.d/default.conf
+# RUN { \
+#       echo 'server_tokens off;'; \
+#       echo 'client_max_body_size 5m;'; \
+#     } > /etc/nginx/conf.d/my_proxy.conf
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# FROM nginx
 
-RUN chown -R nginx:nginx /usr/share/nginx/html/
+# RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/my_proxy.conf
+# RUN chown -R nginx:nginx /usr/share/nginx/html/

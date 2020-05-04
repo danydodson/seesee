@@ -3,8 +3,7 @@ services:
 
   nginx_proxy:
     container_name: nginx_proxy
-    # build: ./gateway/nginx_proxy
-    image: jwilder/nginx-proxy
+    image: danydodson/seesee_nginx_proxy
     ports:
       - "80:80"
       - "443:443"
@@ -13,6 +12,7 @@ services:
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
     labels:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
     restart: always
@@ -33,7 +33,7 @@ services:
 
   web_client:
     container_name: web_client
-    build: ./gateway/web_client
+    image: danydodson/seesee_web_client
     volumes:
       - ./gateway/web_client:/usr/src/app
     environment:
@@ -48,7 +48,7 @@ services:
 
   users_api:
     container_name: users_api
-    build: ./services/users/api
+    image: danydodson/seesee_users_api
     restart: unless-stopped
     # volumes:
       # - /usr/src/app/node_modules

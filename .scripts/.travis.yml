@@ -3,7 +3,7 @@ services:
   - docker
 
 before_install:
-  - docker build -t danydodson/react-test -f ./seesee-client/Dockerfile.dev ./seesee-client
+  - docker build -t danydodson/react-test -f ./web/gallery_pwa/Dockerfile.test ./web/gallery_pwa
 
 script:
   - docker run danydodson/react-test npm test -- --coverage
@@ -26,10 +26,10 @@ after_success:
 deploy:
   provider: elasticbeanstalk
   region: us-west-1
-  app: multi-docker
-  env: MultiDocker-env
+  app: seesee
+  env: seesee-env
   bucket_name: elasticbeanstalk-us-west-1-306476627547
-  bucket_path: docker-multi
+  bucket_path: seesee
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY

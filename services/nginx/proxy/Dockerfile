@@ -1,4 +1,3 @@
-# Cf., https://github.com/schmunk42/nginx-proxy#proxy-wide
 FROM jwilder/nginx-proxy
 
 # RUN { \
@@ -8,6 +7,6 @@ FROM jwilder/nginx-proxy
 
 # FROM nginx
 
-# RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d/my_proxy.conf
-# RUN chown -R nginx:nginx /usr/share/nginx/html/
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+RUN chown -R nginx:nginx /usr/share/nginx/html/

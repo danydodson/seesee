@@ -7,7 +7,7 @@
       "detail": "cleans docker and builds new images",
       "dependsOrder": "sequence",
       "problemMatcher": [],
-      "dependsOn": ["docker prune docker", "docker build images", "docker lift containers"],
+      "dependsOn": ["1 docker prune all", "2 docker build images", "3 docker lift containers"],
     },
     {
       "label": "1 docker prune all",

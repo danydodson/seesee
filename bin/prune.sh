@@ -7,7 +7,9 @@ clean_build=true
 if [ $clean_docker ]
 then
     echo "[CLEANING] docker-compose down remove orphans"
-    cd ../ && docker-compose down --remove-orphans --volumes && cd .scripts
+    cd ../services/nginx/proxy && docker-compose down --remove-orphans --volumes && cd ../../../bin && \
+    cd ../services/tunnel && docker-compose down --remove-orphans --volumes && cd ../../bin
+    cd ../subscribers/grafana && docker-compose down --remove-orphans --volumes && cd ../../bin
 fi
 
 if [ $clean_docker ]

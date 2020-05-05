@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+  #
+  auth_service:
+    image: danydodson/auth_service
+    container_name: auth_service
+    build:
+      context: .
+      dockerfile: 'Dockerfile'
+    env_file: .develop.env
+    environment:
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=auth_db
+      - MONGO_DB=$MONGO_DB
+    ports:
+      - '80:5000'
+    depends_on:
+      - auth_db
+    volumes:
+      - .:/home/node/app
+      - node_modules:/home/node/app/node_modules
+    networks:
+      - auth_network
+    command: ./wait-for.sh auth_db:27017 -- /home/node/app/node_modules/.bin/nodemon src/index.js
+
+  auth_db:
+    image: mongo
+    container_name: auth_db
+    restart: unless-stopped
+    env_file: .develop.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:
+      - auth_db_vol:/data/db
+    ports:
+      - '27018:27017'
+    networks:
+      - auth_network
+
+networks:
+  auth_network:
+    driver: bridge
+
+volumes:
+  auth_db_vol:
+  node_modules:

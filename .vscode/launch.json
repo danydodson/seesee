@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "launch users api",
+      "request": "launch",
+      "program": "${workspaceFolder}/services/users/api/build/index.js",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "pwa-node"
+    },
+  ]
+}

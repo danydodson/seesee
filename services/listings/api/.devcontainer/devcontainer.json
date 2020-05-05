@@ -1,0 +1,19 @@
+{
+  "name": "services-gallery-api",
+  "dockerComposeFile": ["../../../docker-compose.yml", ],
+  "service": "services-gallery-api",
+  "workspaceFolder": "/home/node/workspace",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/zsh"
+  },
+  "extensions": [
+    "hookyqr.beautify",
+    "shawnzhong.system-task-manager",
+    "mutantdino.resourcemonitor",
+    "wayou.vscode-icons-mac",
+    "william-voyek.vscode-nginx"
+  ],
+  "shutdownAction": "none",
+  // "postCreateCommand": "yarn install",
+  "remoteUser": "node"
+}

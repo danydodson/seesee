@@ -1,99 +1,92 @@
-version: '3'
+version: "3.8"
 services:
-  web-client:
-    container_name: web-client
-    build:
-      context: ./web-client
-      dockerfile: Dockerfile
-    volumes:
-      - /opt/web-client/node_modules
-      - ./web-client:/opt/web-client
-    networks:
-      - frontend
 
-  demo-service:
-    container_name: demo-service
-    build:
-      context: ./demo-service
-      dockerfile: Dockerfile
-    restart: on-failure
+  nginx_proxy:
+    container_name: nginx_proxy
+    # build: ./gateway/nginx_proxy
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
     volumes:
-      - /opt/demo-service/node_modules
-      - ./demo-service:/opt/demo-service
-      - database:/var/lib/postgresql/data
-    environment:
-      - MONGO_URI=mongodb://mongodb-server/demo-service
-      - POSTGRES_USER='postgres'
-      - POSTGRES_PASSWORD='postgres'
-      - POSTGRES_DB='values'
-      - REDIS_HOST='redis-server'
-      - REDIS_PORT=6379
-    networks:
-      - frontend
-
-  nginx-service:
-    container_name: nginx-service
-    build:
-      context: ./nginx-service
-      dockerfile: Dockerfile
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - certs:/etc/nginx/certs:ro
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
     restart: always
-    ports:
-      - '3050:80'
-    networks:
-      - frontend
-
-  # nginx-proxy:
-  #   container_name: nginx-proxy
-  #   image: jwilder/nginx-proxy
-  #   ports:
-  #     - '80:80'
-  #     - '443:443'
-  #   volumes:
-  #     - /etc/nginx/certs
-  #     - /etc/nginx/vhost.d
-  #     - /usr/share/nginx/html
-  #     - /var/run/docker.sock:/tmp/docker.sock:ro
-  #   networks:
-  #     - frontend
-
-  redis-worker:
-    container_name: redis-worker
-    build:
-      context: ./redis-worker
-      dockerfile: Dockerfile
-    restart: on-failure
+  
+  nginx_letsencrypt:
+    container_name: nginx_letsencrypt
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: unless-stopped
     volumes:
-      - /opt/redis-worker/node_modules
-      - ./redis-worker:/opt/redis-worker
-    networks:
-      - frontend
-
-  redis-server:
-    container_name: redis-server
-    image: 'redis'
-    restart: on-failure
-    networks:
-      - frontend
-
-  mongodb-server:
-    container_name: mongodb-server
-    image: mongo
-    ports:
-      - '27017:27017'
-
-  postgres-server:
-    container_name: postgres-server
-    image: 'postgres'
-    restart: on-failure
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - certs:/etc/nginx/certs
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - nginx_proxy
     environment:
-      - POSTGRES_USER='postgres'
-      - POSTGRES_PASSWORD='postgres'
-      - POSTGRES_DB='values'
-    networks:
-      - frontend
+      - NGINX_PROXY_CONTAINER=nginx_proxy
+
+  web_client:
+    container_name: web_client
+    build: ./gateway/web_client
+    volumes:
+      - ./gateway/web_client:/usr/src/app
+    environment:
+      - NODE_ENV=production
+      - VIRTUAL_HOST=seesee.com
+      - LETSENCRYPT_HOST=seesee.com
+      - LETSENCRYPT_EMAIL=dany@dany.codes
+    ports:
+      - 3000:80
+    depends_on:
+      - users_api
+
+  users_api:
+    container_name: users_api
+    build: ./services/users/api
+    restart: unless-stopped
+    # volumes:
+      # - /usr/src/app/node_modules
+      # - ./services/users/api:/usr/src/app
+    environment:
+      - MONGO_USERNAME=dany
+      - MONGO_PASSWORD=password
+      - MONGO_DB=seesee-users-data
+      - MONGO_HOSTNAME=users_mongo
+    ports:
+      - 7000:7000
+    logging:
+      options:
+        max-size: "4m"
+        max-file: "10"
+    depends_on:
+      - users_mongo
+
+  users_mongo:
+    container_name: users_mongo
+    image: mongo:latest
+    restart: unless-stopped
+    volumes:
+      - users_db:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=dany
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    ports:
+      - 27107:27107
+    
+volumes:
+  conf:
+  vhost:
+  html:
+  certs:
+  users_db:
 
 networks:
-  frontend:
-
-volumes:
-  database:
+  default:
+    external:
+      name: nginx-proxy

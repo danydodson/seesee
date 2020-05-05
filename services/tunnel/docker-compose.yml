@@ -1,0 +1,18 @@
+version: '3'
+services:
+
+  proxy-tunnel:
+    image: danydodson/proxy-tunnel
+    container_name: proxy-tunnel
+    ports:
+      - "2222:22"
+    expose:
+      - "2222"
+    environment:
+      - VIRTUAL_HOST=dev.seesee.space
+      - LETSENCRYPT_HOST=dev.seesee.space
+
+networks:
+  default:
+    external:
+      name: nginx-proxy

@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    hostname: mongodb
+    volumes:
+        - ./.docker/mongodb/mongod.conf:/etc/mongod.conf
+        - ./.docker/mongodb/initdb.d/:/docker-entrypoint-initdb.d/
+        - ./.docker/mongodb/data/db/:/data/db/
+        - ./.docker/mongodb/data/log/:/var/log/mongodb/
+    env_file:
+        - .env
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+        MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+        MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    ports:
+        - "27017:27017"
+    networks:
+      - users_tier
+    command: ["-f", "/etc/mongod.conf"]
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    ports:
+        - 8081:8081
+    volumes:
+        - ./.docker/mongo-express/docker-entrypoint.sh:/docker-entrypoint.sh
+    env_file:
+        - .env
+    environment:
+        ME_CONFIG_MONGODB_SERVER: mongodb
+        ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+        ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+        ME_CONFIG_BASICAUTH_USERNAME: ${ME_CONFIG_BASICAUTH_USERNAME}
+        ME_CONFIG_BASICAUTH_PASSWORD: ${ME_CONFIG_BASICAUTH_PASSWORD}
+    networks:
+      - users_tier
+    depends_on:
+        - mongodb
+
+networks:
+  users_tier:

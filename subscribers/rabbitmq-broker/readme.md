@@ -1,13 +1,28 @@
-# rabbitmq-broker 
+# Asynchronous Microservices with RabbitMQ and Node.js
 
-This uses the official [RabbitMQ Docker image](https://hub.docker.com/_/rabbitmq) with the management plugin included. 
+## Setup
+After Provisioning RabbitMQ, run
+````
+npm install
+node rabbit_mq_setup.js
+cd web-service
+node web-service.js
+// in a different terminal
+cd processor-service 
+node processor-service.js
+````
 
-It's running at default, with nothing configured. 
+In a third terminal, send a request to test the processing:
+````
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"data":"my-data"}' \
+  http://localhost:3000/api/v1/processData
+````
 
-Should you decide to keep it in your app, see their [documentation](https://www.rabbitmq.com/documentation.html). You might also consider 
- using a commercial hosting service that is colocated in your data center. See their list of [recommended hosts](https://www.rabbitmq.com/#support). 
+You should see the results in the web service terminal after a few seconds:
+````
+Results saved
+requestId: x , resultsData: my-data-processed
 
-
-Remember to set up authentication! And consider restricting [authorization](https://www.rabbitmq.com/access-control.html) for 
- each service.  
-
+````

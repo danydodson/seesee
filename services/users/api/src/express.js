@@ -12,7 +12,7 @@ const CURRENT_WORKING_DIR = process.cwd()
 const app = express()
 
 // parse body params and attache them to req.body
-app.use(express.json());
+app.use(express.json())
 app.use(cookieParser())
 app.use(compress())
 

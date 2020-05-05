@@ -1,11 +1,9 @@
-// import secrets from '../helpers/accessSecrets'
-
-const { MONGO_USERNAME, MONGO_PASSWORD, MONGO_PORT, MONGO_USERS_DB } = process.env
-
-// const MONGO_USERNAME = secrets.get('MONGO_USERNAME')
-// const MONGO_PASSWORD = secrets.get('MONGO_PASSWORD')
-// const MONGO_PORT = secrets.get('MONGO_PORT')
-// const MONGO_USERS_DB = secrets.get('MONGO_USERS_DB')
+const {
+  MONGO_USERNAME,
+  MONGO_PASSWORD,
+  MONGO_USERS_DB
+  MONGO_PORT,
+} = process.env
 
 const MONGO_OPTIONS = {
   useNewUrlParser: true,

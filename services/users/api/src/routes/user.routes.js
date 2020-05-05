@@ -1,42 +1,18 @@
-import {
-  testingCtrl,
-  profilesFeedCtrl,
-  newProfileCtrl,
-  getProfileCtrl,
-  updateProfileCtrl,
-  addFollowingCtrl,
-  addFollowerCtrl,
-  delFollowingCtrl,
-  delFollowerCtrl,
-  delProfileCtrl,
-} from '../controllers/profile'
+import express from 'express'
+import userCtrl from '../controllers/user.controller'
+import authCtrl from '../controllers/auth.controller'
 
-// import {
-//   validateProfile,
-//   validateResults,
-// } from '../validation'
+const router = express.Router()
 
-// import express from 'express'
-import { Router } from 'express'
-import auth from '../middleware/auth'
-import asyncHandler from 'express-async-handler'
+router.route('/api/users')
+  .get(userCtrl.list)
+  .post(userCtrl.create)
 
-// const router = express.Router()
+router.route('/api/users/:userId')
+  .get(authCtrl.requireSignin, userCtrl.read)
+  .put(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.update)
+  .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.remove)
 
-export default (app, route = Router()) => {
+router.param('userId', userCtrl.userByID)
 
-  app.use('/', route)
-
-  route.get('/dudes/testing', auth.optional, testingCtrl)
-  route.get('/dudes', auth.optional, asyncHandler(profilesFeedCtrl))
-
-  route.post('/dude/create', auth.required, asyncHandler(newProfileCtrl))
-
-  route.put('/dude/follow/:username', auth.required, asyncHandler(addFollowingCtrl), asyncHandler(addFollowerCtrl))
-  route.put('/dude/unfollow/:username', auth.required, asyncHandler(delFollowingCtrl), asyncHandler(delFollowerCtrl))
-
-  route.get('/dude/:username', auth.optional, asyncHandler(getProfileCtrl))
-  route.put('/dude/:username', auth.required, validateProfile, validateResults, asyncHandler(updateProfileCtrl))
-
-  route.delete('/dude/delete', auth.required, asyncHandler(delProfileCtrl))
-}
+export default router

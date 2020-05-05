@@ -2,20 +2,20 @@ version: "3.8"
 services:
 
   # ==========================================#
-  # Global Volumes                            #
+  #  global volumes                           #
   # ==========================================#
 
   volumes:
-    conf:
-    vhost:
-    html:
-    certs:
-    users_db_vol:
+    nginx_conf:
+    nginx_vhost:
+    nginx_html:
+    nginx_certs:
     auth_db_vol:
-    node_modules:
+    users_db_vol:
+    listings_db_vol:
   
   # ==========================================#
-  # Global Volumes                            #
+  #  global networks                          #
   # ==========================================#
   
   networks:
@@ -26,7 +26,7 @@ services:
         name: sevrices_network
 
   # ==========================================#
-  #                                           #
+  #  services/nginx                           #
   # ==========================================# 
 
   nginx_proxy:
@@ -36,16 +36,16 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - conf:/etc/nginx/conf.d
-      - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
-      - certs:/etc/nginx/certs:ro
+      - nginx_conf:/etc/nginx/conf.d
+      - nginx_vhost:/etc/nginx/vhost.d
+      - nginx_html:/usr/share/nginx/html
+      - nginx_certs:/etc/nginx/certs:ro
     labels:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
     restart: always
 
   # ==========================================#
-  #                                           #
+  #  services/nginx                           #
   # ==========================================# 
 
   docker_gen:
@@ -55,80 +55,34 @@ services:
     depends_on:
       - nginx_proxy
     volumes:
-      - conf:/etc/nginx/conf.d
-      - vhost:/etc/nginx/vhost.d
-      - certs:/etc/nginx/certs:ro
-      - ./nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
+      - nginx_conf:/etc/nginx/conf.d
+      - nginx_vhost:/etc/nginx/vhost.d
+      - nginx_certs:/etc/nginx/certs:ro
+      - ./services/nginx/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
     labels:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.docker_gen"
     restart: always
 
   # ==========================================#
-  #                                           #
+  #  services/nginx                           #
   # ==========================================#
 
   letsencrypt:
+    container_name: letsencrypt
     image: jrcs/letsencrypt-nginx-proxy-companion
-    container_name: nginx_letsencrypt
+    volumes:
+      - nginx_vhost:/etc/nginx/vhost.d
+      - nginx_html:/usr/share/nginx/html
+      - nginx_certs:/etc/nginx/certs
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     depends_on:
       - nginx_proxy
       - docker_gen
-    volumes:
-      - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
-      - certs:/etc/nginx/certs
-      - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: always
 
   # ==========================================#
-  #                                           #
-  # ==========================================#
-
-  auth_service:
-    image: danydodson/auth_service
-    container_name: auth_service
-    build:
-      context: .
-      dockerfile: 'Dockerfile'
-    env_file: .develop.env
-    environment:
-      - MONGO_USERNAME=$MONGO_USERNAME
-      - MONGO_PASSWORD=$MONGO_PASSWORD
-      - MONGO_HOSTNAME=auth_db
-      - MONGO_DB=$MONGO_DB
-    ports:
-      - '80:5000'
-    depends_on:
-      - auth_db
-    volumes:
-      - .:/home/node/app
-      - node_modules:/home/node/app/node_modules
-    networks:
-      - auth_network
-    command: ./wait-for.sh auth_db:27017 -- /home/node/app/node_modules/.bin/nodemon src/index.js
-
-  # ==========================================#
-  #                                           #
-  # ==========================================#
-
-  auth_db:
-    image: mongo
-    container_name: auth_db
-    restart: unless-stopped
-    env_file: .develop.env
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
-    volumes:
-      - auth_db_vol:/data/db
-    ports:
-      - '27018:27017'
-    networks:
-      - auth_network
-  
-  # ==========================================#
-  #                                           #
+  #  gateway/web_client                       #
   # ==========================================#
 
   web_client:
@@ -144,24 +98,73 @@ services:
     ports:
       - 3000:80
     depends_on:
-      - users_api
+      - nginx_proxy
+      - docker_gen
+      - auth_service
+      - users_service
+      - listings_service
 
   # ==========================================#
-  #                                           #
+  #  gateway/passport                         #
   # ==========================================#
 
-  users_api:
-    container_name: users_api
-    build: ./services/users/api
-    restart: unless-stopped
-    # volumes:
-      # - /usr/src/app/node_modules
-      # - ./services/users/api:/usr/src/app
+  auth_service:
+    container_name: auth_service
+    image: danydodson/auth_service
+    build:
+      context: .
+      dockerfile: 'Dockerfile'
+    env_file: .develop.env
     environment:
-      - MONGO_USERNAME=dany
-      - MONGO_PASSWORD=password
-      - MONGO_DB=seesee-users-data
-      - MONGO_HOSTNAME=users_mongo
+      - MONGO_HOSTNAME=auth_data
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_DB=$MONGO_AUTH_DB
+    ports:
+      - '80:5000'
+    depends_on:
+      - auth_data
+    volumes:  
+      - /usr/src/app/node_modules
+      - ./gateway/passport:/usr/src/app
+    networks:
+      - auth_network
+    command: ./wait-for.sh auth_data:27017 -- /home/node/app/node_modules/.bin/nodemon src/index.js
+
+  # ==========================================#
+  #  gateway/passport                         #
+  # ==========================================#
+
+  auth_data:
+    container_name: auth_data
+    image: mongo:latest
+    env_file: .develop.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:
+      - auth_db_vol:/data/db
+    ports:
+      - '27018:27017'
+    networks:
+      - auth_network
+    restart: unless-stopped
+  
+  # ==========================================#
+  #  services/users/api                       #
+  # ==========================================#
+
+  users_service:
+    container_name: users_service
+    build: ./services/users/api
+    environment:
+      - MONGO_HOSTNAME=users_data
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_DB=$MONGO_USERS_DB
+    volumes: 
+      - /usr/src/app/node_modules
+      - ./services/users/api:/usr/src/app
     ports:
       - 7000:7000
     logging:
@@ -169,45 +172,111 @@ services:
         max-size: "4m"
         max-file: "10"
     depends_on:
-      - users_mongo
-
-  # ==========================================#
-  #                                           #
-  # ==========================================#
-
-  users_mongo:
-    container_name: users_mongo
-    image: mongo:latest
+      - users_data
     restart: unless-stopped
+
+  # ==========================================#
+  # services/users/db                         #
+  # ==========================================#
+
+  users_data:
+    container_name: users_data
+    image: mongo:latest
     volumes:
-      - users_db:/data/db
+      - users_db_vol:/data/db
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=dany
-      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
     ports:
       - 27107:27107
+    restart: unless-stopped
 
   # ==========================================#
-  #                                           #
+  #  services/listings/api                    #
   # ==========================================#
 
-    rabbitmq:
-      image: rabbitmq:3-management-alpine
-      container_name: rabbitmq
-      volumes:
-        - ./.docker/rabbitmq/etc/:/etc/rabbitmq/
-        - ./.docker/rabbitmq/data/:/var/lib/rabbitmq/
-        - ./.docker/rabbitmq/logs/:/var/log/rabbitmq/
-      environment:
-        RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE}
-        RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
-        RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
-      ports:
-        - 5672:5672
-        - 15672:15672
+  listings_service:
+    container_name: listings_service
+    build: ./services/users/api
+    volumes:
+      - /usr/src/app/node_modules
+      - ./services/users/api:/usr/src/app
+    environment:
+      - MONGO_HOSTNAME=listings_data
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_DB=$MONGO_LISTINGS_DB
+    ports:
+      - 7000:7000
+    logging:
+      options:
+        max-size: "4m"
+        max-file: "10"
+    depends_on:
+      - listings_data
+    restart: unless-stopped
 
   # ==========================================#
-  #                                           #
+  # services/listings/db                      #
+  # ==========================================#
+
+  listings_data:
+    container_name: listings_data
+    image: mongo:latest
+    volumes:
+      - users_db_vol:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    ports:
+      - 27107:27107
+    restart: unless-stopped
+
+  # ==========================================#
+  # subscribers/rabbitmq                      #
+  # ==========================================#
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management-alpine
+    volumes:
+      - ./.docker/rabbitmq/etc/:/etc/rabbitmq/
+      - ./.docker/rabbitmq/data/:/var/lib/rabbitmq/
+      - ./.docker/rabbitmq/logs/:/var/log/rabbitmq/
+    environment:
+      RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE}
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    ports:
+      - 5672:5672
+      - 15672:15672
+      
+  # ==========================================#
+  #  services/mongo_express                   #
+  # ==========================================#
+
+  mongo_express:
+    image: mongo-express
+    container_name: mongo_express
+    ports:
+      - 8081:8081
+    volumes:
+      - ./.docker/mongo-express/docker-entrypoint.sh:/docker-entrypoint.sh
+    env_file:
+      - .env
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      ME_CONFIG_BASICAUTH_USERNAME: ${ME_CONFIG_BASICAUTH_USERNAME}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${ME_CONFIG_BASICAUTH_PASSWORD}
+    depends_on:
+      - auth_service
+      - users_service
+      - listings_service
+
+  # ==========================================#
+  #  services/grafana                         #
   # ==========================================#
 
   grafana:
@@ -219,16 +288,16 @@ services:
       - VIRTUAL_HOST=graf.seesee.space
       - VIRTUAL_PORT=3000
       - LETSENCRYPT_HOST=graf.seesee.space
-      - LETSENCRYPT_EMAIL=danydodson@gmail.com
+      - LETSENCRYPT_EMAIL=dany@dany.codes
     restart: always
   
   # ==========================================#
-  #                                           #
+  #  utilities/proxy_tunnel                   #
   # ==========================================#
 
   proxy_tunnel:
-    image: danydodson/seesee_proxy_tunnel
     container_name: proxy_tunnel
+    image: danydodson/seesee_proxy_tunnel
     ports:
       - "2222:22"
     expose:

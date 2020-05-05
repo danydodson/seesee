@@ -6,7 +6,7 @@ acme_endpoint="http://boulder:4001/directory"
 
 setup_boulder() {
   # Per the boulder README:
-  nginx_proxy_ip="$(ifconfig nginx-proxy | grep "inet addr:" | cut -d: -f2 | awk '{ print $1}')"
+  nginx_proxy_ip="$(ifconfig sevrices_network | grep "inet addr:" | cut -d: -f2 | awk '{ print $1}')"
 
   export GOPATH=${TRAVIS_BUILD_DIR}/go
   [[ ! -d $GOPATH/src/github.com/letsencrypt/boulder ]] \

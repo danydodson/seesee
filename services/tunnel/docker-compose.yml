@@ -1,9 +1,9 @@
 version: '3'
 services:
 
-  proxy-tunnel:
-    image: danydodson/proxy-tunnel
-    container_name: proxy-tunnel
+  proxy_tunnel:
+    image: danydodson/seesee_proxy_tunnel
+    container_name: proxy_tunnel
     ports:
       - "2222:22"
     expose:
@@ -15,4 +15,4 @@ services:
 networks:
   default:
     external:
-      name: nginx-proxy
+      name: sevrices_network

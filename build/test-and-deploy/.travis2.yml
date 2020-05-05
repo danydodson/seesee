@@ -32,7 +32,7 @@ before_install:
   - sudo chmod +x /usr/local/bin/yq
 
 install:
-  - docker network create nginx-proxy -o "com.docker.network.bridge.name"="nginx-proxy"
+  - docker network create sevrices_network -o "com.docker.network.bridge.name"="sevrices_network"
   - tests/setup-boulder.sh
 
 before_script:

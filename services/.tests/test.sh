@@ -38,7 +38,7 @@ sleep 20
 
 docker run --rm --detach \
   --name webapp-test \
-  --network nginx-proxy \
+  --network sevrices_network \
   --env "VIRTUAL_HOST=$test_domain" \
   --env "VIRTUAL_PORT=80" \
   --env "LETSENCRYPT_HOST=$test_domain" \

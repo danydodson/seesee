@@ -1,0 +1,17 @@
+version: '3'
+services:
+
+owncloud:
+  container_name: owncloud
+  image: owncloud:10.0.3
+  hostname: owncloud
+  ports:
+    - "8080:80"
+  environment:
+    VIRTUAL_HOST: cloud.ippon.local
+    VIRTUAL_PORT: 8080
+
+networks:
+  default:
+    external:
+      name: nginx-proxy

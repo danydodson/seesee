@@ -1,1 +1,0 @@
-https://libertyseeds.ca/2018/04/26/An-nginx-proxy-lets-encrypt-Docker-Composition/

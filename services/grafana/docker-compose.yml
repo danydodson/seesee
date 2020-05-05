@@ -1,0 +1,19 @@
+version: '3'
+services:
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    expose:
+      - "3000"
+    environment:
+      - VIRTUAL_HOST=graf.seesee.space
+      - VIRTUAL_PORT=3000
+      - LETSENCRYPT_HOST=graf.seesee.space
+      - LETSENCRYPT_EMAIL=danydodson@gmail.com
+    restart: always
+
+networks:
+  default:
+    external:
+      name: nginx-proxy

@@ -1,0 +1,37 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t danydodson/react-test -f ./web/gallery_pwa/Dockerfile.test ./web/gallery_pwa
+
+script:
+  - docker run danydodson/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t danydodson/seesee_services_nginx ./services/nginx
+  - docker build -t danydodson/seesee_services_auth ./services/auth/api
+  - docker build -t danydodson/seesee_services_listings ./services/listings/api
+  - docker build -t danydodson/seesee_services_users ./uservices/users/api
+  - docker build -t danydodson/seesee_services_redis ./uservices/redis
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push danydodson/seesee_services_nginx
+  - docker push danydodson/seesee_services_auth
+  - docker push danydodson/seesee_services_listings
+  - docker push danydodson/seesee_services_users
+  - docker push danydodson/seesee_services_redis
+
+deploy:
+  provider: elasticbeanstalk
+  region: us-west-1
+  app: seesee
+  env: seesee-env
+  bucket_name: elasticbeanstalk-us-west-1-306476627547
+  bucket_path: seesee
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY

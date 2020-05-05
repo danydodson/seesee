@@ -3,14 +3,14 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": " docker start develop",
+      "label": "(5) docker start develop",
       "detail": "cleans docker and builds new images",
       "dependsOrder": "sequence",
       "problemMatcher": [],
       "dependsOn": ["1 docker prune all", "2 docker build images", "3 docker lift containers"],
     },
     {
-      "label": "1 docker prune all",
+      "label": "(1) docker prune all",
       "type": "shell",
       "detail": "cleans workspace objects",
       "command": "cd bin && source prune.sh",
@@ -18,7 +18,7 @@
       "presentation": { "echo": true, "reveal": "always", "focus": true, "panel": "shared", "showReuseMessage": true, "clear": false },
     },
     {
-      "label": "2 docker build images",
+      "label": "(2) docker build images",
       "type": "shell",
       "detail": "builds and tags all docker images",
       "command": "cd bin && source build.sh",
@@ -26,7 +26,7 @@
       "presentation": { "echo": true, "reveal": "always", "focus": true, "panel": "shared", "showReuseMessage": true, "clear": false },
     },
     {
-      "label": "3 docker lift containers",
+      "label": "(3) docker lift containers",
       "type": "shell",
       "detail": "lift and detach all docker-compose containers",
       "command": "cd bin && source lift.sh",
@@ -34,7 +34,7 @@
       "presentation": { "echo": true, "reveal": "always", "focus": true, "panel": "shared", "showReuseMessage": true, "clear": false },
     },
     {
-      "label": "4 docker push images",
+      "label": "(4) docker push images",
       "type": "shell",
       "detail": "pushes images to docker hub",
       "command": "cd bin && source push.sh",

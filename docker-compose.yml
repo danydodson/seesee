@@ -1,10 +1,37 @@
 version: "3.8"
 services:
 
+  # ==========================================#
+  # Global Volumes                            #
+  # ==========================================#
+
+  volumes:
+    conf:
+    vhost:
+    html:
+    certs:
+    users_db_vol:
+    auth_db_vol:
+    node_modules:
+  
+  # ==========================================#
+  # Global Volumes                            #
+  # ==========================================#
+  
+  networks:
+    auth_network:
+      driver: bridge
+    default:
+      external:
+        name: sevrices_network
+
+  # ==========================================#
+  #                                           #
+  # ==========================================# 
+
   nginx_proxy:
+    image: nginx
     container_name: nginx_proxy
-    # build: ./gateway/nginx_proxy
-    image: jwilder/nginx-proxy
     ports:
       - "80:80"
       - "443:443"
@@ -16,20 +43,93 @@ services:
     labels:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
     restart: always
-  
-  nginx_letsencrypt:
-    container_name: nginx_letsencrypt
+
+  # ==========================================#
+  #                                           #
+  # ==========================================# 
+
+  docker_gen:
+    image: jwilder/docker-gen
+    command: -notify-sighup nginx_proxy -watch /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
+    container_name: docker_gen
+    depends_on:
+      - nginx_proxy
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - certs:/etc/nginx/certs:ro
+      - ./nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.docker_gen"
+    restart: always
+
+  # ==========================================#
+  #                                           #
+  # ==========================================#
+
+  letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
-    restart: unless-stopped
+    container_name: nginx_letsencrypt
+    depends_on:
+      - nginx_proxy
+      - docker_gen
     volumes:
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - certs:/etc/nginx/certs
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    depends_on:
-      - nginx_proxy
+    restart: always
+
+  # ==========================================#
+  #                                           #
+  # ==========================================#
+
+  auth_service:
+    image: danydodson/auth_service
+    container_name: auth_service
+    build:
+      context: .
+      dockerfile: 'Dockerfile'
+    env_file: .develop.env
     environment:
-      - NGINX_PROXY_CONTAINER=nginx_proxy
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=auth_db
+      - MONGO_DB=$MONGO_DB
+    ports:
+      - '80:5000'
+    depends_on:
+      - auth_db
+    volumes:
+      - .:/home/node/app
+      - node_modules:/home/node/app/node_modules
+    networks:
+      - auth_network
+    command: ./wait-for.sh auth_db:27017 -- /home/node/app/node_modules/.bin/nodemon src/index.js
+
+  # ==========================================#
+  #                                           #
+  # ==========================================#
+
+  auth_db:
+    image: mongo
+    container_name: auth_db
+    restart: unless-stopped
+    env_file: .develop.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:
+      - auth_db_vol:/data/db
+    ports:
+      - '27018:27017'
+    networks:
+      - auth_network
+  
+  # ==========================================#
+  #                                           #
+  # ==========================================#
 
   web_client:
     container_name: web_client
@@ -45,6 +145,10 @@ services:
       - 3000:80
     depends_on:
       - users_api
+
+  # ==========================================#
+  #                                           #
+  # ==========================================#
 
   users_api:
     container_name: users_api
@@ -67,6 +171,10 @@ services:
     depends_on:
       - users_mongo
 
+  # ==========================================#
+  #                                           #
+  # ==========================================#
+
   users_mongo:
     container_name: users_mongo
     image: mongo:latest
@@ -78,15 +186,53 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=password
     ports:
       - 27107:27107
-    
-volumes:
-  conf:
-  vhost:
-  html:
-  certs:
-  users_db:
 
-networks:
-  default:
-    external:
-      name: sevrices_network
+  # ==========================================#
+  #                                           #
+  # ==========================================#
+
+    rabbitmq:
+      image: rabbitmq:3-management-alpine
+      container_name: rabbitmq
+      volumes:
+        - ./.docker/rabbitmq/etc/:/etc/rabbitmq/
+        - ./.docker/rabbitmq/data/:/var/lib/rabbitmq/
+        - ./.docker/rabbitmq/logs/:/var/log/rabbitmq/
+      environment:
+        RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE}
+        RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+        RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      ports:
+        - 5672:5672
+        - 15672:15672
+
+  # ==========================================#
+  #                                           #
+  # ==========================================#
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    expose:
+      - "3000"
+    environment:
+      - VIRTUAL_HOST=graf.seesee.space
+      - VIRTUAL_PORT=3000
+      - LETSENCRYPT_HOST=graf.seesee.space
+      - LETSENCRYPT_EMAIL=danydodson@gmail.com
+    restart: always
+  
+  # ==========================================#
+  #                                           #
+  # ==========================================#
+
+  proxy_tunnel:
+    image: danydodson/seesee_proxy_tunnel
+    container_name: proxy_tunnel
+    ports:
+      - "2222:22"
+    expose:
+      - "2222"
+    environment:
+      - VIRTUAL_HOST=dev.seesee.space
+      - LETSENCRYPT_HOST=dev.seesee.space

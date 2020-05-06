@@ -1,19 +1,11 @@
-// https://go.microsoft.com/fwlink/?LinkId=733558
 {
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "(5) docker start develop",
-      "detail": "cleans docker and builds new images",
-      "dependsOrder": "sequence",
-      "problemMatcher": [],
-      "dependsOn": ["1 docker prune all", "2 docker build images", "3 docker lift containers"],
-    },
-    {
       "label": "(1) docker prune all",
       "type": "shell",
       "detail": "cleans workspace objects",
-      "command": "cd bin && source prune.sh",
+      "command": "source ${workspaceFolder}/utilities/docker/clean.sh",
       "problemMatcher": [],
       "presentation": { "echo": true, "reveal": "always", "focus": true, "panel": "shared", "showReuseMessage": true, "clear": false },
     },
@@ -21,7 +13,7 @@
       "label": "(2) docker build images",
       "type": "shell",
       "detail": "builds and tags all docker images",
-      "command": "cd bin && source build.sh",
+      "command": "cd ${workspaceFolder}/utilities/docker && source build.sh",
       "problemMatcher": [],
       "presentation": { "echo": true, "reveal": "always", "focus": true, "panel": "shared", "showReuseMessage": true, "clear": false },
     },
@@ -29,7 +21,7 @@
       "label": "(3) docker lift containers",
       "type": "shell",
       "detail": "lift and detach all docker-compose containers",
-      "command": "cd bin && source lift.sh",
+      "command": "cd ${workspaceFolder}/utilities/docker && source lift.sh",
       "problemMatcher": [],
       "presentation": { "echo": true, "reveal": "always", "focus": true, "panel": "shared", "showReuseMessage": true, "clear": false },
     },
@@ -37,9 +29,28 @@
       "label": "(4) docker push images",
       "type": "shell",
       "detail": "pushes images to docker hub",
-      "command": "cd bin && source push.sh",
+      "command": "cd ${workspaceFolder}/utilities/docker && source push.sh",
       "problemMatcher": [],
       "presentation": { "echo": true, "reveal": "always", "focus": true, "panel": "shared", "showReuseMessage": true, "clear": false },
     },
+    // {
+    //   "label": "build image in dir",
+    //   "type": "shell",
+    //   "detail": "builds image from Dockerfile",
+    //   "command": "",
+    //   "dependsOrder": "sequence",
+    //   "problemMatcher": [],
+    //   "presentation": { "echo": true, "reveal": "always", "focus": true, "panel": "shared", "showReuseMessage": true, "clear": false },
+    // },
+    // {
+    //   "label": "dir",
+    //   "type": "shell",
+    //   "options": {
+    //     "cwd": "${workspaceFolder}"
+    //   },
+    //   "command": "ls",
+    //   "problemMatcher": [],
+    //   "presentation": { "echo": true, "reveal": "always", "focus": true, "panel": "shared", "showReuseMessage": true, "clear": false },
+    // }
   ]
 }

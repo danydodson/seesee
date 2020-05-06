@@ -13,6 +13,8 @@ RUN echo "\ncomplete -C '/usr/local/bin/aws_completer' aws\naws configure && sou
 
 WORKDIR /usr/src/app
 
-COPY resources /usr/src/app
+COPY make_completion.sh /usr/src/app
+COPY configure.sh /usr/src/app
+COPY Makefile /usr/src/app
 
 CMD ["bash"]

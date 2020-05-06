@@ -15,8 +15,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy:prod": "rsync -avzhe ssh --progress ./public/* root@krim.com:/root/krim.com",
-    "test": "react-scripts test"
+    "deploy": "rsync -avzhe ssh --progress ./public/* root@seesee.space.com:/home/ubuntu/seesee/"
   },
   "eslintConfig": {
     "extends": "react-app"

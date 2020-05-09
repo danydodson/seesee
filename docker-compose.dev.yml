@@ -15,7 +15,7 @@ services:
       - nginx_certs:/etc/nginx/certs:ro
     ports:
       - "80:80"
-      - "443:443"
+      # - "443:443"
     labels:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
     restart: always
@@ -74,14 +74,14 @@ services:
       # - BUILD_VERSION=1.0
       # - BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
       # - NODE_ENV=production
-      - VIRTUAL_HOST=see.seesee.com
       - VIRTUAL_PORT=3000
-      - LETSENCRYPT_HOST=see.seesee.com
-      - LETSENCRYPT_EMAIL=dany@dany.codes
+      - VIRTUAL_HOST=see.localhost
+      # - LETSENCRYPT_HOST=see.localhost
+      # - LETSENCRYPT_EMAIL=dany@dany.codes
     depends_on:
       - nginx_proxy
       - docker_gen
-      - letsencrypt
+      # - letsencrypt
       # - auth_service
       # - users_service
       # - gallery_service
@@ -263,17 +263,17 @@ services:
   #  services/grafana                         #
   # ==========================================#
 
-  grafana:
-    container_name: grafana
-    image: grafana/grafana
-    expose:
-      - "3000"
-    environment:
-      - VIRTUAL_HOST=graf.seesee.space
-      - VIRTUAL_PORT=3000
-      - LETSENCRYPT_HOST=graf.seesee.space
-      - LETSENCRYPT_EMAIL=dany@dany.codes
-    restart: always
+  # grafana:
+  #   container_name: grafana
+  #   image: grafana/grafana
+  #   expose:
+  #     - "3000"
+  #   environment:
+  #     - VIRTUAL_PORT=3000
+  #     - VIRTUAL_HOST=graf.localhost
+  #     - LETSENCRYPT_HOST=graf.localhost
+  #     - LETSENCRYPT_EMAIL=dany@dany.codes
+  #   restart: always
   
   # ==========================================#
   #  utilities/proxy_tunnel                   #

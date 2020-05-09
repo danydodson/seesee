@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 
 # Default password, overwrite with "docker build ... --build-arg ROOTPW=password"
-ARG ROOTPW=root
+ARG ROOTPW=password
 
 RUN apt-get update && apt-get install -y openssh-server
 

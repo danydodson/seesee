@@ -13,9 +13,9 @@
     "react-scripts": "^3.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "rsync -avzhe ssh --progress ./public/* root@seesee.space.com:/home/ubuntu/seesee/"
+    "start": "react-scripts start",
+    "deploy": "rsync -rlptzv --progress --exclude=.git --exclude=.vscode --exclude=/node_modules --exclude=/build /home/dany/projects/github/seesee/gateway/client/* ubuntu@34.234.108.25:/home/ubuntu/testing/gateway/client"
   },
   "eslintConfig": {
     "extends": "react-app"

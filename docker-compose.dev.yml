@@ -117,18 +117,18 @@ services:
   #  gateway/passport                         #
   # ==========================================#
 
-  # auth_data:
-  #   container_name: auth_data
-  #   image: mongo
-  #   ports:
-  #     - '27018:27018'
-  #   env_file: ./gateway/passport/.env
-  #   environment:
-  #     - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-  #     - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
-  #   volumes:
-  #     - auth_db_vol:/data/db
-  #   restart: unless-stopped
+  auth_data:
+    container_name: auth_data
+    image: mongo
+    ports:
+      - '27018:27018'
+    env_file: ./gateway/passport/.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:
+      - auth_db_vol:/data/db
+    restart: unless-stopped
   
   # ==========================================#
   #  services/users/api                       #
@@ -160,18 +160,18 @@ services:
   # services/users/db                         #
   # ==========================================#
 
-  # users_data:
-  #   container_name: users_data
-  #   image: mongo
-  #   ports:
-  #     - 27107:27107
-  #   env_file: ./services/users/api/.env
-  #   environment:
-  #     - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-  #     - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
-  #   volumes:
-  #     - users_db_vol:/data/db
-  #   restart: unless-stopped
+  users_data:
+    container_name: users_data
+    image: mongo
+    ports:
+      - 27107:27107
+    env_file: ./services/users/api/.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:
+      - users_db_vol:/data/db
+    restart: unless-stopped
 
   # ==========================================#
   #  services/gallery/api                     #
@@ -203,18 +203,18 @@ services:
   # services/gallery/db                       #
   # ==========================================#
 
-  # gallery_data:
-  #   container_name: gallery_data
-  #   image: mongo
-  #   env_file: ./services/gallery/api/.env
-  #   environment:
-  #     - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-  #     - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
-  #   volumes:
-  #     - gallery_db_vol:/data/db
-  #   ports:
-  #     - 27107:27107
-  #   restart: unless-stopped
+  gallery_data:
+    container_name: gallery_data
+    image: mongo
+    ports:
+      - 27107:27107
+    env_file: ./services/gallery/api/.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:
+      - gallery_db_vol:/data/db
+    restart: unless-stopped
 
   # ==========================================#
   # subscribers/rabbitmq                      #

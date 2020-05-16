@@ -1,7 +1,7 @@
 module.exports = {
   plugins: [
     [
-      'module-resolver', { alias: { '#root': './v1' } }
+      'module-resolver', { alias: { '#root': './src' } }
     ]
   ],
   presets: [

@@ -19,8 +19,8 @@ if [ $clean ]
 then
     echo "[CLEAN] removing all node_modules"
     #
-    rm -rf ../gateway/client/node_modules && \
-    rm -rf ../gateway/client/build && \
+    rm -rf ../../gateway/client/node_modules && \
+    rm -rf ../../gateway/client/build && \
     #
     rm -rf ../gateway/passport/node_modules && \
     rm -rf ../gateway/passport/build && \

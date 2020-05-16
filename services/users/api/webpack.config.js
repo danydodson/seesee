@@ -5,7 +5,7 @@ const CURRENT_WORKING_DIR = process.cwd()
 module.exports = {
   name: 'server',
   mode: 'development',
-  entry: [path.join(CURRENT_WORKING_DIR, './v1/index.js')],
+  entry: [path.join(CURRENT_WORKING_DIR, './src/index.js')],
   target: 'node',
   output: {
     path: path.join(CURRENT_WORKING_DIR, '/build/'),

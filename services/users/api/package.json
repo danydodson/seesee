@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "author": "Dany Dodson",
   "description": "Users service for seesee",
-  "main": "v1/index.js",
+  "main": "vsrc1/index.js",
   "scripts": {
     "build": "rm -rf build && webpack --no-progress --mode=production --config webpack.config.prod.js",
-    "watch": "nodemon --exec babel-node v1/index.js",
-    "start": "NODE_ENV=production node build/index.js",
+    "watch": "nodemon --exec babel-node src/index.js",
+    "start": "node build/index.js",
     "linkall": "npm link node-deploy",
     "clean": "rm -rf build",
     "test": "cross-env NODE_ENV=test jest --detectOpenHandles"

@@ -1,7 +1,4 @@
-import React from 'react'
-import { hydrate } from 'react-dom'
-import App from './App'
-import registerServiceWorker from "./serviceWorker"
+import "@babel/polyfill"
+import "dotenv/config"
 
-hydrate(<App />, document.getElementById('root'))
-registerServiceWorker()
+import "#root/server/startServer"

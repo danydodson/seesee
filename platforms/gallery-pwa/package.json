@@ -1,0 +1,36 @@
+{
+  "name": "platforms-gallery-pwa",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Dany Dodson",
+  "description": "platforms-gallery-pwa",
+  "scripts": {
+    "build": "rm -rf dist && NODE_ENV=production parcel build src/index.html",
+    "pre:deploy": "yarn build",
+    "deploy": "./deploy.sh",
+    "watch": "parcel --port=7001 src/index.html"
+  },
+  "dependencies": {
+    "@types/react": "~16.9.35",
+    "apollo-cache-inmemory": "~1.6.6",
+    "apollo-client": "~2.6.10",
+    "apollo-link-http": "~1.5.17",
+    "graphql": "^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0",
+    "graphql-tag": "~2.10.3",
+    "react": "~16.13.1",
+    "react-apollo": "~3.1.5",
+    "react-dom": "~16.13.1",
+    "react-hook-form": "~5.7.2",
+    "react-redux": "~7.2.0",
+    "redux": "^2.0.0 || ^3.0.0 || ^4.0.0-0",
+    "styled-components": "~5.1.0",
+    "yup": "~0.28.5"
+  },
+  "devDependencies": {
+    "parcel-bundler": "~1.12.4"
+  },
+  "alias": {
+    "#root": "./src"
+  },
+  "license": "MIT"
+}

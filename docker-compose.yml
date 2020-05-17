@@ -91,7 +91,7 @@ services:
     container_name: users_service
     build:
       context: .
-      dockerfile: ./services/users-service/Dockerfile
+      dockerfile: ./services/users/Dockerfile
     environment:
       - DB_URI=mysql://root:password@users_service_db/db?charset=UTF8
     volumes:
@@ -123,7 +123,7 @@ services:
     container_name: listings_service
     build:
       context: .
-      dockerfile: ./services/listings-service/Dockerfile
+      dockerfile: ./services/listings/Dockerfile
     environment:
       - DB_URI=mysql://root:password@listings_service_db/db?charset=UTF8
     volumes:

@@ -1,5 +1,5 @@
-import express from "express"
-import { AuthUser, AuthUserId, Email } from "src/passportjs-auth-app"
+import express from 'express'
+import { AuthUser, AuthUserId, Email } from 'src/passportjs-auth-app'
 
 
 export interface AppWithGuestUserProps {

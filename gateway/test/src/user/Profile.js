@@ -63,7 +63,7 @@ class Profile extends Component {
     }
     return (
       <Paper className={classes.root} elevation={4}>
-        <Typography type="title" className={classes.title}>
+        <Typography type='title' className={classes.title}>
           Profile
         </Typography>
         <List dense>
@@ -76,8 +76,8 @@ class Profile extends Component {
             <ListItemText primary={this.state.user.name} secondary={this.state.user.email}/> {
              auth.isAuthenticated().user && auth.isAuthenticated().user._id === this.state.user._id && 
               (<ListItemSecondaryAction>
-                <Link to={"/user/edit/" + this.state.user._id}>
-                  <IconButton aria-label="Edit" color="primary">
+                <Link to={'/user/edit/' + this.state.user._id}>
+                  <IconButton aria-label='Edit' color='primary'>
                     <Edit/>
                   </IconButton>
                 </Link>
@@ -87,7 +87,7 @@ class Profile extends Component {
           </ListItem>
           <Divider/>
           <ListItem>
-            <ListItemText primary={"Joined: " + (
+            <ListItemText primary={'Joined: ' + (
               new Date(this.state.user.created)).toDateString()}/>
           </ListItem>
         </List>

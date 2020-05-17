@@ -1,6 +1,6 @@
 // actions
-const CLEAR = "session/CLEAR"
-const SET = "session/SET"
+const CLEAR = 'session/CLEAR'
+const SET = 'session/SET'
 
 const DEFAULT_STATE = null
 

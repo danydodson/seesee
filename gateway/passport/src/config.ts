@@ -1,4 +1,4 @@
-import { PathPrefixOrRegex } from "./passportjs-auth-app"
+import { PathPrefixOrRegex } from './passportjs-auth-app'
 
 
 /**
@@ -43,8 +43,8 @@ export const OpenIdProvider = {
  * If an item in the list is a string, it is used to check path PREFIX. The requested path must start with that string for
  *   it to receive guest permission.
  * If an item is a regular expression, any partial match will be permitted. (Tip: start the regular expression
- *   with "^" to indicate it should match the beginning of the path or end with "$" to indicate it must end with the
- *   match. Also, do not use the "/g" global switch (it will cause the test to return false after the first match.)
+ *   with '^' to indicate it should match the beginning of the path or end with '$' to indicate it must end with the
+ *   match. Also, do not use the '/g' global switch (it will cause the test to return false after the first match.)
  *
  * Note: traefik-gateway is configured to completely skip authentication for some paths (eg, /static and /assets)
  *
@@ -76,7 +76,7 @@ export const DevMode_GuestPermittedResource = <PathPrefixOrRegex[]>[
   '/page-data',
   '/common',
   '/socket.io/',
-  '/_next', "/.next", // not sure about these
+  '/_next', '/.next', // not sure about these
   // other common ones?
 ]
 
@@ -87,13 +87,13 @@ export const DevMode_GuestPermittedResource = <PathPrefixOrRegex[]>[
  * See use/src in app/src/middleware/session-state.ts
  */
 export const SessionConfig = {
-  name: "sess.center",
+  name: 'sess.center',
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 15, // 15 days
-    sameSite: "lax",  // https://www.owasp.org/index.php/SameSite
+    sameSite: 'lax',  // https://www.owasp.org/index.php/SameSite
     httpOnly: true, // make this cookie invisible to browser javascript
 
-    // note: explicitly setting "domain" to the base domain tells browser to include the cookie on subdomains. https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie
+    // note: explicitly setting 'domain' to the base domain tells browser to include the cookie on subdomains. https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie
     // not including it (and restricting to same origin) is more secure.
     domain: process.env.WEBSTACK_HOST,
   },
@@ -104,7 +104,7 @@ export const SessionConfig = {
 
 /**
  * When JwtConfig.secret is present, it will verify & decode JsonWebTokens.
- * The decoded data is applied to "x-auth-jwt"
+ * The decoded data is applied to 'x-auth-jwt'
  * Note: if a token is present on a request, the other x-auth-* are not applied.
  */
 
@@ -122,7 +122,7 @@ export const RedisConfig = {
 
 // At present, OpenId Connect is used in production, with password-based login enabled in dev mode for working offline and
 // without third-party API keys. (See README)
-export const EnableLocalPasswordLoginSystem = process.env.NODE_ENV === "development"
+export const EnableLocalPasswordLoginSystem = process.env.NODE_ENV === 'development'
 
 
 // using library default; higher is better/slower. Consider installing argon2 to better defend against offline attacks (should an attacker get a copy of your database and all of the hashed passwords)

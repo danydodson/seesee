@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 services:
 
   users_data:
@@ -17,7 +17,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     ports:
-      - "27017:27017"
+      - '27017:27017'
     networks:
       - users_data_vol
     command: ["-f", "/etc/mongod.conf"]

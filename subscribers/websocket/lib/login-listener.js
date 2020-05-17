@@ -18,7 +18,7 @@ function setupRedisSubscriptionForUserLogin({ redisClient }) {
     if (guestId && authUserId) {
       changeAuthUserId(guestId, authUserId)
     } else {
-      console.warn(`Ignoring invalid message published to Redis "${AuthEventChannel}" channel. Expecting both "authUserId" and "guestId" attribs.`)
+      console.warn(`Ignoring invalid message published to Redis '${AuthEventChannel}' channel. Expecting both 'authUserId' and 'guestId' attribs.`)
     }
   })
 }

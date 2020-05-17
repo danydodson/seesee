@@ -1,29 +1,29 @@
-import express from "express"
-import { MemoryStore, Store } from "express-session"
-import setupFormsAndBasics from "./middleware/forms-basic-middleware"
-import setupPassport from "./middleware/passport-user"
-import buildExpressSessionMiddleware from "./middleware/session-state"
-import setupCurrentUserController from "./middleware/current-user-controller"
-import setupLocalPasswordController from "./middleware/local-password-controller"
-import setupOpenidAuthRouter from "./middleware/openid-controller"
-import setupAuthCheckForTraefik from "./middleware/auth-check"
-import { setupRedisAsUserDatabase } from "./persistence/redis-auth-database"
+import express from 'express'
+import { MemoryStore, Store } from 'express-session'
+import setupFormsAndBasics from './middleware/forms-basic-middleware'
+import setupPassport from './middleware/passport-user'
+import buildExpressSessionMiddleware from './middleware/session-state'
+import setupCurrentUserController from './middleware/current-user-controller'
+import setupLocalPasswordController from './middleware/local-password-controller'
+import setupOpenidAuthRouter from './middleware/openid-controller'
+import setupAuthCheckForTraefik from './middleware/auth-check'
+import { setupRedisAsUserDatabase } from './persistence/redis-auth-database'
 import {
   CurrentUserApiMountPoint,
   InternalAuthVerificationEndPoint,
   LocalPasswordApiMountPoint,
   OpenIdApiMountPoint
-} from "./api-endpoints"
-import { createRedisPublisher, setupAuthAnnouncements } from "./auth-announcement-handlers"
+} from './api-endpoints'
+import { createRedisPublisher, setupAuthAnnouncements } from './auth-announcement-handlers'
 
 
 function initExpressApp(config: Config) {
   const { serverBaseUrl, sessionSecret } = config
   if (!serverBaseUrl) {
-    throw new Error("serverBaseUrl required for passportjs-auth service. ")
+    throw new Error('serverBaseUrl required for passportjs-auth service. ')
   }
   if (!sessionSecret) {
-    throw new Error("sessionSecret required. Ensure AUTH_SESSION_SECRET env variable was set")
+    throw new Error('sessionSecret required. Ensure AUTH_SESSION_SECRET env variable was set')
   }
   const redisAsUserDatabase = setupRedisAsUserDatabase(config.RedisConfig)
   const redisPublisher = createRedisPublisher(config.RedisConfig) // note: if you decide to give this passportjs-auth service its own private db, this redis client should not use it. It is used for pubsub (not for session cookie persistence and such)

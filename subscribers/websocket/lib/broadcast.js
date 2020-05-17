@@ -30,7 +30,7 @@ function setupRedisSubscriptionForBroadcast({ redisClient }) {
     if (data && data.payload) {
       _processReceivedMessage(data)
     } else {
-      console.warn(`Ignoring invalid message published to Redis "${BackgroundPushChannel}" channel. Expecting a "payload" data object on the message.`)
+      console.warn(`Ignoring invalid message published to Redis '${BackgroundPushChannel}' channel. Expecting a 'payload' data object on the message.`)
     }
   })
 }
@@ -44,7 +44,7 @@ function _processReceivedMessage(data) {
   } else if (pushToRoom) {
     broadcastToRoom(pushToRoom, tabWindowId, payload)
   } else {
-    console.warn(`Invalid message published to Redis "${BackgroundPushChannel}" channel. Expecting json containing a "payload" and either a "pushToTabWindow" or "pushToUser" or "pushToRoom" key.`)
+    console.warn(`Invalid message published to Redis '${BackgroundPushChannel}' channel. Expecting json containing a 'payload' and either a 'pushToTabWindow' or 'pushToUser' or 'pushToRoom' key.`)
   }
 }
 
@@ -55,7 +55,7 @@ function broadcastToUser(wsUserId, tabWindowId, payload) {
   }
   const sockets = _filterTabWindowIdWhenPresent(getSocketsForUser(wsUserId), tabWindowId)
   if (tabWindowId) {
-    console.log(`broadcastToUser sending to tabWindowId "${tabWindowId}"`)
+    console.log(`broadcastToUser sending to tabWindowId '${tabWindowId}'`)
   } else {
     console.log(`broadcastToUser sending to ${sockets.length} socket(s)`)
   }
@@ -68,7 +68,7 @@ function broadcastToRoom(roomId, tabWindowId, payload) {
     return
   }
   const sockets = _filterTabWindowIdWhenPresent(getSocketsForRoom(roomId), tabWindowId)
-  console.log(`broadcastToRoom sending to ${sockets.length} socket(s) in room "${roomId}"`)
+  console.log(`broadcastToRoom sending to ${sockets.length} socket(s) in room '${roomId}'`)
   _broadcast(sockets, payload)
 }
 

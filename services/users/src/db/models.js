@@ -1,6 +1,6 @@
-import { DataTypes, Model } from "sequelize"
+import { DataTypes, Model } from 'sequelize'
 
-import sequelize from "./connection"
+import sequelize from './connection'
 
 export class User extends Model { }
 User.init(
@@ -22,9 +22,9 @@ User.init(
   },
   {
     defaultScope: {
-      rawAttributes: { exclude: ["passwordHash"] }
+      rawAttributes: { exclude: ['passwordHash'] }
     },
-    modelName: "users",
+    modelName: 'users',
     sequelize
   }
 )
@@ -40,8 +40,8 @@ UserSession.init(
     userId: {
       allowNull: false,
       references: {
-        key: "id",
-        model: "users"
+        key: 'id',
+        model: 'users'
       },
       type: DataTypes.UUID
     },
@@ -51,7 +51,7 @@ UserSession.init(
     }
   },
   {
-    modelName: "userSessions",
+    modelName: 'userSessions',
     paranoid: false,
     sequelize,
     updatedAt: false

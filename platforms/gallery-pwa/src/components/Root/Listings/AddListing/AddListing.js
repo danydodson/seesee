@@ -1,12 +1,12 @@
-import { useMutation } from "@apollo/react-hooks"
-import gql from "graphql-tag"
-import React from "react"
-import useForm from "react-hook-form"
-import { useSelector } from "react-redux"
-import styled from "styled-components"
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import React from 'react'
+import useForm from 'react-hook-form'
+import { useSelector } from 'react-redux'
+import styled from 'styled-components'
 
-import Textarea from "#root/components/shared/Textarea"
-import TextInput from "#root/components/shared/TextInput"
+import Textarea from '#root/components/shared/Textarea'
+import TextInput from '#root/components/shared/TextInput'
 
 const mutation = gql`
   mutation($description: String!, $title: String!) {
@@ -62,13 +62,13 @@ const AddListing = ({ onAddListing: pushAddListing }) => {
     <Form onSubmit={onSubmit}>
       <Label>
         <LabelText>Title</LabelText>
-        <TextInput disabled={isSubmitting} name="title" ref={register} type="text" />
+        <TextInput disabled={isSubmitting} name='title' ref={register} type='text' />
       </Label>
       <Label>
         <LabelText>Description</LabelText>
-        <Textarea disabled={isSubmitting} name="description" ref={register} />
+        <Textarea disabled={isSubmitting} name='description' ref={register} />
       </Label>
-      <Button disabled={isSubmitting} type="submit">
+      <Button disabled={isSubmitting} type='submit'>
         Add Listing
       </Button>
     </Form>

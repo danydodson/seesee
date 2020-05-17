@@ -1,5 +1,5 @@
-import express from "express"
-import cryptoRandomString from "crypto-random-string"
+import express from 'express'
+import cryptoRandomString from 'crypto-random-string'
 
 
 export interface AuthSessionData {
@@ -15,14 +15,14 @@ export function pluckAuthSessionData(req: express.Request): AuthSessionData {
 
 export function applySessionDataToResponseHeaders(req: express.Request, res: express.Response) {
   _ensureSessionData(req)
-  res.set("x-auth-csrf", req.session.csrfToken)
-  res.set("x-auth-sessionkey", req.session.extraSessionKeyToken)
+  res.set('x-auth-csrf', req.session.csrfToken)
+  res.set('x-auth-sessionkey', req.session.extraSessionKeyToken)
 }
 
 function _ensureSessionData(req: express.Request) {
-  req.session.csrfToken = req.session.csrfToken || cryptoRandomString({ length: 16, type: "base64" })
+  req.session.csrfToken = req.session.csrfToken || cryptoRandomString({ length: 16, type: 'base64' })
   req.session.extraSessionKeyToken = req.session.extraSessionKeyToken || cryptoRandomString({
     length: 16,
-    type: "base64"
+    type: 'base64'
   })
 }

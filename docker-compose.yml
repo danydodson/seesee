@@ -209,8 +209,8 @@ services:
   #     - 7000:7000
   #   logging:
   #     options:
-  #       max-size: "4m"
-  #       max-file: "10"
+  #       max-size: '4m'
+  #       max-file: '10'
   #   depends_on:
   #     - users_data
   #   restart: unless-stopped
@@ -252,8 +252,8 @@ services:
   #     - 7000:7000
   #   logging:
   #     options:
-  #       max-size: "4m"
-  #       max-file: "10"
+  #       max-size: '4m'
+  #       max-file: '10'
   #   depends_on:
   #     - gallery_data
   #   restart: unless-stopped
@@ -303,7 +303,7 @@ services:
   #   image: mongo-express
   #   container_name: mongo_express
   #   ports:
-  #     - "8081:8081"
+  #     - '8081:8081'
   #   volumes:
   #     - ./.docker/mongo-express/docker-entrypoint.sh:/docker-entrypoint.sh
   #   env_file: ./services/users/api/.env
@@ -342,9 +342,9 @@ services:
   #   container_name: proxy_tunnel
   #   image: danydodson/seesee_proxy_tunnel
   #   ports:
-  #     - "2222:22"
+  #     - '2222:22'
   #   expose:
-  #     - "2222"
+  #     - '2222'
   #   environment:
   #     - VIRTUAL_HOST=dev.seesee.space
   #     - LETSENCRYPT_HOST=dev.seesee.space

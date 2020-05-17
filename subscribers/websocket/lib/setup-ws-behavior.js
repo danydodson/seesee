@@ -43,7 +43,7 @@ const permitJoiningRoom = (wsUserId, roomId, { requestHeaders }) => {
  *
  * Note: should you decide to link accounts across multiple openId providers and login methods, you might want to use email address
  * as the wsUserId, to cover the edge case of the same person logging in with multiple openId providers. If so, the 'x-auth-data'
- * header includes "email" when available. (Some providers do not share email, namely Twitter)
+ * header includes 'email' when available. (Some providers do not share email, namely Twitter)
  *
  * @param req
  * @returns {string} wsUserId

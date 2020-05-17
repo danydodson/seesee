@@ -25,12 +25,12 @@ class Home extends Component {
     const {classes} = this.props
     return (
         <Card className={classes.card}>
-          <Typography type="headline" component="h2" className={classes.title}>
+          <Typography type='headline' component='h2' className={classes.title}>
             Home Page
           </Typography>
-          <CardMedia className={classes.media} image={seashellImg} title="Unicorn Shells"/>
+          <CardMedia className={classes.media} image={seashellImg} title='Unicorn Shells'/>
           <CardContent>
-            <Typography type="body1" component="p">
+            <Typography type='body1' component='p'>
               Welcome to the MERN Skeleton home page.
             </Typography>
           </CardContent>

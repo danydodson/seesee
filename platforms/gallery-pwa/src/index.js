@@ -1,15 +1,15 @@
-import "@babel/polyfill"
-import React from "react"
-import { ApolloProvider } from "react-apollo"
-import { render } from "react-dom"
-import { Provider } from "react-redux"
-import { createGlobalStyle, ThemeProvider } from "styled-components"
+import '@babel/polyfill'
+import React from 'react'
+import { ApolloProvider } from 'react-apollo'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
-import graphqlClient from "#root/api/graphqlClient"
-import Root from "#root/components/Root"
-import store from "#root/store"
+import graphqlClient from '#root/api/graphqlClient'
+import Root from '#root/components/Root'
+import store from '#root/store'
 
-import * as theme from "./theme"
+import * as theme from './theme'
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
@@ -35,5 +35,5 @@ render(
       </ThemeProvider>
     </ApolloProvider>
   </Provider>,
-  document.getElementById("app")
+  document.getElementById('app')
 )

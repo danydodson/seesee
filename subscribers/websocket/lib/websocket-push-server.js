@@ -1,6 +1,6 @@
 const http = require('http')
 const WebSocket = require('ws')
-const redis = require("redis")
+const redis = require('redis')
 const { setupWsBehavior, RedisConfig, WebsocketPushPort } = require('./setup-ws-behavior.js')
 
 function start({ port, redisConfig }) {

@@ -38,22 +38,22 @@ class DeleteUser extends Component {
       return <Redirect to='/'/>
     }
     return (<span>
-      <IconButton aria-label="Delete" onClick={this.clickButton} color="secondary">
+      <IconButton aria-label='Delete' onClick={this.clickButton} color='secondary'>
         <DeleteIcon/>
       </IconButton>
 
       <Dialog open={this.state.open} onClose={this.handleRequestClose}>
-        <DialogTitle>{"Delete Account"}</DialogTitle>
+        <DialogTitle>{'Delete Account'}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Confirm to delete your account.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.handleRequestClose} color="primary">
+          <Button onClick={this.handleRequestClose} color='primary'>
             Cancel
           </Button>
-          <Button onClick={this.deleteAccount} color="secondary" autoFocus="autoFocus">
+          <Button onClick={this.deleteAccount} color='secondary' autoFocus='autoFocus'>
             Confirm
           </Button>
         </DialogActions>

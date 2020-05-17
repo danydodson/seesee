@@ -16,7 +16,7 @@ const DefaultHeartbeatDuration = 22000
  * @param wsServer
  */
 function setupWsServer({ extractWsUserIdFromRequest, permitUserConnection, socketAddedForUser, heartbeatDuration, httpServer, wsServer }) {
-  httpServer.on('upgrade', function upgrade(request, notTheSocket, head) { // it seems "socket" in the docs ("notTheSocket" here) and "ws" do not reference the same object and "socket" is something different
+  httpServer.on('upgrade', function upgrade(request, notTheSocket, head) { // it seems 'socket' in the docs ('notTheSocket' here) and 'ws' do not reference the same object and 'socket' is something different
     const wsUserId = extractWsUserIdFromRequest(request)
     if (!permitUserConnection(wsUserId, request)) {
       notTheSocket.terminate() // or use destroy? example in readme and API docs inconsistent

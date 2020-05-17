@@ -1,4 +1,4 @@
-import initExpressApp from "./passportjs-auth-app"
+import initExpressApp from './passportjs-auth-app'
 import * as config from './config'
 
 const WebstackHost = process.env.WEBSTACK_HOST
@@ -11,16 +11,16 @@ const internalAuthHeaders = <string[]>[];
 })
 
 if (!Port) {
-  throw new Error("PASSPORTJS_AUTH_PORT environment variable required")
+  throw new Error('PASSPORTJS_AUTH_PORT environment variable required')
 }
 if (!WebstackHost) {
-  throw new Error("WEBSTACK_HOST environment variable required")
+  throw new Error('WEBSTACK_HOST environment variable required')
 }
 if (!internalAuthHeaders) {
-  throw new Error(`INTERNAL_AUTH_HEADERS environment variable required. Expecting comma-separted list of headers. (Eg, "X-Auth-User, X-Auth-Email")`)
+  throw new Error(`INTERNAL_AUTH_HEADERS environment variable required. Expecting comma-separted list of headers. (Eg, 'X-Auth-User, X-Auth-Email')`)
 }
 const app = initExpressApp({
-  serverBaseUrl: `${WebstackProtocol || "https"}://${WebstackHost}`,
+  serverBaseUrl: `${WebstackProtocol || 'https'}://${WebstackHost}`,
   sessionSecret: config.AuthSessionSecret,
   internalAuthHeaders,
   ...config,
@@ -32,7 +32,7 @@ const app = initExpressApp({
  */
 const server = app.listen(Port, (err: any) => {
   if (err) {
-    console.log("Failed to start passportjs-auth server", err)
+    console.log('Failed to start passportjs-auth server', err)
   } else {
     console.log(`Passportjs-auth server listening on port ${Port}`)
   }

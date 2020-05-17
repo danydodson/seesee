@@ -41,12 +41,12 @@ class Users extends Component {
     const {classes} = this.props
     return (
       <Paper className={classes.root} elevation={4}>
-        <Typography type="title" className={classes.title}>
+        <Typography type='title' className={classes.title}>
           All Users
         </Typography>
         <List dense>
          {this.state.users.map((item, i) => {
-          return <Link to={"/user/" + item._id} key={i}>
+          return <Link to={'/user/' + item._id} key={i}>
                     <ListItem button>
                       <ListItemAvatar>
                         <Avatar>

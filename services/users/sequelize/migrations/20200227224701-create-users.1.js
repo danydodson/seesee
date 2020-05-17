@@ -1,6 +1,6 @@
 module.exports.up = (queryInterface, DataTypes) => {
   return queryInterface.createTable(
-    "users",
+    'users',
     {
       id: {
         allowNull: false,
@@ -30,9 +30,9 @@ module.exports.up = (queryInterface, DataTypes) => {
       }
     },
     {
-      charset: "utf8"
+      charset: 'utf8'
     }
   )
 }
 
-module.exports.down = queryInterface => queryInterface.dropTable("users")
+module.exports.down = queryInterface => queryInterface.dropTable('users')

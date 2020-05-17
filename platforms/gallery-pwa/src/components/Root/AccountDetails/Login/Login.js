@@ -1,12 +1,12 @@
-import { useMutation } from "@apollo/react-hooks"
-import gql from "graphql-tag"
-import React from "react"
-import useForm from "react-hook-form"
-import { useDispatch } from "react-redux"
-import styled from "styled-components"
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import React from 'react'
+import useForm from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import styled from 'styled-components'
 
-import TextInput from "#root/components/shared/TextInput"
-import { setSession } from "#root/store/ducks/session"
+import TextInput from '#root/components/shared/TextInput'
+import { setSession } from '#root/store/ducks/session'
 
 const Label = styled.label`
   display: block;
@@ -63,19 +63,19 @@ const Login = ({ onChangeToSignUp: pushChangeToSignUp }) => {
     <form onSubmit={onSubmit}>
       <Label>
         <LabelText>Email</LabelText>
-        <TextInput disabled={isSubmitting} name="email" type="email" ref={register} />
+        <TextInput disabled={isSubmitting} name='email' type='email' ref={register} />
       </Label>
       <Label>
         <LabelText>Password</LabelText>
-        <TextInput disabled={isSubmitting} name="password" type="password" ref={register} />
+        <TextInput disabled={isSubmitting} name='password' type='password' ref={register} />
       </Label>
-      <LoginButton disabled={isSubmitting} type="submit">
+      <LoginButton disabled={isSubmitting} type='submit'>
         Login
-      </LoginButton>{" "}
+      </LoginButton>{' '}
       <OrSignUp>
-        or{" "}
+        or{' '}
         <a
-          href="#"
+          href='#'
           onClick={evt => {
             evt.preventDefault()
             pushChangeToSignUp()

@@ -1,8 +1,8 @@
-import express from "express"
-import { ClientOpts, RedisClient } from "redis"
+import express from 'express'
+import { ClientOpts, RedisClient } from 'redis'
 import { PubSubChannel } from './shared-constants.generated/redis-names.json'
-import { AuthUser, AuthUserPersistence } from "./passportjs-auth-app"
-import { createRedisClient } from "./persistence/redis-auth-database"
+import { AuthUser, AuthUserPersistence } from './passportjs-auth-app'
+import { createRedisClient } from './persistence/redis-auth-database'
 
 
 export function createRedisPublisher(redisOpts: ClientOpts): RedisClient {

@@ -1,10 +1,10 @@
-import { useMutation } from "@apollo/react-hooks"
-import gql from "graphql-tag"
-import React from "react"
-import { useDispatch, useSelector } from "react-redux"
-import styled from "styled-components"
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
 
-import { clearSession } from "#root/store/ducks/session"
+import { clearSession } from '#root/store/ducks/session'
 
 const mutation = gql`
   mutation($sessionId: ID!) {
@@ -18,7 +18,7 @@ const Email = styled.div`
   margin-top: 0.25rem;
 `
 
-const LogoutLink = styled.a.attrs({ href: "#" })`
+const LogoutLink = styled.a.attrs({ href: '#' })`
   color: blue;
   display: block;
   margin-top: 0.25rem;

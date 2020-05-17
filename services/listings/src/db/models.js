@@ -1,6 +1,6 @@
-import { DataTypes, Model } from "sequelize"
+import { DataTypes, Model } from 'sequelize'
 
-import sequelize from "./connection"
+import sequelize from './connection'
 
 export class Listing extends Model { }
 Listing.init(
@@ -14,5 +14,5 @@ Listing.init(
       type: DataTypes.TEXT
     }
   },
-  { sequelize, modelName: "listings" }
+  { sequelize, modelName: 'listings' }
 )

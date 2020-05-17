@@ -1,11 +1,11 @@
-import { useMutation } from "@apollo/react-hooks"
-import gql from "graphql-tag"
-import React from "react"
-import useForm from "react-hook-form"
-import styled from "styled-components"
-import * as yup from "yup"
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import React from 'react'
+import useForm from 'react-hook-form'
+import styled from 'styled-components'
+import * as yup from 'yup'
 
-import TextInput from "#root/components/shared/TextInput"
+import TextInput from '#root/components/shared/TextInput'
 
 const Label = styled.label`
   display: block;
@@ -43,7 +43,7 @@ const validationSchema = yup.object().shape({
   password: yup
     .string()
     .required()
-    .test("sameAsConfirmPassword", "${path} is not the same as the confirmation password", function () {
+    .test('sameAsConfirmPassword', '${path} is not the same as the confirmation password', function () {
       return this.parent.password === this.parent.confirmPassword
     })
 })
@@ -54,7 +54,7 @@ const SignUp = ({ onChangeToLogin: pushChangeToLogin }) => {
     handleSubmit,
     register,
     reset
-  } = useForm({ mode: "onChange", validationSchema })
+  } = useForm({ mode: 'onChange', validationSchema })
   const [createUser] = useMutation(mutation)
 
   const onSubmit = handleSubmit(async ({ email, password }) => {
@@ -67,23 +67,23 @@ const SignUp = ({ onChangeToLogin: pushChangeToLogin }) => {
     <form onSubmit={onSubmit}>
       <Label>
         <LabelText>Email</LabelText>
-        <TextInput disabled={isSubmitting} name="email" type="email" ref={register} />
+        <TextInput disabled={isSubmitting} name='email' type='email' ref={register} />
       </Label>
       <Label>
         <LabelText>Password</LabelText>
-        <TextInput disabled={isSubmitting} name="password" type="password" ref={register} />
+        <TextInput disabled={isSubmitting} name='password' type='password' ref={register} />
       </Label>
       <Label>
         <LabelText>Confirm Password</LabelText>
-        <TextInput disabled={isSubmitting} name="confirmPassword" type="password" ref={register} />
+        <TextInput disabled={isSubmitting} name='confirmPassword' type='password' ref={register} />
       </Label>
-      <SignUpButton disabled={isSubmitting || !isValid} type="submit">
+      <SignUpButton disabled={isSubmitting || !isValid} type='submit'>
         Sign Up
-      </SignUpButton>{" "}
+      </SignUpButton>{' '}
       <OrSignUp>
-        or{" "}
+        or{' '}
         <a
-          href="#"
+          href='#'
           onClick={evt => {
             evt.preventDefault()
             pushChangeToLogin()

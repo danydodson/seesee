@@ -3,29 +3,29 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /opt/docker-micros
+    destination: /usr/src/seesee-platform
 hooks:
-  BeforeInstall:
-    - location: users-service/aws/codedeploy/BeforeInstall/0_stopExistingProcess.sh
+  pre-install:
+    - location: users-service/aws/codedeploy/pre-install/0_stop-process.sh
       timeout: 300
       runas: root
-    - location: users-service/aws/codedeploy/BeforeInstall/1_removePreviousInstallation.sh
+    - location: users-service/aws/codedeploy/pre-install/1_remove-previous.sh
       timeout: 300
       runas: ec2-user
-  AfterInstall:
-    - location: users-service/aws/codedeploy/AfterInstall/0_changePermissions.sh
+  post-install:
+    - location: users-service/aws/codedeploy/post-install/0_change-permissions.sh
       timeout: 300
       runas: root
-    - location: users-service/aws/codedeploy/AfterInstall/1_installPackages.sh
+    - location: users-service/aws/codedeploy/post-install/1_install-packages.sh
       timeout: 300
       runas: ec2-user
-    - location: users-service/aws/codedeploy/AfterInstall/2_runMigrations.sh
+    - location: users-service/aws/codedeploy/post-install/2_run-migrations.sh
       timeout: 300
       runas: ec2-user
-    - location: users-service/aws/codedeploy/AfterInstall/3_buildBundle.sh
+    - location: users-service/aws/codedeploy/post-install/3_build-bundle.sh
       timeout: 300
       runas: ec2-user
-  ApplicationStart:
-    - location: users-service/aws/codedeploy/ApplicationStart.sh
+  start-application:
+    - location: users-service/aws/codedeploy/start-application.sh
       timeout: 300
       runas: root

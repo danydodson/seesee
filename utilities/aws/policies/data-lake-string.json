@@ -1,4 +1,0 @@
-{
-  "seesee-space-uri": "mongodb+srv://danydodson:IZmJ5l8Qp357l6@cluster-0-b4a1a.mongodb.net/test?retryWrites=true&w=majority",
-  "seesee-lake-uri": "mongodb://danydodson:IZmJ5l8Qp357l6@seesee-lake-0-egitb.a.query.mongodb.net/test?ssl=true&authSource=admin"
-}

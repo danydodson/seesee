@@ -2,7 +2,7 @@ version: '3.8'
 services:
 
   # ==========================================#
-  #  services/nginx-proxy                     #
+  #  services/nginx:proxy                     #
   # ==========================================# 
 
   # nginx_proxy:
@@ -21,7 +21,7 @@ services:
   #   restart: always
   
   # ==========================================#
-  #  services/nginx docker-gen                #
+  #  services/nginx:docker-gen                #
   # ==========================================# 
   
   # docker_gen:
@@ -41,7 +41,7 @@ services:
   #   restart: always
 
   # ==========================================#
-  #  services/nginx-letsencrypt               #
+  #  services/nginx:letsencrypt               #
   # ==========================================#
 
   # letsencrypt:
@@ -83,7 +83,7 @@ services:
 
 
   # ==========================================#
-  #  services/users-service                   #
+  #  services/users                           #
   # ==========================================#
 
   users_service:
@@ -99,7 +99,7 @@ services:
       - users_service_db
 
   # ==========================================#
-  #  services/users-data                      #
+  #  services/users:data                      #
   # ==========================================#
 
   users_service_db:
@@ -112,7 +112,7 @@ services:
       - 0.0.0.0:7201:3306
 
   # ==========================================#
-  #  services/listings-service                #
+  #  services/listings                        #
   # ==========================================#
 
   listings_service:
@@ -128,7 +128,7 @@ services:
       - listings_service_db
 
   # ==========================================#
-  #  services/listings-data                   #
+  #  services/listings:data                   #
   # ==========================================#
 
   listings_service_db:
@@ -141,132 +141,46 @@ services:
       - 0.0.0.0:7200:3306
       
   # ==========================================#
-  #  services/users                           #
-  # ==========================================#
-
-  # auth_service:
-  #   container_name: auth_service
-  #   image: danydodson/auth_service
-  #   build:
-  #     context: .
-  #     dockerfile: 'Dockerfile'
-  #   env_file: ./gateway/passport/.env
-  #   environment:
-  #     - MONGO_HOSTNAME=auth_data
-  #     - MONGO_USERNAME=$MONGO_USERNAME
-  #     - MONGO_PASSWORD=$MONGO_PASSWORD
-  #     - MONGO_DB=$MONGO_AUTH_DB
-  #   volumes:
-  #     - /usr/src/app/node_modules
-  #     - ./gateway/passport:/usr/src/app
-  #   ports:
-  #     - '80:5000'
-  #   depends_on:
-  #     - auth_data
-  #   command: ./wait-for.sh auth_data:27017 -- /home/node/app/node_modules/.bin/nodemon src/index.js
-
-  # ==========================================#
   #  gateway/passport                         #
   # ==========================================#
 
-  # auth_data:
-  #   container_name: auth_data
-  #   image: mongo
-  #   env_file: ./gateway/passport/.env
-  #   environment:
-  #     - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-  #     - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
-  #   volumes:
-  #     - auth_db_vol:/data/db
-  #   ports:
-  #     - '27018:27018'
-  #   restart: unless-stopped
-  
-  # ==========================================#
-  #  services/users/api                       #
-  # ==========================================#
-
-  # users_service:
-  #   container_name: users_service
-  #   build: ./services/users/api
-  #   env_file: ./services/users/api/.env
-  #   environment:
-  #     - MONGO_HOSTNAME=users_data
-  #     - MONGO_USERNAME=$MONGO_USERNAME
-  #     - MONGO_PASSWORD=$MONGO_PASSWORD
-  #     - MONGO_DB=$MONGO_USERS_DB
-  #   volumes: 
-  #     - /usr/src/app/node_modules
-  #     - ./services/users/api:/usr/src/app
-  #   ports:
-  #     - 7000:7000
-  #   logging:
-  #     options:
-  #       max-size: '4m'
-  #       max-file: '10'
-  #   depends_on:
-  #     - users_data
-  #   restart: unless-stopped
+  auth_service:
+    container_name: auth_service
+    image: danydodson/auth_service
+    build:
+      context: .
+      dockerfile: 'Dockerfile'
+    env_file: ./gateway/passport/.env
+    environment:
+      - MONGO_HOSTNAME=auth_data
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_DB=$MONGO_AUTH_DB
+    volumes:
+      - /usr/src/app/node_modules
+      - ./gateway/passport:/usr/src/app
+    ports:
+      - '80:5000'
+    depends_on:
+      - auth_data
+    command: ./wait-for.sh auth_data:27017 -- /home/node/app/node_modules/.bin/nodemon src/index.js
 
   # ==========================================#
-  # services/users/db                         #
+  #  gateway/passport:data                    #
   # ==========================================#
 
-  # users_data:
-  #   container_name: users_data
-  #   image: mongo
-  #   ports:
-  #     - 27107:27107
-  #   env_file: ./services/users/api/.env
-  #   environment:
-  #     - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-  #     - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
-  #   volumes:
-  #     - users_db_vol:/data/db
-  #   restart: unless-stopped
-
-  # ==========================================#
-  #  services/gallery/api                     #
-  # ==========================================#
-
-  # gallery_service:
-  #   container_name: gallery_service
-  #   build: ./services/gallery/api
-  #   env_file: ./services/gallery/api/.env
-  #   volumes:
-  #     - /usr/src/app/node_modules
-  #     - ./services/users/api:/usr/src/app
-  #   environment:
-  #     - MONGO_HOSTNAME=gallery_data
-  #     - MONGO_USERNAME=$MONGO_USERNAME
-  #     - MONGO_PASSWORD=$MONGO_PASSWORD
-  #     - MONGO_DB=$MONGO_GALLERY_DB
-  #   ports:
-  #     - 7000:7000
-  #   logging:
-  #     options:
-  #       max-size: '4m'
-  #       max-file: '10'
-  #   depends_on:
-  #     - gallery_data
-  #   restart: unless-stopped
-
-  # ==========================================#
-  # services/gallery/db                       #
-  # ==========================================#
-
-  # gallery_data:
-  #   container_name: gallery_data
-  #   image: mongo
-  #   env_file: ./services/gallery/api/.env
-  #   environment:
-  #     - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-  #     - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
-  #   volumes:
-  #     - gallery_db_vol:/data/db
-  #   ports:
-  #     - 27107:27107
-  #   restart: unless-stopped
+  auth_data:
+    container_name: auth_data
+    image: mongo
+    env_file: ./gateway/passport/.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:
+      - auth_db_vol:/data/db
+    ports:
+      - '27018:27018'
+    restart: unless-stopped
 
   # ==========================================#
   # subscribers/rabbitmq                      #
@@ -287,29 +201,6 @@ services:
   #     - ./subscribers/rabbitmq/etc/:/etc/rabbitmq/
   #     - ./subscribers/rabbitmq/data/:/var/lib/rabbitmq/
   #     - ./subscribers/rabbitmq/logs/:/var/log/rabbitmq/
-      
-  # ==========================================#
-  #  services/mongo_express                   #
-  # ==========================================#
-
-  # mongo_express:
-  #   image: mongo-express
-  #   container_name: mongo_express
-  #   ports:
-  #     - '8081:8081'
-  #   volumes:
-  #     - ./.docker/mongo-express/docker-entrypoint.sh:/docker-entrypoint.sh
-  #   env_file: ./services/users/api/.env
-  #   environment:
-  #     ME_CONFIG_MONGODB_SERVER: mongodb
-  #     ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-  #     ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-  #     ME_CONFIG_BASICAUTH_USERNAME: ${ME_CONFIG_BASICAUTH_USERNAME}
-  #     ME_CONFIG_BASICAUTH_PASSWORD: ${ME_CONFIG_BASICAUTH_PASSWORD}
-    # depends_on:
-      # - auth_service
-      # - users_service
-      # - gallery_service
 
   # ==========================================#
   #  services/grafana                         #
@@ -328,7 +219,7 @@ services:
   #   restart: always
   
   # ==========================================#
-  #  utilities/proxy_tunnel                   #
+  #  utilities/tunnel                         #
   # ==========================================#
 
   # proxy_tunnel:

@@ -11,11 +11,9 @@ const AccountDetails = () => {
 
   if (session) return <Account />
 
-  return isSigningUp ? (
-    <SignUp onChangeToLogin={() => setIsSigningUp(false)} />
-  ) : (
-      <Login onChangeToSignUp={() => setIsSigningUp(true)} />
-    )
+  return isSigningUp
+    ? (<SignUp onChangeToLogin={() => setIsSigningUp(false)} />)
+    : (<Login onChangeToSignUp={() => setIsSigningUp(true)} />)
 }
 
 export default AccountDetails

@@ -5,13 +5,12 @@ import express from 'express'
 
 import resolvers from '#root/graphql/resolvers'
 import typeDefs from '#root/graphql/typeDefs'
-// import accessEnv from '#root/helpers/accessEnv'
+import accessEnv from '#root/helpers/accessEnv'
 
 import formatGraphQLErrors from './formatGraphQLErrors'
 import injectSession from './injectSession'
 
-// const PORT = accessEnv('PORT', 7000)
-const PORT = 7000
+const PORT = accessEnv('PORT', 7000)
 
 const apolloServer = new ApolloServer({
   context: a => a,
@@ -36,5 +35,5 @@ app.use(injectSession)
 apolloServer.applyMiddleware({ app, cors: false, path: '/graphql' })
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.info(`API gateway listening on ${PORT}`)
+  console.info(`[GATEWAY_CLIENT] is listening on port: ${PORT}`)
 })

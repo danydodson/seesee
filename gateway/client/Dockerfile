@@ -1,14 +1,14 @@
-FROM node:12
-
-# RUN mkdir -p /usr/src/app/node_modules && chown -R node:node /usr/src/app
+FROM node:14
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY package.json .
 
 RUN yarn
 
-# RUN yarn run build
+COPY . .
+
+RUN yarn run build
 
 EXPOSE 3000
 

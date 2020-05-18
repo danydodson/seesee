@@ -1,9 +1,10 @@
 import { Sequelize } from 'sequelize'
 
-// import accessEnv from '#root/helpers/accessEnv'
+import accessEnv from '#root/helpers/accessEnv'
 
-// const dbURI = accessEnv('DB_URI')
-const dbURI = 'users_service_db'
+const dbURI = accessEnv('DB_URI')
+
+console.log(`[DB_URI] ${dbURI}`)
 
 const sequelize = new Sequelize(dbURI, {
   dialectOptions: {

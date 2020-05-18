@@ -10,7 +10,7 @@ fi
 
 echo "[BUILD] building and lifting..."
 docker-compose -f ../../docker-compose.yml build --no-cache
-docker-compose -f ../../docker-compose.yml up
+docker-compose -f ../../docker-compose.yml up -d
 
 # echo "[BUILD] Building users service db..."
 # docker-compose -f ../../docker-compose.yml up users_service_db

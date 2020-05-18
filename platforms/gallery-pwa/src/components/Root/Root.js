@@ -21,11 +21,11 @@ const query = gql`
   }
 `
 
+// width: 80rem;
 const Container = styled.div`
   display: flex;
   flex-flow: row nowrap;
   margin: 0 auto;
-  width: 80rem;
 `
 
 const Content = styled.div`
@@ -33,9 +33,9 @@ const Content = styled.div`
   margin-right: 1rem;
 `
 
+// width: 10rem;
 const Sidebar = styled.div`
   flex: 0 auto;
-  width: 10rem;
 `
 
 const Wrapper = styled.div`

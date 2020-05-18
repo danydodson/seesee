@@ -1,16 +1,33 @@
 {
-  "codedeploy.region": "us-east-1",
+  // 
   "codedeploy.applicationName": "seesee",
+  "codedeploy.region": "us-east-1",
   "codedeploy.isApplicationWorkspace": true,
+  // 
   "sync-rsync.sites": [
     {
       "name": "seesee",
-      "deleteFiles": false,
       "upOnly": true,
+      "deleteFiles": true,
       "localPath": "/home/dany/projects/github/seesee/",
       "remotePath": "ubuntu@34.234.108.25:/home/ubuntu/seesee",
-      "exclude": ["**/node_modules", "**/build", "**/dist", ".git", ".vscode"],
+      // "include": [],
+      "exclude": [
+        "**/.git",
+        "**/.vscode",
+        "**/.cache",
+        "**/dist",
+        "**/build",
+        "**/utilities/aws",
+        "**/utilities/boulder",
+        "**/utilities/lightsail",
+        "**/utilities/make",
+        "**/utilities/release",
+        "**/docker-compose.test.yml",
+        "**/node_modules",
+      ],
     },
   ],
+  // 
   "favorites.storageFilePath": "../../working/.favorites.json",
 }

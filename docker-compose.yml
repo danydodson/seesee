@@ -75,7 +75,6 @@ services:
       # - LETSENCRYPT_EMAIL=dany@dany.codes
       - USERS_SERVICE_URI=http://users_service:7101
       - LISTINGS_SERVICE_URI=http://listings_service:7100
-      # - ./gateway/client:/usr/src/app
     ports:
       - 7000:7000
     depends_on:
@@ -94,8 +93,6 @@ services:
       dockerfile: Dockerfile
     environment:
       - DB_URI=mysql://root:password@users_service_db/db?charset=UTF8
-    # volumes:
-    #   - ./services/users:/usr/src/app
     ports:
       - 7101:7101
     depends_on:
@@ -125,8 +122,6 @@ services:
       dockerfile: Dockerfile
     environment:
       - DB_URI=mysql://root:password@listings_service_db/db?charset=UTF8
-    # volumes:
-    #   - ./services/listings-service:/app
     ports:
       - 7100:7100
     depends_on:

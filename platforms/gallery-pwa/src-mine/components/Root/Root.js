@@ -1,13 +1,13 @@
-import gql from "graphql-tag"
-import React, { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
-import styled from "styled-components"
+import gql from 'graphql-tag'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import styled from 'styled-components'
 
-import graphqlClient from "#root/api/graphqlClient"
-import { setSession } from "#root/store/ducks/session"
+import graphqlClient from '#root/api/graphqlClient'
+import { setSession } from '#root/store/ducks/session'
 
-import AccountDetails from "./AccountDetails"
-import Listings from "./Listings"
+import AccountDetails from './AccountDetails'
+import Listings from './Listings'
 
 const query = gql`
   {
@@ -58,7 +58,7 @@ const Root = () => {
     })
   }, [])
 
-  if (!initialised) return "Loading..."
+  if (!initialised) return 'Loading...'
 
   return (
     <Wrapper>

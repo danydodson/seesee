@@ -1,6 +1,6 @@
-import { combineReducers, createStore } from "redux"
+import { combineReducers, createStore } from 'redux'
 
-import * as ducks from "./ducks"
+import * as ducks from './ducks'
 
 const reducers = combineReducers(ducks)
 

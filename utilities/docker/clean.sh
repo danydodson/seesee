@@ -21,6 +21,11 @@ then
     #
     rm -rf ../../gateway/client/node_modules && \
     rm -rf ../../gateway/client/dist && \
+    # 
+    rm -rf ../../platforms/gallery-pwa/node_modules && \
+    rm -rf ../../platforms/gallery-pwa/dist && \
+    rm -rf ../../platforms/gallery-pwa/.cache && \
+    rm -rf ../../platforms/gallery-pwa/.yarn.lock
     #
     # rm -rf ../gateway/passport/node_modules && \
     # rm -rf ../gateway/passport/build && \

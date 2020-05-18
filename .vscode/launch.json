@@ -4,7 +4,7 @@
     {
       "name": "launch users api",
       "request": "launch",
-      "program": "${workspaceFolder}/services/users/api/build/index.js",
+      "program": "${workspaceFolder}/services/users/dist/index.js",
       "skipFiles": ["<node_internals>/**"],
       "type": "pwa-node"
     },

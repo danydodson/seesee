@@ -1,4 +1,3 @@
-// import bodyParser from 'body-parser'
 import cors from 'cors'
 import express from 'express'
 
@@ -11,7 +10,6 @@ const PORT = accessEnv('PORT', 7100)
 const app = express()
 
 app.use(express.json())
-// app.use(bodyParser.json())
 
 app.use(
   cors({

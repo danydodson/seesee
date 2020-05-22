@@ -1,5 +1,5 @@
 
-#!/bin/sh
+#!/usr/bin/zsh
 
 push=true
 

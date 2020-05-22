@@ -1,3 +1,4 @@
+
 #!/bin/sh
 
 if [ ! -z "(docker networks ls -f name=services_network)" ]

@@ -1,3 +1,4 @@
+
 #!/usr/bin/zsh
 
 up=true

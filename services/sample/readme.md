@@ -3,7 +3,7 @@
 
 ## Generate your key with the openssl command:
 
-sudo openssl dhparam -out /home/ubuntu/seesee/subscribers/certbot/dhparam-2048.pem 2048
+sudo openssl dhparam -out /home/ubuntu/seesee/certs/dhparam/dhparam-2048.pem 2048
 
 
 ## Then relaunch nginx_proxy

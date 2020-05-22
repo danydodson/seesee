@@ -1,32 +1,19 @@
 {
-  // seesee lightsail rsync
-  "sync-rsync.sites": [
-    {
-      "name": "seesee",
-      "upOnly": true,
-      "localPath": "/home/dany/projects/github/seesee/",
-      "remotePath": "ubuntu@34.234.108.25:/home/ubuntu/seesee",
-      "exclude": [
-        "**/.git",
-        "**/.vscode",
-        "**/.cache",
-        "**/dist",
-        "**/build",
-        "**/utilities/aws",
-        "**/utilities/boulder",
-        "**/utilities/lightsail",
-        "**/utilities/make",
-        "**/utilities/release",
-        "**/docker-compose.test.yml",
-        "**/node_modules",
-        "**/dhparam"
-      ],
-    },
-  ],
   // aws code deploy
   "codedeploy.applicationName": "seesee",
   "codedeploy.region": "us-east-1",
   "codedeploy.isApplicationWorkspace": true,
   // favorites storage location
   "favorites.storageFilePath": "../../working/.favorites.json",
+  // seesee lightsail rsync
+  "sync-rsync.sites": [
+    {
+      "name": "seesee",
+      "upOnly": true,
+      // "deleteFiles": true,
+      "localPath": "/home/dany/projects/github/seesee/",
+      "remotePath": "ubuntu@34.234.108.25:/home/ubuntu/seesee",
+      "exclude": ["**/.git", "**/.vscode", "**/.cache", "**/dist", "**/build", "**/utilities/aws", "**/utilities/boulder", "**/utilities/lightsail", "**/utilities/make", "**/utilities/release", "**/docker-compose.test.yml", "**/node_modules"],
+    },
+  ],
 }

@@ -2,6 +2,20 @@ version: '3.8'
 services:
 
   # ==========================================#
+  #  services/sample                          #
+  # ==========================================#
+
+  node_sample:
+    build:
+      context: ./services/sample/
+      dockerfile: Dockerfile
+    image: node_sample
+    container_name: node_sample
+    restart: unless-stopped
+    networks:
+      - app_network
+
+  # ==========================================#
   #  nginx_proxy                              #
   # ==========================================#
   
@@ -14,7 +28,7 @@ services:
       - 443:443
     volumes:
       - web_root:/var/www/html
-      - ./services/nginx/nginx.conf:/etc/nginx/conf.d
+      - ./services/nginx/:/etc/nginx/conf.d
       - certbot_etc:/etc/letsencrypt
       - certbot_var:/var/lib/letsencrypt
       - dhparam:/etc/ssl/certs
@@ -37,20 +51,6 @@ services:
     depends_on:
       - nginx_proxy
     command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --force-renewal -d seesee.space  -d www.seesee.space
-
-  # ==========================================#
-  #  services/node-sample                     #
-  # ==========================================#
-
-  node_sample:
-    build:
-      context: ./services/node-sample/
-      dockerfile: Dockerfile
-    image: node_sample
-    container_name: node_sample
-    restart: unless-stopped
-    networks:
-      - app_network
 
 
  # ==========================================#
@@ -110,6 +110,53 @@ services:
       - MYSQL_DATABASE=db
     ports:
       - 0.0.0.0:7200:3306
+
+  # rabbitmq:
+  #   container_name: rabbitmq
+  #   image: rabbitmq:3-management-alpine
+  #   ports:
+  #     - 5672:5672
+  #     - 15672:15672
+  #   env_file: ./subscribers/rabbitmq/.env
+  #   environment:
+  #     RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE}
+  #     RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+  #     RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+  #   volumes:
+  #     - ./subscribers/rabbitmq/etc/:/etc/rabbitmq/
+  #     - ./subscribers/rabbitmq/data/:/var/lib/rabbitmq/
+  #     - ./subscribers/rabbitmq/logs/:/var/log/rabbitmq/
+
+  # ==========================================#
+  #  services/grafana                         #
+  # ==========================================#
+
+  # grafana:
+  #   container_name: grafana
+  #   image: grafana/grafana
+  #   expose:
+  #     - 3000
+  #   environment:
+  #     - VIRTUAL_HOST=graf.seesee.space
+  #     - VIRTUAL_PORT=3000
+  #     - LETSENCRYPT_HOST=graf.seesee.space
+  #     - LETSENCRYPT_EMAIL=dany@dany.codes
+  #   restart: always
+
+  # ==========================================#
+  #  services/tunnel                          #
+  # ==========================================#
+
+  # proxy_tunnel:
+  #   container_name: proxy_tunnel
+  #   image: danydodson/seesee_proxy_tunnel
+  #   ports:
+  #     - '2222:22'
+  #   expose:
+  #     - '2222'
+  #   environment:
+  #     - VIRTUAL_HOST=dev.seesee.space
+  #     - LETSENCRYPT_HOST=dev.seesee.space
       
 # ==========================================#
 #  global volumes                           #
@@ -132,7 +179,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/ubuntu/seesee/subscribers/cerbot-renewel/dhparam/
+      device: /home/ubuntu/seesee/certs/dhparam/
       o: bind
   
 # ==========================================#

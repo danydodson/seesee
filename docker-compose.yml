@@ -144,43 +144,43 @@ services:
   #  gateway/passport                         #
   # ==========================================#
 
-  auth_service:
-    container_name: auth_service
-    image: danydodson/auth_service
-    build:
-      context: .
-      dockerfile: 'Dockerfile'
-    env_file: ./gateway/passport/.env
-    environment:
-      - MONGO_HOSTNAME=auth_data
-      - MONGO_USERNAME=$MONGO_USERNAME
-      - MONGO_PASSWORD=$MONGO_PASSWORD
-      - MONGO_DB=$MONGO_AUTH_DB
-    volumes:
-      - /usr/src/app/node_modules
-      - ./gateway/passport:/usr/src/app
-    ports:
-      - '80:5000'
-    depends_on:
-      - auth_data
-    command: ./wait-for.sh auth_data:27017 -- /home/node/app/node_modules/.bin/nodemon src/index.js
+  # auth_service:
+  #   container_name: auth_service
+  #   image: danydodson/auth_service
+  #   build:
+  #     context: .
+  #     dockerfile: 'Dockerfile'
+  #   env_file: ./gateway/passport/.env
+  #   environment:
+  #     - MONGO_HOSTNAME=auth_data
+  #     - MONGO_USERNAME=$MONGO_USERNAME
+  #     - MONGO_PASSWORD=$MONGO_PASSWORD
+  #     - MONGO_DB=$MONGO_AUTH_DB
+  #   volumes:
+  #     - /usr/src/app/node_modules
+  #     - ./gateway/passport:/usr/src/app
+  #   ports:
+  #     - '80:5000'
+  #   depends_on:
+  #     - auth_data
+  #   command: ./wait-for.sh auth_data:27017 -- /home/node/app/node_modules/.bin/nodemon src/index.js
 
   # ==========================================#
   #  gateway/passport:data                    #
   # ==========================================#
 
-  auth_data:
-    container_name: auth_data
-    image: mongo
-    env_file: ./gateway/passport/.env
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
-    volumes:
-      - auth_db_vol:/data/db
-    ports:
-      - '27018:27018'
-    restart: unless-stopped
+  # auth_data:
+  #   container_name: auth_data
+  #   image: mongo
+  #   env_file: ./gateway/passport/.env
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+  #     - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+  #   volumes:
+  #     - auth_db_vol:/data/db
+  #   ports:
+  #     - '27018:27018'
+  #   restart: unless-stopped
 
   # ==========================================#
   # subscribers/rabbitmq                      #

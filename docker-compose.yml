@@ -2,19 +2,19 @@ version: '3.8'
 services:
 
   # ==========================================#
-  #  webserver                                #
+  #  nginx_proxy                              #
   # ==========================================#
   
-  webserver:
+  nginx_proxy:
     image: nginx:mainline-alpine
-    container_name: webserver
+    container_name: nginx_proxy
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
     volumes:
       - web_root:/var/www/html
-      - ./services/node-sample/nginx:/etc/nginx/conf.d
+      - ./services/nginx/nginx.conf:/etc/nginx/conf.d
       - certbot_etc:/etc/letsencrypt
       - certbot_var:/var/lib/letsencrypt
       - dhparam:/etc/ssl/certs
@@ -23,6 +23,21 @@ services:
     networks:
       - app_network
       
+  # ==========================================#
+  #  certbot                                  #
+  # ==========================================#
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot_etc:/etc/letsencrypt
+      - certbot_var:/var/lib/letsencrypt
+      - web_root:/var/www/html
+    depends_on:
+      - nginx_proxy
+    command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --force-renewal -d seesee.space  -d www.seesee.space
+
   # ==========================================#
   #  services/node-sample                     #
   # ==========================================#
@@ -37,20 +52,64 @@ services:
     networks:
       - app_network
 
-  # ==========================================#
-  #  certbot                                  #
+
+ # ==========================================#
+  #  services/users                           #
   # ==========================================#
 
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - certbot_etc:/etc/letsencrypt
-      - certbot_var:/var/lib/letsencrypt
-      - web_root:/var/www/html
+  users_service:
+    container_name: users_service
+    build:
+      context: ./services/users/
+      dockerfile: Dockerfile
+    environment:
+      - DB_URI=mysql://root:password@users_service_db/db?charset=UTF8
+    # ports:
+    #   - 7101:7101
     depends_on:
-      - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --force-renewal -d seesee.space  -d www.seesee.space
+      - users_service_db
+
+  # ==========================================#
+  #  services/users:data                      #
+  # ==========================================#
+
+  users_service_db:
+    container_name: users_service_db
+    image: mysql:5.7.20
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=db
+    ports:
+      - 0.0.0.0:7201:3306
+
+  # ==========================================#
+  #  services/listings                        #
+  # ==========================================#
+
+  listings_service:
+    container_name: listings_service
+    build:
+      context: ./services/listings/
+      dockerfile: Dockerfile
+    environment:
+      - DB_URI=mysql://root:password@listings_service_db/db?charset=UTF8
+    # ports:
+    #   - 7100:7100
+    depends_on:
+      - listings_service_db
+
+  # ==========================================#
+  #  services/listings:data                   #
+  # ==========================================#
+
+  listings_service_db:
+    container_name: listings_service_db
+    image: mysql:5.7.20
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=db
+    ports:
+      - 0.0.0.0:7200:3306
       
 # ==========================================#
 #  global volumes                           #
@@ -66,14 +125,14 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/ubuntu/seesee/services/node-sample/views/
+      device: /home/ubuntu/seesee/services/sample/views/
       o: bind
 
   dhparam:
     driver: local
     driver_opts:
       type: none
-      device: /home/ubuntu/seesee/services/node-sample/dhparam/
+      device: /home/ubuntu/seesee/subscribers/cerbot-renewel/dhparam/
       o: bind
   
 # ==========================================#

@@ -12,7 +12,7 @@ RUN yarn
 
 COPY --chown=node:node . .
 
-EXPOSE 7101
+EXPOSE 7100
 
 CMD yarn watch
 # ===============================================================================

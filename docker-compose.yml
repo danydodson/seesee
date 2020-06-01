@@ -5,26 +5,26 @@ services:
   #  gateway/client                           #
   # ==========================================#
 
-  gateway_client:
-    container_name: gateway_client
-    build:
-      context: ./gateway/clieny/
-      dockerfile: Dockerfile
-    image: gateway_client
-    restart: unless-stopped
-    networks:
-      - app_network
+  # gateway_client:
+  #   container_name: gateway_client
+  #   build:
+  #     context: ./gateway/clieny/
+  #     dockerfile: Dockerfile
+  #   image: gateway_client
+  #   restart: unless-stopped
+  #   networks:
+  #     - app_network
 
   # ==========================================#
-  #  services/sharks                          #
+  #  services/sample                          #
   # ==========================================#
 
-  sharks_service:
-    container_name: sharks_service
+  sample_service:
+    container_name: sample_service
     build:
-      context: ./services/sharks/
+      context: ./services/sample/
       dockerfile: Dockerfile
-    image: sharks_service
+    image: sample_service
     restart: unless-stopped
     networks:
       - app_network
@@ -106,14 +106,13 @@ services:
       # - "443:443"
     volumes:
       - web_root:/var/www/html
-      - ./services/nginx/web/nginx.conf:/etc/nginx/conf.d
+      - ./services/nginx/conf.d:/etc/nginx/conf.d
       - certbot_etc:/etc/letsencrypt
       - certbot_var:/var/lib/letsencrypt
       # - dhparam:/etc/ssl/certs
     depends_on:
-      - gateway_client
-      - sharks_service
-      - users_service
+      - sample_service
+      # - users_service
       # - listings_service
     networks:
       - app_network
@@ -131,8 +130,8 @@ services:
       - web_root:/var/www/html
     depends_on:
       - nginx_web
-    # command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --force-renewal -d seesee.space  -d www.seesee.space
     command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --staging -d seesee.space  -d www.seesee.space
+    # command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --force-renewal -d seesee.space  -d www.seesee.space
 
   # rabbitmq:
   #   container_name: rabbitmq
@@ -195,8 +194,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/ubuntu/seesee/platforms/gallery-pwa/dist/
-      # device: /home/ubuntu/seesee/services/sample/views/
+      device: /home/ubuntu/seesee/services/sample/views/
       o: bind
 
   # dhparam:

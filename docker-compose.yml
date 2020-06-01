@@ -19,55 +19,63 @@ services:
   #  services/users                           #
   # ==========================================#
 
-  # users_service:
-  #   container_name: users_service
-  #   build:
-  #     context: ./services/users/
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     - DB_URI=mysql://root:password@users_service_db/db?charset=UTF8
-  #   depends_on:
-  #     - users_service_db
+  users_service:
+    container_name: users_service
+    build:
+      context: ./services/users/
+      dockerfile: Dockerfile
+    environment:
+      - DB_URI=mysql://root:password@users_service_db/db?charset=UTF8
+    depends_on:
+      - users_service_db
+    networks:
+      - app_network
 
   # ==========================================#
   #  services/users:data                      #
   # ==========================================#
 
-  # users_service_db:
-  #   container_name: users_service_db
-  #   image: mysql:5.7.20
-  #   environment:
-  #     - MYSQL_ROOT_PASSWORD=password
-  #     - MYSQL_DATABASE=db
-  #   ports:
-  #     - "7201:3306"
+  users_service_db:
+    container_name: users_service_db
+    image: mysql:5.7.20
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=db
+    ports:
+      - "7201:3306"
+    networks:
+      - app_network
 
   # ==========================================#
   #  services/listings                        #
   # ==========================================#
 
-  # listings_service:
-  #   container_name: listings_service
-  #   build:
-  #     context: ./services/listings/
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     - DB_URI=mysql://root:password@listings_service_db/db?charset=UTF8
-  #   depends_on:
-  #     - listings_service_db
+  listings_service:
+    container_name: listings_service
+    build:
+      context: ./services/listings/
+      dockerfile: Dockerfile
+    environment:
+      - DB_URI=mysql://root:password@listings_service_db/db?charset=UTF8
+    depends_on:
+      - listings_service_db
+    networks:
+      - app_network
 
   # ==========================================#
   #  services/listings:data                   #
   # ==========================================#
 
-  # listings_service_db:
-  #   container_name: listings_service_db
-  #   image: mysql:5.7.20
-  #   environment:
-  #     - MYSQL_ROOT_PASSWORD=password
-  #     - MYSQL_DATABASE=db
-  #   ports:
-  #     - "7200:3306"
+  listings_service_db:
+    container_name: listings_service_db
+    image: mysql:5.7.20
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=db
+    ports:
+      - "7200:3306"
+    networks:
+      - app_network
 
   # ==========================================#
   #  nginx_proxy                              #

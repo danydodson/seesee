@@ -104,8 +104,8 @@ services:
       - web_root:/var/www/html
     depends_on:
       - nginx_proxy
-    # command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --staging -d seesee.space  -d www.seesee.space
     command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --force-renewal -d seesee.space  -d www.seesee.space
+    # command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --staging -d seesee.space  -d www.seesee.space
 
   # rabbitmq:
   #   container_name: rabbitmq
@@ -175,7 +175,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/ubuntu/seesee/services/nginx/certbot/dhparam/
+      device: /home/ubuntu/seesee/utilities/dhparam/
       o: bind
   
 # ==========================================#

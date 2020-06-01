@@ -2,15 +2,29 @@ version: '3.8'
 services:
 
   # ==========================================#
-  #  services/sample                          #
+  #  gateway/client                           #
   # ==========================================#
 
-  node_sample:
+  gateway_client:
+    container_name: gateway_client
     build:
-      context: ./services/sample/
+      context: ./gateway/clieny/
       dockerfile: Dockerfile
-    image: node_sample
-    container_name: node_sample
+    image: gateway_client
+    restart: unless-stopped
+    networks:
+      - app_network
+
+  # ==========================================#
+  #  services/sharks                          #
+  # ==========================================#
+
+  sharks_service:
+    container_name: sharks_service
+    build:
+      context: ./services/sharks/
+      dockerfile: Dockerfile
+    image: sharks_service
     restart: unless-stopped
     networks:
       - app_network
@@ -24,6 +38,7 @@ services:
     build:
       context: ./services/users/
       dockerfile: Dockerfile
+    restart: unless-stopped
     environment:
       - DB_URI=mysql://root:password@users_service_db/db?charset=UTF8
     depends_on:
@@ -55,6 +70,7 @@ services:
     build:
       context: ./services/listings/
       dockerfile: Dockerfile
+    restart: unless-stopped
     environment:
       - DB_URI=mysql://root:password@listings_service_db/db?charset=UTF8
     depends_on:
@@ -81,21 +97,24 @@ services:
   #  nginx_proxy                              #
   # ==========================================#
   
-  nginx_proxy:
+  nginx_web:
     image: nginx:mainline-alpine
-    container_name: nginx_proxy
+    container_name: nginx_web
     restart: unless-stopped
     ports:
       - "80:80"
-      - "443:443"
+      # - "443:443"
     volumes:
       - web_root:/var/www/html
-      - ./services/nginx:/etc/nginx/conf.d
+      - ./services/nginx/web/nginx.conf:/etc/nginx/conf.d
       - certbot_etc:/etc/letsencrypt
       - certbot_var:/var/lib/letsencrypt
-      - dhparam:/etc/ssl/certs
+      # - dhparam:/etc/ssl/certs
     depends_on:
-      - node_sample
+      - gateway_client
+      - sharks_service
+      - users_service
+      # - listings_service
     networks:
       - app_network
       
@@ -111,9 +130,9 @@ services:
       - certbot_var:/var/lib/letsencrypt
       - web_root:/var/www/html
     depends_on:
-      - nginx_proxy
-    command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --force-renewal -d seesee.space  -d www.seesee.space
-    # command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --staging -d seesee.space  -d www.seesee.space
+      - nginx_web
+    # command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --force-renewal -d seesee.space  -d www.seesee.space
+    command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --staging -d seesee.space  -d www.seesee.space
 
   # rabbitmq:
   #   container_name: rabbitmq
@@ -176,15 +195,16 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/ubuntu/seesee/services/sample/views/
+      device: /home/ubuntu/seesee/platforms/gallery-pwa/dist/
+      # device: /home/ubuntu/seesee/services/sample/views/
       o: bind
 
-  dhparam:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/ubuntu/seesee/utilities/dhparam/
-      o: bind
+  # dhparam:
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     device: /home/ubuntu/seesee/utilities/dhparam/
+  #     o: bind
   
 # ==========================================#
 #  global networks                          #

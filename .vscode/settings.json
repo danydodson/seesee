@@ -19,6 +19,7 @@
         "**/.vscode",
         "**/.cache",
         "**/dist",
+        "**/assets",
         "**/build",
         "**/node_modules",
         "**/docker-compose.test.yml",

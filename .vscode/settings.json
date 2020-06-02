@@ -26,4 +26,14 @@
       ],
     },
   ],
+  // "vsicons.associations.folders": [
+  //   { "icon": "vscode", "extensions": [".vscode"], "filename": true, "format": "svg" },
+  //   { "icon": "src", "extensions": ["gateway"], "filename": true, "format": "svg" },
+  //   { "icon": "docs", "extensions": ["assets"], "filename": true, "format": "svg" },
+  //   { "icon": "src", "extensions": ["services"], "filename": true, "format": "svg" },
+  //   { "icon": "src", "extensions": ["subscribers"], "filename": true, "format": "svg" },
+  //   { "icon": "src", "extensions": ["services"], "filename": true, "format": "svg" },
+  //   { "icon": "src", "extensions": ["platforms"], "filename": true, "format": "svg" },
+  //   { "icon": "config", "extensions": ["utilities"], "filename": true, "format": "svg" },
+  // ],
 }

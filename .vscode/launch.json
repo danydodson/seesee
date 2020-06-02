@@ -4,35 +4,35 @@
     // launch the sample service using node
     {
       "name": "Sample API",
+      "type": "pwa-node",
       "request": "launch",
       "program": "${workspaceFolder}/services/sample/dist/index.js",
       "skipFiles": ["<node_internals>/**"],
-      "type": "pwa-node"
     },
     // launch the users service using node
     {
       "name": "Users API",
+      "type": "pwa-node",
       "request": "launch",
       "program": "${workspaceFolder}/services/users/dist/index.js",
       "skipFiles": ["<node_internals>/**"],
-      "type": "pwa-node"
     },
     // launch the listings service using node
     {
       "name": "Listings API",
+      "type": "pwa-node",
       "request": "launch",
       "program": "${workspaceFolder}/services/listings/dist/index.js",
       "skipFiles": ["<node_internals>/**"],
-      "type": "pwa-node"
     },
-    // 
+    // debug a bash script
     {
-      "name": "Zsh Debug",
+      "name": "Bash Debug",
+      "type": "bashdb",
       "request": "launch",
       "program": "${command:SelectScriptName}",
       "cwd": "${workspaceFolder}",
       "args": [],
-      "type": "zshdb",
     },
   ]
 }

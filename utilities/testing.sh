@@ -1,12 +1,12 @@
 
-#!/usr/bin/zsh
+#!/usr/bin/bash
 
-BOOL=true
 VAR1=1
 VAR2=2
-VAR3=3
 
-if [ $BOOL ] 
+BOOL1=true
+
+if [ $BOOL1 ]
 then
     echo 'the first if statement is true ...'
     echo 'first calculation =' $VAR1 + $VAR2

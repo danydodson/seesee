@@ -30,6 +30,7 @@
       "name": "Bash Debug",
       "type": "bashdb",
       "request": "launch",
+      "terminalKind": "integrated",
       "program": "${command:SelectScriptName}",
       "cwd": "${workspaceFolder}",
       "args": [],

@@ -1,6 +1,18 @@
 {
   "version": "0.2.0",
   "configurations": [
+
+    // launch the pwa
+    {
+      "name": "PWA Platform",
+      "type": "pwa-node",
+      // "type": "node",
+      "request": "launch",
+      // "port": 3000,
+      "program": "${workspaceFolder}/platforms/react/src/index.js",
+      "skipFiles": ["<node_internals>/**"],
+      "trace": true,
+    },
     // launch the sample service using node
     {
       "name": "Sample API",

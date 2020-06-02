@@ -5,29 +5,32 @@ services:
   #  gateway/client                           #
   # ==========================================#
 
-  # gateway_client:
-  #   container_name: gateway_client
-  #   build:
-  #     context: ./gateway/clieny/
-  #     dockerfile: Dockerfile
-  #   image: gateway_client
-  #   restart: unless-stopped
-  #   networks:
-  #     - app_network
+  gateway_client:
+    container_name: gateway_client
+    build:
+      context: ./gateway/client/
+      dockerfile: Dockerfile
+    image: gateway_client
+    restart: unless-stopped
+    depends_on:
+      - users_service
+      - listings_service
+    networks:
+      - app_network
 
   # ==========================================#
   #  services/sample                          #
   # ==========================================#
 
-  sample_service:
-    container_name: sample_service
-    build:
-      context: ./services/sample/
-      dockerfile: Dockerfile
-    image: sample_service
-    restart: unless-stopped
-    networks:
-      - app_network
+  # sample_service:
+  #   container_name: sample_service
+  #   build:
+  #     context: ./services/sample/
+  #     dockerfile: Dockerfile
+  #   image: sample_service
+  #   restart: unless-stopped
+  #   networks:
+  #     - app_network
 
   # ==========================================#
   #  services/users                           #
@@ -97,23 +100,23 @@ services:
   #  nginx_proxy                              #
   # ==========================================#
   
-  nginx_web:
+  nginx_server:
     image: nginx:mainline-alpine
-    container_name: nginx_web
+    container_name: nginx_server
     restart: unless-stopped
     ports:
       - "80:80"
       # - "443:443"
     volumes:
-      - web_root:/var/www/html
+      # - web_root:/var/www/html
       - ./services/nginx/conf.d:/etc/nginx/conf.d
-      - certbot_etc:/etc/letsencrypt
-      - certbot_var:/var/lib/letsencrypt
+      # - certbot_etc:/etc/letsencrypt
+      # - certbot_var:/var/lib/letsencrypt
       # - dhparam:/etc/ssl/certs
     depends_on:
-      - sample_service
-      # - users_service
-      # - listings_service
+      # - sample_service
+      - users_service
+      - listings_service
     networks:
       - app_network
       
@@ -121,49 +124,17 @@ services:
   #  certbot                                  #
   # ==========================================#
 
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - certbot_etc:/etc/letsencrypt
-      - certbot_var:/var/lib/letsencrypt
-      - web_root:/var/www/html
-    depends_on:
-      - nginx_web
-    command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --staging -d seesee.space  -d www.seesee.space
-    # command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --force-renewal -d seesee.space  -d www.seesee.space
-
-  # rabbitmq:
-  #   container_name: rabbitmq
-  #   image: rabbitmq:3-management-alpine
-  #   ports:
-  #     - 5672:5672
-  #     - 15672:15672
-  #   env_file: ./subscribers/rabbitmq/.env
-  #   environment:
-  #     RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE}
-  #     RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
-  #     RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+  # certbot:
+  #   image: certbot/certbot
+  #   container_name: certbot
   #   volumes:
-  #     - ./subscribers/rabbitmq/etc/:/etc/rabbitmq/
-  #     - ./subscribers/rabbitmq/data/:/var/lib/rabbitmq/
-  #     - ./subscribers/rabbitmq/logs/:/var/log/rabbitmq/
-
-  # ==========================================#
-  #  services/grafana                         #
-  # ==========================================#
-
-  # grafana:
-  #   container_name: grafana
-  #   image: grafana/grafana
-  #   expose:
-  #     - 3000
-  #   environment:
-  #     - VIRTUAL_HOST=graf.seesee.space
-  #     - VIRTUAL_PORT=3000
-  #     - LETSENCRYPT_HOST=graf.seesee.space
-  #     - LETSENCRYPT_EMAIL=dany@dany.codes
-  #   restart: always
+  #     - certbot_etc:/etc/letsencrypt
+  #     - certbot_var:/var/lib/letsencrypt
+  #     - web_root:/var/www/html
+  #   depends_on:
+  #     - nginx_server
+  #   command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --staging -d seesee.space  -d www.seesee.space
+    # command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --force-renewal -d seesee.space  -d www.seesee.space
 
   # ==========================================#
   #  services/tunnel                          #
@@ -184,24 +155,23 @@ services:
 #  global volumes                           #
 # ==========================================#
 
-volumes:
-
-  certbot_etc:
+# volumes:
   
-  certbot_var:
+  # certbot_etc:
+  # certbot_var:
 
-  web_root:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/ubuntu/seesee/services/sample/views/
-      o: bind
+  # web_root:
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     device: /home/ubuntu/seesee/services/sample/views/
+  #     o: bind
 
   # dhparam:
   #   driver: local
   #   driver_opts:
   #     type: none
-  #     device: /home/ubuntu/seesee/utilities/dhparam/
+  #     device: /home/ubuntu/seesee/services/nginx/certs
   #     o: bind
   
 # ==========================================#

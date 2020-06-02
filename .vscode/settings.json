@@ -3,10 +3,8 @@
   "codedeploy.applicationName": "seesee",
   "codedeploy.region": "us-east-1",
   "codedeploy.isApplicationWorkspace": true,
-
   // favorites storage location
   "favorites.storageFilePath": "../../working/.favorites.json",
-
   // seesee lightsail rsync
   "sync-rsync.sites": [
     {
@@ -25,15 +23,5 @@
         "**/docker-compose.test.yml",
       ],
     },
-  ],
-  // "vsicons.associations.folders": [
-  //   { "icon": "vscode", "extensions": [".vscode"], "filename": true, "format": "svg" },
-  //   { "icon": "src", "extensions": ["gateway"], "filename": true, "format": "svg" },
-  //   { "icon": "docs", "extensions": ["assets"], "filename": true, "format": "svg" },
-  //   { "icon": "src", "extensions": ["services"], "filename": true, "format": "svg" },
-  //   { "icon": "src", "extensions": ["subscribers"], "filename": true, "format": "svg" },
-  //   { "icon": "src", "extensions": ["services"], "filename": true, "format": "svg" },
-  //   { "icon": "src", "extensions": ["platforms"], "filename": true, "format": "svg" },
-  //   { "icon": "config", "extensions": ["utilities"], "filename": true, "format": "svg" },
-  // ],
+  ]
 }

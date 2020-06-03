@@ -1,21 +1,6 @@
 {
   "version": "0.2.0",
   "configurations": [
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Docker Attach to Node",
-      "remoteRoot": "/home/node/app"
-      // "remoteRoot": "/usr/src/app"
-    },
-    // launch the pwa in chrome
-    {
-      "name": "App in Chrome",
-      "request": "launch",
-      "type": "pwa-chrome",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}/platforms/app"
-    },
     // launch the sample service using node
     {
       "name": "Sample API",

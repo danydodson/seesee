@@ -1,0 +1,45 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "docker start fresh run all",
+      "detail": "clean and restart",
+      "dependsOrder": "sequence",
+      "dependsOn": ["docker compose down", "docker compose build", "docker compose up"],
+      "presentation": { "echo": true, "panel": "shared", "showReuseMessage": true, "clear": false, "reveal": "always", "focus": true },
+      "problemMatcher": [],
+    },
+    {
+      "label": "docker compose down",
+      "type": "shell",
+      "detail": "cleans system",
+      "command": "source ${workspaceFolder}/utilities/docker/clean.sh",
+      "presentation": { "echo": true, "panel": "shared", "showReuseMessage": true, "clear": false, "reveal": "always", "focus": true },
+      "problemMatcher": [],
+    },
+    {
+      "label": "docker compose build",
+      "type": "shell",
+      "detail": "builds image from Dockerfile",
+      "command": "source ${workspaceFolder}/utilities/docker/build.sh",
+      "problemMatcher": [],
+      "presentation": { "echo": true, "panel": "shared", "showReuseMessage": true, "clear": false, "reveal": "always", "focus": true },
+    },
+    {
+      "label": "docker compose up",
+      "type": "shell",
+      "detail": "compose up all containers",
+      "command": "source ${workspaceFolder}/utilities/docker/lift_up.sh",
+      "presentation": { "echo": true, "panel": "shared", "showReuseMessage": true, "clear": false, "reveal": "always", "focus": true },
+      "problemMatcher": [],
+    },
+    {
+      "label": "docker push images",
+      "type": "shell",
+      "detail": "push images to dockerhub",
+      "command": "source ${workspaceFolder}/utilities/docker/push.sh",
+      "presentation": { "echo": true, "panel": "shared", "showReuseMessage": true, "clear": false, "reveal": "always", "focus": true },
+      "problemMatcher": [],
+    },
+  ]
+}

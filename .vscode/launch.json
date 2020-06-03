@@ -1,47 +1,43 @@
 {
   "version": "0.2.0",
   "configurations": [
-
-    // launch the pwa
+    // launch the pwa in chrome
     {
-      "name": "PWA Platform",
-      "type": "pwa-node",
-      // "type": "node",
+      "name": "App in Chrome",
       "request": "launch",
-      // "port": 3000,
-      "program": "${workspaceFolder}/platforms/react/src/index.js",
-      "skipFiles": ["<node_internals>/**"],
-      "trace": true,
+      "type": "pwa-chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}"
     },
     // launch the sample service using node
     {
       "name": "Sample API",
-      "type": "pwa-node",
       "request": "launch",
+      "type": "pwa-node",
       "program": "${workspaceFolder}/services/sample/dist/index.js",
       "skipFiles": ["<node_internals>/**"],
     },
     // launch the users service using node
     {
       "name": "Users API",
-      "type": "pwa-node",
       "request": "launch",
+      "type": "pwa-node",
       "program": "${workspaceFolder}/services/users/dist/index.js",
       "skipFiles": ["<node_internals>/**"],
     },
     // launch the listings service using node
     {
       "name": "Listings API",
-      "type": "pwa-node",
       "request": "launch",
+      "type": "pwa-node",
       "program": "${workspaceFolder}/services/listings/dist/index.js",
       "skipFiles": ["<node_internals>/**"],
     },
     // debug a bash script
     {
       "name": "Bash Debug",
-      "type": "bashdb",
       "request": "launch",
+      "type": "bashdb",
       "terminalKind": "integrated",
       "program": "${command:SelectScriptName}",
       "cwd": "${workspaceFolder}",

@@ -23,5 +23,7 @@
         "**/docker-compose.test.yml",
       ],
     },
-  ]
+  ],
+  // git settings
+  "git.ignoreLimitWarning": true
 }

@@ -5,7 +5,7 @@
   "author": "Dany Dodson",
   "description": "platforms-gallery-pwa",
   "scripts": {
-    "build": "rm -rf build && NODE_ENV=production parcel build src/index.html -d build/output --cache-dir build/cache",
+    "build": "rm -rf build && NODE_ENV=production parcel build src/index.html --out-dir build/output --cache-dir build/cache --no-source-maps",
     "predeploy": "yarn build",
     "deploy": "./deploy.sh",
     "watch": "parcel --port=7001 src/index.html"

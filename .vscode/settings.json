@@ -5,19 +5,33 @@
   "codedeploy.isApplicationWorkspace": true,
   // seesee lightsail rsync
   "sync-rsync.sites": [
-    // {
-    //   "name": "seesee",
-    //   "upOnly": true,
-    //   "localPath": "/home/dany/projects/github/seesee/",
-    //   "remotePath": "ubuntu@34.234.108.25:/home/ubuntu/seesee",
-    //   "exclude": ["**/.git", "**/.vscode", "**/.cache", "**/dist", "**/assets", "**/build", "**/node_modules", "**/docker-compose.test.yml" ],
-    // },
+    {
+      "name": "pwa",
+      "upOnly": true,
+      "localPath": "/home/dany/projects/github/seesee/platforms/pwa/",
+      "remotePath": "ubuntu@34.234.108.25:/home/ubuntu/seesee/pwa",
+      "exclude": ["**/.git", "**/.vscode", "**/.cache", "**/build", "**/node_modules"],
+    },
+    {
+      "name": "development",
+      "upOnly": true,
+      "localPath": "/home/dany/projects/github/seesee/",
+      "remotePath": "ubuntu@34.234.108.25:/home/ubuntu/seesee/development",
+      "exclude": ["**/.git", "**/.vscode", "**/.cache", "**/assets", "**/build", "**/node_modules", "**/pwa", "**/docker-compose.prod.yml", "**/docker-compose.staged.yml"],
+    },
     {
       "name": "staged",
       "upOnly": true,
-      "localPath": "/home/dany/projects/github/seesee/assets/mern/",
-      "remotePath": "ubuntu@34.234.108.25:/home/ubuntu/staged",
-      "exclude": ["**/node_modules"],
+      "localPath": "/home/dany/projects/github/seesee/",
+      "remotePath": "ubuntu@34.234.108.25:/home/ubuntu/seesee/staged",
+      "exclude": ["**/.git", "**/.vscode", "**/.cache", "**/assets", "**/build", "**/node_modules", "**/pwa", "**/docker-compose.dev.yml", "**/docker-compose.prod.yml"],
+    },
+    {
+      "name": "production",
+      "upOnly": true,
+      "localPath": "/home/dany/projects/github/seesee/",
+      "remotePath": "ubuntu@34.234.108.25:/home/ubuntu/seesee/production",
+      "exclude": ["**/.git", "**/.vscode", "**/.cache", "**/assets", "**/build", "**/node_modules", "**/pwa", "**/docker-compose.dev.yml", "**/docker-compose.staged.yml"],
     },
   ],
   // favorites storage location

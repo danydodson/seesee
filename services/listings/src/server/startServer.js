@@ -5,6 +5,7 @@ import accessEnv from '#root/helpers/accessEnv'
 
 import setupRoutes from './routes'
 
+// const PORT = process.env.USERS_SERVICE_PORT || 7100
 const PORT = accessEnv('PORT', 7100)
 
 const app = express()

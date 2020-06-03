@@ -1,60 +1,26 @@
-FROM node:14
+FROM node:14 as builder
 
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
-
 WORKDIR /home/node/app
 
-COPY package.json ./
+COPY package.json /home/node/app
+
+RUN apt-get update && apt-get upgrade \
+  && yarn add node-gyp node-pre-gyp
 
 USER node
 
-RUN yarn install
-# RUN yarn install --production=true
+RUN yarn install --production=true
+COPY --chown=node:node . /home/node/app/
 
-COPY --chown=node:node . .
+FROM node:14
 
-EXPOSE 7101
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+WORKDIR /home/node/app
 
-CMD yarn watch
+COPY --from=builder /usr/src/app /usr/src/app
 
-# ==============================================================================
+USER node
 
-# FROM node:14
-
-# WORKDIR /usr/src/app
-
-# COPY package.json .
-
-# RUN yarn
-
-# COPY . .
-
-# RUN yarn run build
-
-# CMD yarn watch
-
-# ==============================================================================
-
-# FROM node:14
-
-# RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
-
-# WORKDIR /home/node/app
-
-# COPY package*.json .
-
-# RUN yarn
-
-# USER node
-
-# COPY --chown=node:node . .
-
-# RUN yarn run build
-
-# ENV PORT 3001
-
-# EXPOSE 5000
-
-# EXPOSE $PORT
-
+CMD ["yarn", "watch"]
 # CMD yarn watch

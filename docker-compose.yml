@@ -2,206 +2,158 @@ version: '3.8'
 services:
 
   # ==========================================#
-  #  gateway/testing                          #
+  #  gateway/client                           #
   # ==========================================#
 
-  gateway_testing:
-    container_name: gateway_testing
-    build: ./gateway/testing
+  gateway_client:
+    container_name: gateway_client
+    build: ./gateway/client
     restart: always
+    environment:
+      USERS_SERVICE_URI: ${USERS_SERVICE_URI}
+      LISTINGS_SERVICE_URI: ${LISTINGS_SERVICE_URI}
     expose:
-      - ${GATEWAY_TESTING_PORT}
+      - ${GATEWAY_CLIENT_EXPOSE}
+    ports:
+      - '${GATEWAY_CLIENT_PORT}:${GATEWAY_CLIENT_PORT}'
+    depends_on:
+      - users_service
+      - listings_service
     networks:
       - api_network
+
+  # ==========================================#
+  #  services/nginx                           #
+  # ==========================================#
   
-  # ==========================================#
-  #  services/testing                         #
-  # ==========================================#
-
-  testing_service:
-    container_name: testing_service
-    build: ./services/testing
-    restart: always
-    environment:
-      - MONGO_URI=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@${MONGO_URI}
-      - TESTING_SERVICE_PORT=${TESTING_SERVICE_PORT}
-      - NODE_ENV=${NODE_ENV}
-    expose:
-      - ${TESTING_SERVICE_PORT}
-    command: node src/server.js
-    depends_on: 
-      - testing_service_db
-    networks:
-      - api_network
-      # - client_network
-
-  # ==========================================#
-  #  services/testing_db                      #
-  # ==========================================#
-
-  testing_service_db:
-    container_name: testing_service_db
-    image: mongo
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+  nginx_service:
+    container_name: nginx_service
+    build: ./services/nginx
+    restart: unless-stopped
     volumes:
-      - testing_service_data:/data/db
-      - ./services/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      # - ./gateway/client/build:/usr/share/nginx/html
+      - web_root:/usr/share/nginx/html
+      - ./services/nginx/conf.d/default.conf:/etc/nginx/conf.d/nginx.conf
+      # - certbot_etc:/etc/letsencrypt
+      # - certbot_var:/var/lib/letsencrypt
+      # - dhparam:/etc/ssl/certs
+    expose:
+      - ${NGINX_DEFAULT_PORT}
+    ports:
+      - ${NGINX_DEFAULT_PORT}:${NGINX_DEFAULT_PORT}
+      # - ${NGINX_SECURE_PORT}:${NGINX_SECURE_PORT}
     networks:
       - api_network
+
+  # ==========================================#
+  #  services/nginx:certbot                   #
+  # ==========================================#
+
+  # nginx_certbot:
+  #   container_name: nginx_certbot
+  #   image: certbot/certbot
+  #   command: certonly --webroot --webroot-path=/usr/share/nginx/html --email dany@dany.codes --agree-tos --no-eff-email --staging -d seesee.space  -d www.seesee.space
+  #   volumes:
+  #     # - ./gateway/client/build:/usr/share/nginx/html
+  #     - web_root:/usr/share/nginx/html
+  #     - certbot_etc:/etc/letsencrypt
+  #     - certbot_var:/var/lib/letsencrypt
+  #   networks:
+  #     - api_network
 
   # ==========================================#
   #  services/users                           #
   # ==========================================#
-
-  # users_service:
-  #   container_name: users_service
-  #   build:
-  #     context: ./services/users/
-  #     dockerfile: Dockerfile
-  #   restart: unless-stopped
-  #   environment:
-  #     - DB_URI=mysql://root:password@users_service_db/db?charset=UTF8
-  #   depends_on:
-  #     - users_service_db
-  #   networks:
-  #     - api_network
+  
+  users_service:
+    container_name: users_service
+    build: ./services/users
+    restart: unless-stopped
+    # command: babel-watch -L src/index.js
+    environment:
+      DB_URI: ${USERS_SERVICE_DB_URI}
+      NODE_ENV: ${NODE_ENV}
+    expose: 
+      - ${USERS_SERVICE_PORT}
+    depends_on:
+      - users_service_db
+    networks:
+      - api_network
 
   # ==========================================#
-  #  services/users:data                      #
+  #  services/users:db                        #
   # ==========================================#
 
-  # users_service_db:
-  #   container_name: users_service_db
-  #   image: mysql:5.7.20
-  #   environment:
-  #     - MYSQL_ROOT_PASSWORD=password
-  #     - MYSQL_DATABASE=db
-  #   ports:
-  #     - "7201:3306"
-  #   networks:
-  #     - api_network
+  users_service_db:
+    container_name: users_service_db
+    image: mysql:5.7.20
+    environment:
+      MYSQL_ROOT_PASSWORD: ${USERS_SERVICE_DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${USERS_SERVICE_DB_ROOT_DATABASE}
+    ports:
+      - ${USERS_SERVICE_DB_HOST_PORT}:${USERS_SERVICE_DB_CONTAINER_PORT}
+    networks:
+      - api_network
 
   # ==========================================#
   #  services/listings                        #
   # ==========================================#
 
-  # listings_service:
-  #   container_name: listings_service
-  #   build:
-  #     context: ./services/listings/
-  #     dockerfile: Dockerfile
-  #   restart: unless-stopped
-  #   environment:
-  #     - DB_URI=mysql://root:password@listings_service_db/db?charset=UTF8
-  #   depends_on:
-  #     - listings_service_db
-  #   networks:
-  #     - api_network
-
-  # ==========================================#
-  #  services/listings:data                   #
-  # ==========================================#
-
-  # listings_service_db:
-  #   container_name: listings_service_db
-  #   image: mysql:5.7.20
-  #   environment:
-  #     - MYSQL_ROOT_PASSWORD=password
-  #     - MYSQL_DATABASE=db
-  #   ports:
-  #     - "7200:3306"
-  #   networks:
-  #     - api_network
-
-  # ==========================================#
-  #  nginx_proxy                              #
-  # ==========================================#
-  
-  nginx_server:
-    container_name: nginx_server
-    build: ./services/nginx
+  listings_service:
+    container_name: listings_service
+    build: ./services/listings
     restart: unless-stopped
-    ports:
-      - "80:80"
-      # - "443:443"
-    volumes:
-      - web_root:/usr/share/nginx/html
-      - nginx_conf:/etc/nginx/conf.d
-      # - certbot_etc:/etc/letsencrypt
-      # - certbot_var:/var/lib/letsencrypt
-      # - dhparam:/etc/ssl/certs
+    # command: babel-watch -L src/index.js
+    environment:
+      DB_URI: ${LISTINGS_SERVICE_DB_URI}
+      NODE_ENV: ${NODE_ENV}
+    expose: 
+      - ${LISTINGS_SERVICE_PORT}
     depends_on:
-      - testing_service
+      - listings_service_db
     networks:
       - api_network
-      # - client_network
-      
-  # ==========================================#
-  #  certbot                                  #
-  # ==========================================#
-
-  # certbot:
-  #   image: certbot/certbot
-  #   container_name: certbot
-  #   volumes:
-  #     - certbot_etc:/etc/letsencrypt
-  #     - certbot_var:/var/lib/letsencrypt
-  #     - web_root:/var/www/html
-  #   depends_on:
-  #     - nginx_server
-  #   command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --staging -d seesee.space  -d www.seesee.space
-  #   # command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --force-renewal -d seesee.space  -d www.seesee.space
 
   # ==========================================#
-  #  services/tunnel                          #
+  #  services/listings:db                     #
   # ==========================================#
 
-  # proxy_tunnel:
-  #   container_name: proxy_tunnel
-  #   image: danydodson/seesee_proxy_tunnel
-  #   ports:
-  #     - '2222:22'
-  #   expose:
-  #     - '2222'
-  #   environment:
-  #     - VIRTUAL_HOST=dev.seesee.space
-  #     - LETSENCRYPT_HOST=dev.seesee.space
+  listings_service_db:
+    container_name: listings_service_db
+    image: mysql:5.7.20
+    environment:
+      MYSQL_ROOT_PASSWORD: ${LISTINGS_SERVICE_DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${LISTINGS_SERVICE_DB_ROOT_DATABASE}
+    ports:
+      - ${LISTINGS_SERVICE_DB_HOST_PORT}:${LISTINGS_SERVICE_DB_CONTAINER_PORT}
+    networks:
+      - api_network
       
 # ==========================================#
 #  global volumes                           #
 # ==========================================#
 
 volumes:
-  
-  # certbot_var:
-  # certbot_etc:
 
-  testing_service_data:
+  # certbot_etc:
+  # certbot_var:
 
   web_root:
     driver: local
     driver_opts:
       type: none
-      device: /home/dany/projects/github/seesee/gateway/testing/build/
-      o: bind
-
-  nginx_conf:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/dany/projects/github/seesee/services/nginx/conf.d/
+      device: /home/dany/projects/github/seesee/gateway/client/build
+      # device: /home/ubuntu/seesee/gateway/client/build
       o: bind
 
   # dhparam:
   #   driver: local
   #   driver_opts:
   #     type: none
-  #     device: /home/ubuntu/seesee/services/nginx/certs
+  #     device: /home/dany/projects/github/seesee/services/nginx/certs
+  #     # device: /home/ubuntu/seesee/services/nginx/certs
   #     o: bind
-  
+
 # ==========================================#
 #  global networks                          #
 # ==========================================#
@@ -209,5 +161,3 @@ volumes:
 networks:
   api_network:
     driver: bridge
-  # client_network:
-  #   driver: bridge

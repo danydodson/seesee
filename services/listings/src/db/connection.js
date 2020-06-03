@@ -4,7 +4,7 @@ import accessEnv from '#root/helpers/accessEnv'
 
 const dbURI = accessEnv('DB_URI')
 
-// console.log(`[DB_URI] ${dbURI}`)
+console.log(`[LISTINGS_SERVICE_DB_URI] ${dbURI}`)
 
 const sequelize = new Sequelize(dbURI, {
   dialectOptions: {

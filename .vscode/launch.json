@@ -7,7 +7,7 @@
       "request": "launch",
       "type": "pwa-chrome",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}"
+      "webRoot": "${workspaceFolder}/platforms/app"
     },
     // launch the sample service using node
     {

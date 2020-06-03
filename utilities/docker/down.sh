@@ -1,5 +1,5 @@
 
-#!/usr/bin/zsh
+#!/usr/bin/bash
 
 clean=true
 

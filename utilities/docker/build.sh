@@ -1,5 +1,5 @@
 
-#!/usr/bin/zsh
+#!/usr/bin/bash
 
 if [ ! -z "(docker networks ls -f name=services_network)" ]
 then

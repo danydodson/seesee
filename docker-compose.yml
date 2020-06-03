@@ -124,55 +124,55 @@ services:
   #  certbot                                  #
   # ==========================================#
 
-  # certbot:
-  #   image: certbot/certbot
-  #   container_name: certbot
-  #   volumes:
-  #     - certbot_etc:/etc/letsencrypt
-  #     - certbot_var:/var/lib/letsencrypt
-  #     - web_root:/var/www/html
-  #   depends_on:
-  #     - nginx_server
-  #   command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --staging -d seesee.space  -d www.seesee.space
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot_etc:/etc/letsencrypt
+      - certbot_var:/var/lib/letsencrypt
+      - web_root:/var/www/html
+    depends_on:
+      - nginx_server
+    command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --staging -d seesee.space  -d www.seesee.space
     # command: certonly --webroot --webroot-path=/var/www/html --email dany@dany.codes --agree-tos --no-eff-email --force-renewal -d seesee.space  -d www.seesee.space
 
   # ==========================================#
   #  services/tunnel                          #
   # ==========================================#
 
-  # proxy_tunnel:
-  #   container_name: proxy_tunnel
-  #   image: danydodson/seesee_proxy_tunnel
-  #   ports:
-  #     - '2222:22'
-  #   expose:
-  #     - '2222'
-  #   environment:
-  #     - VIRTUAL_HOST=dev.seesee.space
-  #     - LETSENCRYPT_HOST=dev.seesee.space
+  proxy_tunnel:
+    container_name: proxy_tunnel
+    image: danydodson/seesee_proxy_tunnel
+    ports:
+      - '2222:22'
+    expose:
+      - '2222'
+    environment:
+      - VIRTUAL_HOST=dev.seesee.space
+      - LETSENCRYPT_HOST=dev.seesee.space
       
 # ==========================================#
 #  global volumes                           #
 # ==========================================#
 
-# volumes:
+volumes:
   
-  # certbot_etc:
-  # certbot_var:
+  certbot_etc:
+  certbot_var:
 
-  # web_root:
-  #   driver: local
-  #   driver_opts:
-  #     type: none
-  #     device: /home/ubuntu/seesee/services/sample/views/
-  #     o: bind
+  web_root:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/ubuntu/seesee/services/sample/views/
+      o: bind
 
-  # dhparam:
-  #   driver: local
-  #   driver_opts:
-  #     type: none
-  #     device: /home/ubuntu/seesee/services/nginx/certs
-  #     o: bind
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/ubuntu/seesee/services/nginx/certs
+      o: bind
   
 # ==========================================#
 #  global networks                          #

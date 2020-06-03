@@ -1,0 +1,96 @@
+version: '3.8'
+services:
+
+  nginx_server:
+    container_name: nginx_server
+    build: ./services/nginx
+    restart: unless-stopped
+    ports:
+      - ${NGINX_DEFAULT_PORT}:${NGINX_DEFAULT_PORT}
+      - ${NGINX_SECURE_PORT}:${NGINX_SECURE_PORT}
+    volumes:
+      - web_root:/usr/share/nginx/html
+      - ./services/nginx/conf.d/default.conf:/etc/nginx/conf.d/nginx.conf
+      # - certbot_etc:/etc/letsencrypt
+      # - certbot_var:/var/lib/letsencrypt
+      # - dhparam:/etc/ssl/certs
+    depends_on:
+      - users_service
+      - listings_service
+    networks:
+      - api_network
+
+  # ==========================================#
+  # ==========================================#
+  
+  # ==========================================#
+  #  gateway/passport                         #
+  # ==========================================#
+
+  gateway_passport:
+    container_name: gateway_passport
+    image: danydodson/auth_service
+    build:
+      context: .
+      dockerfile: 'Dockerfile'
+    env_file: ./gateway/passport/.env
+    environment:
+      MONGO_HOSTNAME: gateway_passport_db
+      MONGO_USERNAME: ${AUTH_MONGO_USERNAME}
+      MONGO_PASSWORD: ${AUTH_MONGO_PASSWORD}
+      MONGO_DB: ${AUTH_SERVICE_MONGO_DATABASE}
+    volumes:
+      - /usr/src/app/node_modules
+      - ./gateway/passport:/usr/src/app
+    ports:
+      - '80:5000'
+    depends_on:
+      - gateway_passport_db
+    command: ./wait-for.sh gateway_passport_db:27017 -- /home/node/app/node_modules/.bin/nodemon src/index.js
+
+  # ==========================================#
+  #  gateway/passport:data                    #
+  # ==========================================#
+
+  gateway_passport_db:
+    container_name: gateway_passport_db
+    image: mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${AUTH_SERVICE_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${AUTH_SERVICE_INITDB_ROOT_PASSWORD}
+    volumes:
+      - gateway_passport_data_vol:/data/db
+    ports:
+      - ${AUTH_SERVICE_DB_PORT}:${AUTH_SERVICE_DB_PORT}
+  
+# ==========================================#
+#  global volumes                           #
+# ==========================================#
+
+volumes:
+  nginx_conf_vol:
+  nginx_vhost_vol:
+  nginx_html_vol:
+  nginx_certs_vol:
+  
+  gateway_passport_data_vol:
+
+  web_root:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/dany/projects/github/seesee/gateway/testing/build
+      o: bind
+  
+# ==========================================#
+#  global networks                          #
+# ==========================================#
+  
+networks:
+  default:
+    external:
+      name: services_network
+      
+  api_network:
+    driver: bridge

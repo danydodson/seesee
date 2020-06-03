@@ -7,8 +7,11 @@ services:
 
   gateway_client:
     container_name: gateway_client
-    build: ./gateway/client
+    build: 
+      context: ..
+      dockerfile: gateway/client/Dockerfile
     restart: always
+    env_file: .env
     environment:
       USERS_SERVICE_URI: ${USERS_SERVICE_URI}
       LISTINGS_SERVICE_URI: ${LISTINGS_SERVICE_URI}
@@ -28,8 +31,11 @@ services:
   
   nginx_service:
     container_name: nginx_service
-    build: ./services/nginx
+    build: 
+      context: ..
+      dockerfile: services/nginx/Dockerfile
     restart: unless-stopped
+    env_file: .env
     volumes:
       # - ./gateway/client/build:/usr/share/nginx/html
       - web_root:/usr/share/nginx/html
@@ -67,9 +73,12 @@ services:
   
   users_service:
     container_name: users_service
-    build: ./services/users
+    build: 
+      context: ..
+      dockerfile: ./services/users/Dockerfile
     restart: unless-stopped
     # command: babel-watch -L src/index.js
+    env_file: .env
     environment:
       DB_URI: ${USERS_SERVICE_DB_URI}
       NODE_ENV: ${NODE_ENV}
@@ -87,6 +96,7 @@ services:
   users_service_db:
     container_name: users_service_db
     image: mysql:5.7.20
+    env_file: .env
     environment:
       MYSQL_ROOT_PASSWORD: ${USERS_SERVICE_DB_ROOT_PASSWORD}
       MYSQL_DATABASE: ${USERS_SERVICE_DB_ROOT_DATABASE}
@@ -101,9 +111,12 @@ services:
 
   listings_service:
     container_name: listings_service
-    build: ./services/listings
+    build: 
+      context: ..
+      dockerfile: services/listings/Dockerfile
     restart: unless-stopped
     # command: babel-watch -L src/index.js
+    env_file: .env
     environment:
       DB_URI: ${LISTINGS_SERVICE_DB_URI}
       NODE_ENV: ${NODE_ENV}
@@ -121,6 +134,7 @@ services:
   listings_service_db:
     container_name: listings_service_db
     image: mysql:5.7.20
+    env_file: .env
     environment:
       MYSQL_ROOT_PASSWORD: ${LISTINGS_SERVICE_DB_ROOT_PASSWORD}
       MYSQL_DATABASE: ${LISTINGS_SERVICE_DB_ROOT_DATABASE}

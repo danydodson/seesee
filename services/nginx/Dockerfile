@@ -1,18 +1,19 @@
+FROM node:14 as builder
+
+RUN mkdir -p /app
+
+WORKDIR /app
+RUN git clone https://github.com/danydodson/seesee.git .
+
+WORKDIR /app/platforms/pwa
+RUN yarn && yarn build
+
 FROM nginx:mainline-alpine
 
-# remove default conf.d/* files
-# then copy local .conf files to image
-RUN rm /etc/nginx/conf.d/default.conf
-COPY conf.d/default.conf /etc/nginx/conf.d/default.conf
-COPY conf.d/hello.conf /etc/nginx/conf.d/hello.conf 
+RUN rm -rf /etc/nginx/default.conf
+COPY conf.d/default.conf /etc/nginx/default.conf
+COPY --from=builder /app/platforms/pwa/build/output/ /usr/share/nginx/html/
 
-# copy html files to image
-COPY ./html /usr/share/nginx/html
-
-# copy the react build from the build container
-# COPY --from=builder /usr/src/app/build /usr/share/nginx/html
-
-# set permissions so nginx can serve it
 RUN chown -R nginx.nginx /usr/share/nginx/html/
 
 EXPOSE 80

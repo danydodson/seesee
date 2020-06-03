@@ -3,8 +3,6 @@
   "codedeploy.applicationName": "seesee",
   "codedeploy.region": "us-east-1",
   "codedeploy.isApplicationWorkspace": true,
-  // favorites storage location
-  "favorites.storageFilePath": "../../working/.favorites.json",
   // seesee lightsail rsync
   "sync-rsync.sites": [
     {
@@ -24,6 +22,8 @@
       ],
     },
   ],
+  // favorites storage location
+  "favorites.storageFilePath": "../../working/.favorites.json",
   // git settings
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
 }

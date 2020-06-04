@@ -9,7 +9,7 @@ COPY package.json /home/node/app/
 
 USER node
 
-RUN RUN yarn install --production=true
+RUN yarn install --production=true
 
 COPY --chown=node:node . /home/node/app/
 

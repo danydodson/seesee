@@ -1,5 +1,5 @@
 FROM node:10.16.3-alpine AS base
- 
+
 # note: you'll likely want postgres and a user table for authentication instead of redis. 
 # If so uncomment lines 8,9,10,11
 

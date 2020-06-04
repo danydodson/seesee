@@ -1,16 +1,16 @@
 FROM node:14
 
-RUN mkdir -p /home/node/app/node_modules && \
-  chown -R node:node /home/node/app
+RUN apt-get update && \
+  apt-get upgrade 
 
-WORKDIR /home/node/app
+WORKDIR /usr/src/app
 
-COPY package.json /home/node/app/
+COPY yarn* /usr/src/app/
+COPY package* /usr/src/app/
 
-USER node
+RUN yarn install
+RUN yarn build
 
-RUN yarn install --production=true
-
-COPY --chown=node:node . /home/node/app/
+EXPOSE 3000
 
 CMD ["yarn", "watch"]

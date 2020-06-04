@@ -8,14 +8,11 @@ services:
   gateway_client:
     container_name: gateway_client
     build: ./gateway/client
-    restart: always
     environment:
       LISTINGS_SERVICE_URI: http://listings_service:7100
       USERS_SERVICE_URI: http://users_service:7101
-    expose:
-       - 3000
     ports:
-      - 0.0.0.0:7000:7000
+      - 7000:7000
     depends_on:
       - listings_service
       - users_service
@@ -26,18 +23,16 @@ services:
   #  services/nginx                           #
   # ==========================================#
   
-  nginx_service:
-    container_name: nginx_service
-    build: ./services/nginx
-    restart: unless-stopped
-    volumes: 
-      - ./platforms/pwa:/usr/src/app
-    expose:
-      - 80
-    ports:
-      - 0.0.0.0:80:80
-    networks:
-      - api_network
+  # nginx_service:
+  #   container_name: nginx_service
+  #   build: ./services/nginx
+  #   restart: unless-stopped
+  #   volumes: 
+  #     - ./platforms/pwa:/usr/src/app
+  #   ports:
+  #     - 80:80
+  #   networks:
+  #     - api_network
 
   # ==========================================#
   #  services/users                           #
@@ -46,13 +41,10 @@ services:
   users_service:
     container_name: users_service
     build: ./services/users/
-    restart: unless-stopped
     environment:
       - DB_URI=mysql://root:password@users_service_db/db?charset=UTF8
-    expose: 
-      - 7101
     ports: 
-      - 0.0.0.0:7101:7101
+      - 7101:7101
     depends_on:
       - users_service_db
     networks:
@@ -80,13 +72,10 @@ services:
   listings_service:
     container_name: listings_service
     build: ./services/listings
-    restart: unless-stopped
     environment:
       DB_URI: mysql://root:password@listings_service_db/db?charset=UTF8
-    expose: 
-      - 7100
     ports: 
-      - 0.0.0.0:7100:7100
+      - 7100:7100
     depends_on:
       - listings_service_db
     networks:

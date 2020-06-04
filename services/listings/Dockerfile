@@ -1,19 +1,14 @@
 FROM node:14
 
 RUN apt-get update && \
-  apt-get upgrade && \
-  mkdir -p /home/node/app/node_modules && \
-  chown -R node:node /home/node/app
+  apt-get upgrade 
 
-WORKDIR /home/node/app
+WORKDIR /usr/src/app
 
-COPY yarn* /home/node/app/
-COPY package* /home/node/app/
+COPY yarn* /usr/src/app/
+COPY package* /usr/src/app/
 
-USER node
-
-RUN yarn install --production=true
-
-COPY --chown=node:node . /home/node/app/
+RUN yarn install
+RUN yarn build
 
 CMD ["yarn", "watch"]

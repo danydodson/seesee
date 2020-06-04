@@ -1,0 +1,1 @@
+docker exec -it ${IMAGEID} yarn run db:migrate

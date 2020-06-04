@@ -7,19 +7,15 @@ services:
 
   gateway_client:
     container_name: gateway_client
-    build: 
-      context: "./gateway/client/"
-      dockerfile: "Dockerfile"
-    # restart: always
+    build: ./gateway/client
+    restart: always
     environment:
       LISTINGS_SERVICE_URI: http://listings_service:7100
       USERS_SERVICE_URI: http://users_service:7101
-    # expose:
-    #    - 3000
+    expose:
+       - 3000
     ports:
       - 7000:7000
-    volumes:
-      - ./gateway/client:/opt/app
     depends_on:
       - listings_service
       - users_service
@@ -42,39 +38,19 @@ services:
   #     - api_network
 
   # ==========================================#
-  #  services/nginx:certbot                   #
-  # ==========================================#
-
-  # nginx_certbot:
-  #   container_name: nginx_certbot
-  #   image: certbot/certbot
-  #   command: certonly --webroot --webroot-path=/usr/share/nginx/html --email dany@dany.codes --agree-tos --no-eff-email --staging -d seesee.space  -d www.seesee.space
-  #   volumes:
-  #     # - ./gateway/client/build:/usr/share/nginx/html
-  #     - web_root:/usr/share/nginx/html
-  #     - certbot_etc:/etc/letsencrypt
-  #     - certbot_var:/var/lib/letsencrypt
-  #   networks:
-  #     - api_network
-
-  # ==========================================#
   #  services/users                           #
   # ==========================================#
   
   users_service:
     container_name: users_service
-    build: 
-      context: "./services/users/"
-      dockerfile: "Dockerfile"
-    # restart: unless-stopped
+    build: ./services/users/
+    restart: unless-stopped
     environment:
       - DB_URI=mysql://root:password@users_service_db/db?charset=UTF8
     expose: 
       - 7101
     ports: 
       - 7101:7101
-    volumes: 
-      - ./services/users:/opt/app
     depends_on:
       - users_service_db
     networks:
@@ -101,18 +77,14 @@ services:
 
   listings_service:
     container_name: listings_service
-    build: 
-      context: "./services/listings/"
-      dockerfile: "Dockerfile"
-    # restart: unless-stopped
+    build: ./services/listings
+    restart: unless-stopped
     environment:
       DB_URI: mysql://root:password@listings_service_db/db?charset=UTF8
     expose: 
       - 7100
     ports: 
       - 7100:7100
-    volumes: 
-      - ./services/listings:/opt/app
     depends_on:
       - listings_service_db
     networks:

@@ -2,11 +2,11 @@ import { Sequelize } from 'sequelize'
 
 import accessEnv from '#root/helpers/accessEnv'
 
-const DBURI = accessEnv('DB_URI')
+const dbUri = accessEnv('DB_URI')
 
-console.log(`[LISTINGS_SERVICE_DB_URI] = ${DBURI}`)
+console.log(`[LISTINGS_DB_URI] = ${dbUri}`)
 
-const sequelize = new Sequelize(DBURI, {
+const sequelize = new Sequelize(dbUri, {
   dialectOptions: {
     charset: 'utf8',
     multipleStatements: true

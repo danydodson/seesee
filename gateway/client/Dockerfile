@@ -1,30 +1,16 @@
 FROM node:14
 
-COPY . /opt/app
+RUN mkdir -p /home/node/app/node_modules && \
+  chown -R node:node /home/node/app
 
-WORKDIR /opt/app
+WORKDIR /home/node/app
+
+COPY package.json /home/node/app/
+
+USER node
 
 RUN yarn
 
-EXPOSE 3000
+COPY --chown=node:node . /home/node/app/
 
-CMD yarn watch
-
-# FROM node:14
-
-# RUN mkdir -p /home/node/app/node_modules && \
-#   chown -R node:node /home/node/app
-
-# WORKDIR /home/node/app
-
-# COPY package.json /home/node/app/
-
-# USER node
-
-# RUN yarn
-
-# COPY --chown=node:node . /home/node/app/
-
-
-
-# CMD ["yarn", "watch"]
+CMD ["yarn", "watch"]

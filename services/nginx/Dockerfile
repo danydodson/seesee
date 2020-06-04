@@ -6,7 +6,9 @@ WORKDIR /app
 RUN git clone https://github.com/danydodson/seesee.git .
 
 WORKDIR /app/platforms/pwa
-RUN yarn && yarn build
+
+RUN yarn install --production=true && \
+  yarn build
 
 FROM nginx:mainline-alpine
 

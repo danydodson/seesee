@@ -6,9 +6,9 @@
   "description": "platforms-pwa",
   "license": "MIT",
   "scripts": {
-    "build": "sudo rm -rf build && NODE_ENV=production parcel build src/index.html -d build/bundle --cache-dir build/cache",
-    "watch": "sudo rm -rf build && parcel --port=7001 src/index.html -d build/output --cache-dir build/cache",
-    "deploy": "./deploy.sh"
+    "clean": "sudo rm -rf build",
+    "build": "yarn clean && NODE_ENV=production parcel build src/index.html -d build/output --cache-dir build/cache",
+    "watch": "yarn clean && parcel --port=7001 src/index.html -d build/output --cache-dir build/cache"
   },
   "dependencies": {
     "@types/react": "^16.8.0",

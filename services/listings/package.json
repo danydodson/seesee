@@ -4,12 +4,11 @@
   "main": "index.js",
   "author": "Dany Dodson",
   "description": "listings-service",
+  "license": "MIT",
   "scripts": {
     "build": "webpack --progress",
-    "deploy": "node-deploy $(pwd)",
     "db:migrate": "sequelize db:migrate",
     "db:migrate:undo": "sequelize db:migrate:undo",
-    "linkall": "yarn link node-deploy",
     "watch": "babel-watch -L src/index.js"
   },
   "dependencies": {
@@ -32,7 +31,5 @@
     "webpack": "~4.41.5",
     "webpack-cli": "~3.3.10",
     "webpack-node-externals": "~1.7.2"
-  },
-  "devDependencies": {},
-  "license": "MIT"
+  }
 }

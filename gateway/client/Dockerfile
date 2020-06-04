@@ -9,10 +9,10 @@ COPY package.json /home/node/app/
 
 USER node
 
-RUN yarn install --production
+RUN yarn
 
-COPY --chown=node:node . .
+COPY --chown=node:node . /home/node/app/
 
-RUN yarn run build
+EXPOSE 3000
 
-CMD yarn watch
+CMD ["yarn", "watch"]

@@ -5,9 +5,9 @@
   "author": "Dany Dodson",
   "description": "platforms-pwa",
   "scripts": {
-    "build": "rm -rf build && NODE_ENV=production parcel build src/index.html -d build/bundle --cache-dir build/cache --no-source-maps",
-    "watch": "rm -rf build && parcel --port=7001 src/index.html -d build/output --cache-dir build/cache --no-source-maps",
-    "predeploy": "yarn build",
+    "build": "sudo rm -rf build && NODE_ENV=production parcel build src/index.html -d build/bundle --cache-dir build/cache",
+    "watch": "sudo rm -rf build && parcel --port=7001 src/index.html -d build/output --cache-dir build/cache",
+    "pre-deploy": "yarn build",
     "deploy": "./deploy.sh"
   },
   "dependencies": {

@@ -12,7 +12,7 @@ COPY package* /home/node/app/
 
 USER node
 
-RUN yarn
+RUN yarn install --production=true
 
 COPY --chown=node:node . /home/node/app/
 

@@ -4,8 +4,6 @@ const { changeAuthUserId } = require('./membership-tracking.js')
 
 const AuthEventChannel = PubSubChannel.AuthEvent
 
-
-
 function setupRedisSubscriptionForUserLogin({ redisClient }) {
   redisClient.subscribe(AuthEventChannel)
 

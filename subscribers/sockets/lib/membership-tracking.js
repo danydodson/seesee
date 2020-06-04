@@ -1,11 +1,8 @@
-
-
 // Socket associations with users and rooms are tracked here.
 // Not persisted because it doesn't use much memory and if the server crashes, the clients must reconnect anyway, websockets use sticky sessions.
 // Still, might be smart to use a time-rotating cache to avoid memory leaks.
 const socketsByAuthUserId = {}
 const socketsByRoomId = {}
-
 
 // There might be multiple instances of this websocket service, but all subscribe to the same redis notification channel,
 // and act
@@ -94,7 +91,7 @@ function _stopTrackingSocket(ws, collection, id) {
 }
 
 
-
+AS
 module.exports = {
   getSocketsForUser,
   getSocketsForRoom,

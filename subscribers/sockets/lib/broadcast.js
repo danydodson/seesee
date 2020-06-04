@@ -8,14 +8,12 @@ if (!BackgroundPushChannel) {
   throw new Error('SEVERE: could not load shared constants')
 }
 
-
 const WebSocketState = {  // https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/readyState
   CONNECTING: 0,
   OPEN: 1,
   CLOSING: 2,
   CLOSED: 3,
 }
-
 
 // note: if for some reason you want to use a different message-passing mechanism here instead of Redis pubsub, keep in mind that
 // the same user or room member might connect to different websocket servers (should you scale it beyond 1.)
@@ -34,8 +32,6 @@ function setupRedisSubscriptionForBroadcast({ redisClient }) {
     }
   })
 }
-
-
 
 function _processReceivedMessage(data) {
   const { pushToUser, pushToRoom, tabWindowId, payload } = data

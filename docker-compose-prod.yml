@@ -10,12 +10,15 @@ services:
     build: ./gateway/client
     restart: always
     environment:
-      USERS_SERVICE_URI: http://users-service:7101
-      LISTINGS_SERVICE_URI: http://listings-service:7100
+      USERS_SERVICE_URI: ${USERS_SERVICE_URI}
+      LISTINGS_SERVICE_URI: ${LISTINGS_SERVICE_URI}
     expose:
-       - '3000'
+      - ${GATEWAY_CLIENT_EXPOSE}
     ports:
-      - '7000:7000'
+      - '${GATEWAY_CLIENT_PORT}:${GATEWAY_CLIENT_PORT}'
+    depends_on:
+      - users_service
+      - listings_service
     networks:
       - api_network
 
@@ -27,10 +30,18 @@ services:
     container_name: nginx_service
     build: ./services/nginx
     restart: unless-stopped
+    # volumes:
+      # - ./gateway/client/build:/usr/share/nginx/html
+      # - web_root:/usr/share/nginx/html
+      # - ./services/nginx/conf.d/default.conf:/etc/nginx/conf.d/nginx.conf
+      # - certbot_etc:/etc/letsencrypt
+      # - certbot_var:/var/lib/letsencrypt
+      # - dhparam:/etc/ssl/certs
     expose:
-      - '80'
+      - ${NGINX_DEFAULT_PORT}
     ports:
-      - '80:80'
+      - ${NGINX_DEFAULT_PORT}:${NGINX_DEFAULT_PORT}
+      # - ${NGINX_SECURE_PORT}:${NGINX_SECURE_PORT}
     networks:
       - api_network
 
@@ -58,12 +69,12 @@ services:
     container_name: users_service
     build: ./services/users
     restart: unless-stopped
+    # command: babel-watch -L src/index.js
     environment:
-      - DB_URI=mysql://root:password@users_service_db/db?charset=UTF8
+      DB_URI: ${USERS_SERVICE_DB_URI}
+      NODE_ENV: ${NODE_ENV}
     expose: 
-      - '7101'
-    ports: 
-      - '7101:7101'
+      - ${USERS_SERVICE_PORT}
     depends_on:
       - users_service_db
     networks:
@@ -77,10 +88,10 @@ services:
     container_name: users_service_db
     image: mysql:5.7.20
     environment:
-      MYSQL_DATABASE: db
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: ${USERS_SERVICE_DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${USERS_SERVICE_DB_ROOT_DATABASE}
     ports:
-      - '0.0.0.0:7201:3306'
+      - 0.0.0.0:${USERS_SERVICE_DB_HOST_PORT}:${USERS_SERVICE_DB_CONTAINER_PORT}
     networks:
       - api_network
 
@@ -92,12 +103,12 @@ services:
     container_name: listings_service
     build: ./services/listings
     restart: unless-stopped
+    # command: babel-watch -L src/index.js
     environment:
-      DB_URI: mysql://root:password@listings_service_db/db?charset=UTF8
+      DB_URI: ${LISTINGS_SERVICE_DB_URI}
+      NODE_ENV: ${NODE_ENV}
     expose: 
-      - '7100'
-    ports: 
-      - '7100:7100'
+      - ${LISTINGS_SERVICE_PORT}
     depends_on:
       - listings_service_db
     networks:
@@ -111,16 +122,35 @@ services:
     container_name: listings_service_db
     image: mysql:5.7.20
     environment:
-      MYSQL_DATABASE: db
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: ${LISTINGS_SERVICE_DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${LISTINGS_SERVICE_DB_ROOT_DATABASE}
     ports:
-      - 0.0.0.0:7200:3306
+      - 0.0.0.0:${LISTINGS_SERVICE_DB_HOST_PORT}:${LISTINGS_SERVICE_DB_CONTAINER_PORT}
     networks:
       - api_network
       
 # ==========================================#
 #  global volumes                           #
 # ==========================================#
+
+# volumes:
+
+  # certbot_etc:
+  # certbot_var:
+
+  # web_root:
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     device: /home/dany/projects/github/seesee/platforms/pwa/build/
+  #     o: bind
+
+  # dhparam:
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     device: /home/dany/projects/github/seesee/services/nginx/certs
+  #     o: bind
 
 # ==========================================#
 #  global networks                          #
@@ -129,3 +159,5 @@ services:
 networks:
   api_network:
     driver: bridge
+
+

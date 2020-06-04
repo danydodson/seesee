@@ -15,7 +15,7 @@ services:
     expose:
        - 3000
     ports:
-      - 7000:7000
+      - 0.0.0.0:7000:7000
     depends_on:
       - listings_service
       - users_service
@@ -34,9 +34,8 @@ services:
       - ./platforms/pwa:/usr/src/app
     expose:
       - 80
-      - 7000
     ports:
-      - 80:80
+      - 0.0.0.0:80:80
     networks:
       - api_network
 
@@ -53,7 +52,7 @@ services:
     expose: 
       - 7101
     ports: 
-      - 7101:7101
+      - 0.0.0.0:7101:7101
     depends_on:
       - users_service_db
     networks:
@@ -87,7 +86,7 @@ services:
     expose: 
       - 7100
     ports: 
-      - 7100:7100
+      - 0.0.0.0:7100:7100
     depends_on:
       - listings_service_db
     networks:

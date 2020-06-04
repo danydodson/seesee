@@ -30,8 +30,6 @@ services:
     container_name: nginx_service
     build: ./services/nginx
     restart: unless-stopped
-    volumes: 
-      - ./platforms/pwa:/usr/src/app
     expose:
       - 80
     ports:

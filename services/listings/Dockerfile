@@ -7,7 +7,8 @@ RUN apt-get update && \
 
 WORKDIR /home/node/app
 
-COPY package.json /home/node/app/
+COPY yarn* /home/node/app/
+COPY package* /home/node/app/
 
 USER node
 

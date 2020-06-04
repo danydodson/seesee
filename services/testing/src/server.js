@@ -3,7 +3,9 @@ const mongoose = require('mongoose')
 const app = express()
 
 const port = process.env.TESTING_SERVICE_PORT || 7201
+
 const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/test'
+
 console.log(mongoUri)
 
 // connect to the db

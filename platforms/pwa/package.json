@@ -6,7 +6,7 @@
   "description": "platforms-pwa",
   "license": "MIT",
   "scripts": {
-    "clean": "sudo rm -rf build",
+    "clean": "rm -rf build",
     "build": "NODE_ENV=production parcel build src/index.html -d build/output --cache-dir build/cache",
     "watch": "yarn clean && parcel --port=7001 src/index.html -d build/output --cache-dir build/cache"
   },

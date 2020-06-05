@@ -1,8 +1,8 @@
 const path = require('path')
 
 module.exports = {
-  entry: path.join(__dirname, 'src', 'index'),
   mode: 'development',
+  entry: path.join(__dirname, 'src', 'index'),
   watch: true,
   module: {
     rules: [
@@ -11,7 +11,6 @@ module.exports = {
         include: [path.resolve(__dirname, 'src')],
         exclude: [path.resolve(__dirname, 'node_modules')],
         loader: 'babel-loader',
-        // query: { presets: [["@babel/env", { "targets": { "browsers": "last 2 chrome versions" } }]], }
       }
     ]
   },
@@ -20,13 +19,13 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'build'),
-    publicPath: '/build/',
+    publicPath: '/dist/',
     filename: "bundle.js",
     chunkFilename: '[name].js'
   },
-  devtool: 'source-map',
   devServer: {
-    contentBase: path.join(__dirname, '/build/'),
+    contentBase: path.join(__dirname, '/dist/'),
+    compress: true,
     inline: true,
     host: 'localhost',
     port: 7000,

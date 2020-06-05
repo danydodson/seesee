@@ -4,7 +4,6 @@
   "main": "index.js",
   "author": "Dany Dodson",
   "description": "gateway-client",
-  "license": "MIT",
   "scripts": {
     "build": "webpack --progress",
     "watch": "babel-watch -L src/index.js"

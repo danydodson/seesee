@@ -11,15 +11,81 @@ services:
     environment:
       LISTINGS_SERVICE_URI: http://listings_service:7100
       USERS_SERVICE_URI: http://users_service:7101
-    # volumes: 
-    #   - ./gateway/client:/usr/src/app
     ports:
-      - 7000:7000
+      - "9000:9000"
     depends_on:
       - listings_service
       - users_service
+    # volumes: 
+    #   - ./gateway/client:/usr/src/app
     networks:
-      - api_network
+      - api_net
+
+  # ==========================================#
+  #  services/users                           #
+  # ==========================================#
+  
+  users_service:
+    container_name: users_service
+    build: ./services/users/
+    environment:
+      - DB_URI=mysql://root:password@users_service_db/db?charset=UTF8
+    ports: 
+      - "7101:7101"
+    depends_on:
+      - users_service_db
+    # volumes: 
+    #   - ./services/users:/usr/src/app
+    networks:
+      - api_net
+
+  # ==========================================#
+  #  services/users:db                        #
+  # ==========================================#
+
+  users_service_db:
+    container_name: users_service_db
+    image: mysql:5.7.20
+    environment:
+      MYSQL_DATABASE: db
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "0.0.0.0:7201:3306"
+    networks:
+      - api_net
+
+  # ==========================================#
+  #  services/listings                        #
+  # ==========================================#
+
+  # listings_service:
+  #   container_name: listings_service
+  #   build: ./services/listings/
+  #   environment:
+  #     DB_URI: mysql://root:password@listings_service_db/db?charset=UTF8
+  #   # volumes: 
+  #   #   - ./services/listings:/usr/src/app
+  #   ports: 
+  #     - 7100:7100
+  #   depends_on:
+  #     - listings_service_db
+  #   networks:
+  #     - api_net
+
+  # ==========================================#
+  #  services/listings:db                     #
+  # ==========================================#
+
+  # listings_service_db:
+  #   container_name: listings_service_db
+  #   image: mysql:5.7.20
+  #   environment:
+  #     MYSQL_DATABASE: db
+  #     MYSQL_ROOT_PASSWORD: password
+  #   ports:
+  #     - 0.0.0.0:7200:3306
+  #   networks:
+  #     - api_net
 
   # ==========================================#
   #  services/nginx                           #
@@ -34,74 +100,8 @@ services:
   #   ports:
   #     - 80:80
   #   networks:
-  #     - api_network
+  #     - api_net
 
-  # ==========================================#
-  #  services/users                           #
-  # ==========================================#
-  
-  users_service:
-    container_name: users_service
-    build: ./services/users/
-    environment:
-      - DB_URI=mysql://root:password@users_service_db/db?charset=UTF8
-    # volumes: 
-    #   - ./services/users:/usr/src/app
-    ports: 
-      - 7101:7101
-    depends_on:
-      - users_service_db
-    networks:
-      - api_network
-
-  # ==========================================#
-  #  services/users:db                        #
-  # ==========================================#
-
-  users_service_db:
-    container_name: users_service_db
-    image: mysql:5.7.20
-    environment:
-      MYSQL_DATABASE: db
-      MYSQL_ROOT_PASSWORD: password
-    ports:
-      - 0.0.0.0:7201:3306
-    networks:
-      - api_network
-
-  # ==========================================#
-  #  services/listings                        #
-  # ==========================================#
-
-  listings_service:
-    container_name: listings_service
-    build: ./services/listings/
-    environment:
-      DB_URI: mysql://root:password@listings_service_db/db?charset=UTF8
-    # volumes: 
-    #   - ./services/listings:/usr/src/app
-    ports: 
-      - 7100:7100
-    depends_on:
-      - listings_service_db
-    networks:
-      - api_network
-
-  # ==========================================#
-  #  services/listings:db                     #
-  # ==========================================#
-
-  listings_service_db:
-    container_name: listings_service_db
-    image: mysql:5.7.20
-    environment:
-      MYSQL_DATABASE: db
-      MYSQL_ROOT_PASSWORD: password
-    ports:
-      - 0.0.0.0:7200:3306
-    networks:
-      - api_network
-      
 # ==========================================#
 #  global volumes                           #
 # ==========================================#
@@ -111,5 +111,7 @@ services:
 # ==========================================#
   
 networks:
-  api_network:
+  service_net:
+    driver: bridge
+  api_net:
     driver: bridge

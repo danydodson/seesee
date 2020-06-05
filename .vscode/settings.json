@@ -1,4 +1,5 @@
 {
+  "remoteAuthority":"wsl+Ubuntu",
   // aws code deploy
   "codedeploy.applicationName": "seesee",
   "codedeploy.region": "us-east-1",

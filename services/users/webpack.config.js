@@ -1,15 +1,18 @@
 const path = require('path')
-const webpackNodeExternals = require('webpack-node-externals')
 
 module.exports = {
-  entry: './src/index.js',
-  externals: [webpackNodeExternals()],
   mode: 'production',
+  entry: path.join(__dirname, 'src', 'index'),
+  target: 'node'
   module: {
     rules: [
       {
         test: /\.js$/,
-        use: 'babel-loader'
+        include: [path.resolve(__dirname, 'src')],
+        exclude: [path.resolve(__dirname, 'node_modules')],
+        use: 'babel-loader',
+        // loader: 'babel-loader',
+        // query: { presets: [["@babel/env", { "targets": { "browsers": "last 2 chrome versions" } }]] }
       }
     ]
   },
@@ -17,5 +20,4 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, './build')
   },
-  target: 'node'
 }

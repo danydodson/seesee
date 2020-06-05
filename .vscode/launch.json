@@ -1,6 +1,28 @@
 {
   "version": "0.2.0",
   "configurations": [
+    // debug in docker
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch in Docker",
+      // "preLaunchTask": "tsc-watch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [ "run", "docker-debug" ],
+      "port": 5858,
+      "restart": true,
+      "timeout": 60000,
+      "localRoot": "${workspaceFolder}/dist",
+      "remoteRoot": "/server",
+      "outFiles": [
+        "${workspaceFolder}/dist/**/*.js"
+      ],
+      "skipFiles": [
+        "<node_internals>/**/*.js",
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
     // launch the sample service using node
     {
       "name": "Sample API",

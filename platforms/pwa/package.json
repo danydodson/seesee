@@ -4,17 +4,16 @@
   "main": "index.js",
   "author": "Dany Dodson",
   "description": "platforms-pwa",
-  "license": "MIT",
   "scripts": {
-    "clean": "rm -rf build",
-    "build": "NODE_ENV=production parcel build src/index.html -d build/output --cache-dir build/cache",
-    "watch": "yarn clean && parcel --port=7001 src/index.html -d build/output --cache-dir build/cache"
+    "build": "webpack --config webpack.config.prod.js --progress",
+    "watch": "webpack-dev-server"
   },
   "dependencies": {
     "@types/react": "^16.8.0",
     "apollo-cache-inmemory": "~1.6.5",
     "apollo-client": "^2.6.4",
     "apollo-link-http": "~1.5.16",
+    "dotenv": "8.2.0",
     "graphql": "^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0",
     "graphql-tag": "~2.10.1",
     "parcel-bundler": "~1.12.4",
@@ -27,9 +26,6 @@
     "styled-components": "~4.4.1",
     "yup": "~0.28.0"
   },
-  "alias": {
-    "#root": "./src"
-  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
@@ -37,5 +33,6 @@
     "webpack": "^4.29.0",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"
-  }
+  },
+  "license": "MIT"
 }

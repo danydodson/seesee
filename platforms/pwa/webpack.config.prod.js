@@ -14,13 +14,10 @@ module.exports = {
       }
     ]
   },
-  resolve: {
-    extensions: ['.json', '.js', '.jsx']
-  },
   output: {
     filename: 'bundle.js',
-    path: path.join(__dirname, 'out'),
-    publicPath: '/out/',
+    path: path.join(__dirname, 'build'),
+    publicPath: '/dist/',
     chunkFilename: '[name].js'
   }
 }

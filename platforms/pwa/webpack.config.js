@@ -3,7 +3,6 @@ const path = require('path')
 module.exports = {
   mode: 'development',
   entry: path.join(__dirname, 'src', 'index'),
-  watch: true,
   module: {
     rules: [
       {
@@ -14,17 +13,19 @@ module.exports = {
       }
     ]
   },
+  watch: true,
+  devtool: 'source-map',
   resolve: {
     extensions: ['.json', '.js', '.jsx']
   },
   output: {
     path: path.join(__dirname, 'build'),
-    publicPath: '/dist/',
+    publicPath: '/build/',
     filename: "bundle.js",
     chunkFilename: '[name].js'
   },
   devServer: {
-    contentBase: path.join(__dirname, '/dist/'),
+    contentBase: path.join(__dirname, '/build/'),
     compress: true,
     inline: true,
     host: 'localhost',

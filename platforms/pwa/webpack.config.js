@@ -1,34 +1,21 @@
 const path = require('path')
+const nodeExternals = require('webpack-node-externals')
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: path.join(__dirname, 'src', 'index'),
+  target: 'node',
+  externals: [nodeExternals()],
   module: {
     rules: [
       {
-        test: /.jsx?$/,
-        include: [path.resolve(__dirname, 'src')],
-        exclude: [path.resolve(__dirname, 'node_modules')],
+        test: /\.js$/,
         loader: 'babel-loader',
       }
     ]
   },
-  watch: true,
-  devtool: 'source-map',
-  resolve: {
-    extensions: ['.json', '.js', '.jsx']
-  },
   output: {
-    path: path.join(__dirname, 'build'),
-    publicPath: '/build/',
-    filename: "bundle.js",
-    chunkFilename: '[name].js'
-  },
-  devServer: {
-    contentBase: path.join(__dirname, '/build/'),
-    compress: true,
-    inline: true,
-    host: 'localhost',
-    port: 7000,
-  },
+    filename: 'bundle.js',
+    path: path.join(__dirname, 'build')
+  }
 }

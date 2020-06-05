@@ -6,9 +6,9 @@
   "description": "platforms-pwa",
   "license": "MIT",
   "scripts": {
-    "dev": "rm -rf build && webpack-dev-server",
+    "start": "rm -rf build && webpack-dev-server",
     "watch": "webpack --config webpack.config.js",
-    "build": "rm -rf build && webpack --config webpack.config.prod.js"
+    "build": "rm -rf build && webpack --config webpack.prod.js"
   },
   "dependencies": {
     "@types/react": "^16.8.0",

@@ -1,9 +1,11 @@
 const path = require('path')
+const nodeExternals = require('webpack-node-externals')
 
 module.exports = {
-  entry: path.join(__dirname, 'src', 'index'),
   mode: 'production',
-  watch: true,
+  entry: path.join(__dirname, 'src', 'index'),
+  target: 'node',
+  externals: [nodeExternals()],
   module: {
     rules: [
       {
@@ -12,10 +14,13 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    extensions: ['.json', '.js', '.jsx']
+  },
   output: {
-    filename: "bundle.js",
-    path: path.join(__dirname, 'build'),
-    publicPath: '/build/',
+    filename: 'bundle.js',
+    path: path.join(__dirname, 'out'),
+    publicPath: '/out/',
     chunkFilename: '[name].js'
   }
 }

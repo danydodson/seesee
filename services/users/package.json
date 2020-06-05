@@ -4,6 +4,7 @@
   "main": "index.js",
   "author": "Dany Dodson",
   "description": "users-service",
+  "license": "MIT",
   "scripts": {
     "build": "webpack --progress",
     "watch": "babel-watch -L src/index.js",
@@ -30,6 +31,5 @@
     "webpack": "~4.41.5",
     "webpack-cli": "~3.3.10",
     "webpack-node-externals": "~1.7.2"
-  },
-  "license": "MIT"
+  }
 }

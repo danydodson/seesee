@@ -4,26 +4,29 @@
   "main": "index.js",
   "author": "Dany Dodson",
   "description": "gateway-client",
+  "license": "MIT",
   "scripts": {
     "build": "webpack --progress",
     "watch": "babel-watch -L src/index.js"
   },
   "dependencies": {
-    "@babel/core": "~7.9.6",
-    "@babel/polyfill": "~7.8.7",
-    "@babel/preset-env": "~7.9.6",
     "apollo-server": "~2.13.1",
     "apollo-server-express": "~2.13.1",
-    "babel-loader": "~8.1.0",
-    "babel-plugin-module-resolver": "~4.0.0",
-    "babel-watch": "~7.0.0",
     "cookie-parser": "~1.4.5",
     "cors": "~2.8.5",
     "dotenv": "~8.2.0",
     "express": "~4.17.1",
     "got": "~11.1.4",
+    "lodash": "~4.17.15"
+  },
+  "devDependencies": {
+    "@babel/core": "~7.9.6",
+    "@babel/polyfill": "~7.8.7",
+    "@babel/preset-env": "~7.9.6",
+    "babel-loader": "~8.1.0",
+    "babel-plugin-module-resolver": "~4.0.0",
+    "babel-watch": "~7.0.0",
     "nodemon": "^2.0.4",
-    "lodash": "~4.17.15",
     "webpack": "~4.43.0",
     "webpack-cli": "~3.3.11",
     "webpack-node-externals": "~1.7.2"

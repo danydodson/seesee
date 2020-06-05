@@ -7,4 +7,5 @@ module.exports = {
     ['babel-plugin-styled-components'],
     ['module-resolver', { alias: { '#root': './src' } }],
   ],
+  ignore: ['node_modules', 'build'],
 }

@@ -1,10 +1,7 @@
 {
-  "remoteAuthority":"wsl+Ubuntu",
-  // aws code deploy
-  "codedeploy.applicationName": "seesee",
   "codedeploy.region": "us-east-1",
+  "codedeploy.applicationName": "seesee",
   "codedeploy.isApplicationWorkspace": true,
-  // seesee lightsail rsync
   "sync-rsync.sites": [
     {
       "name": "pwa",
@@ -35,14 +32,8 @@
       "exclude": ["**/.git", "**/.vscode", "**/.cache", "**/assets", "**/build", "**/node_modules", "**/pwa", "**/docker-compose.dev.yml", "**/docker-compose.staged.yml"],
     },
   ],
-  // favorites storage location
-  "favorites.storageFilePath": "../../working/.favorites.json",
-  // git settings
   "git.ignoreLimitWarning": true,
-  "search.exclude": {
-    "**/build": true,
-    "**/node_modules": true,
-    "**/yarn-error.log": true,
-    "**/yarn.lock": true
-  }
+  "favorites.storageFilePath": "../../working/.favorites.json",
+  "search.exclude": { "**/build": true, "**/node_modules": true, "**/yarn-error.log": true, "**/yarn.lock": true },
+  // "remoteAuthority": "wsl+Ubuntu",
 }

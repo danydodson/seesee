@@ -1,115 +1,76 @@
 version: '3'
 services:
-
-  # ==========================================#
-  #  gateway/client                           #
-  # ==========================================#
-
-  gateway_client:
-    container_name: gateway_client
-    build: ./gateway/client/
-    environment:
-      LISTINGS_SERVICE_URI: http://listings_service:7100
-      USERS_SERVICE_URI: http://users_service:7101
-    # volumes: 
-    #   - ./gateway/client:/usr/src/app
-    ports:
-      - "7000:7000"
-    depends_on:
-      - listings_service
-      - users_service
-    networks:
-      - services_network
-
-  # ==========================================#
-  #  services/users                           #
-  # ==========================================#
   
   users_service:
     container_name: users_service
     build: ./services/users/
     environment:
-      - DB_URI=mysql://root:password@users_service_db/db?charset=UTF8
-    # volumes: 
-    #   - ./services/users:/usr/src/app
-    ports: 
-      - "7101:7101"
-    depends_on:
+      DB_URI: 'mysql://root:password@users_service_db/db?charset=UTF8'
+      SERVICE_NAME: users_service
+    ports:
+      - '7101:7101'
+    links:
       - users_service_db
-    networks:
-      - services_network
-
-  # ==========================================#
-  #  services/users:db                        #
-  # ==========================================#
 
   users_service_db:
     container_name: users_service_db
-    image: mysql:5.7.20
+    image: 'mysql:5.7.20'
     environment:
       MYSQL_DATABASE: db
       MYSQL_ROOT_PASSWORD: password
     ports:
-      - "0.0.0.0:7201:3306"
-    networks:
-      - services_network
-
-  # ==========================================#
-  #  services/listings                        #
-  # ==========================================#
-
+      - '0.0.0.0:7201:3306'
+      
   listings_service:
     container_name: listings_service
     build: ./services/listings/
     environment:
-      DB_URI: mysql://root:password@listings_service_db/db?charset=UTF8
-    # volumes: 
-    #   - ./services/listings:/usr/src/app
-    ports: 
-      - 7100:7100
-    depends_on:
+      DB_URI: 'mysql://root:password@listings_service_db/db?charset=UTF8'
+      SERVICE_NAME: listings_service
+    ports:
+      - '7100:7100'
+    links:
       - listings_service_db
-    networks:
-      - services_network
-
-  # ==========================================#
-  #  services/listings:db                     #
-  # ==========================================#
 
   listings_service_db:
     container_name: listings_service_db
-    image: mysql:5.7.20
+    image: 'mysql:5.7.20'
     environment:
       MYSQL_DATABASE: db
       MYSQL_ROOT_PASSWORD: password
     ports:
-      - 0.0.0.0:7200:3306
-    networks:
-      - services_network
+      - '0.0.0.0:7200:3306'
 
-  # ==========================================#
-  #  services/nginx                           #
-  # ==========================================#
-  
-  # nginx_service:
-  #   container_name: nginx_service
-  #   build: ./services/nginx
-  #   restart: unless-stopped
-  #   volumes: 
-  #     - ./platforms/pwa:/usr/src/app
-  #   ports:
-  #     - 80:80
-  #   networks:
-  #     - services_network
+  api_gateway:
+    container_name: api_gateway
+    build: ./services/nginx
+    restart: always
+    depends_on:
+      - users_service
+      - listings_service
+    ports:
+      - 80
 
-# ==========================================#
-#  global volumes                           #
-# ==========================================#
+  client_api:
+    container_name: client_api
+    build: ./gateway/client/
+    environment:
+      LISTINGS_SERVICE_URI: 'http://listings_service:7100'
+      USERS_SERVICE_URI: 'http://users_service:7101'
+    ports:
+      - '7000:7000'
+    links:
+      - listings_service
+      - users_service
+    depends_on:
+      - listings_service
+      - users_service
 
-# ==========================================#
-#  global networks                          #
-# ==========================================#
-  
-networks:
-  services_network:
-    driver: bridge
+  datadog:
+    links:
+      - api_gateway
+      - users_service_db
+      - listings_service_db
+    image: 'datadog/agent:latest'
+    environment:
+      DD_API_KEY: d9ea5db53324fb66e0be658b2c66da8c

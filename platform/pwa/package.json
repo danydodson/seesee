@@ -1,7 +1,9 @@
 {
-  "name": "react-pwa",
-  "version": "2.2.10",
-  "description": "A highly scalable, Progressive Web Application foundation with the best Developer Experience (DX).",
+  "name": "seesee-pwa",
+  "version": "1.0.0",
+  "author": "Dany Dodson",
+  "description": "seesee pwa platform",
+  "license": "MIT",
   "scripts": {
     "start": "pawjs --no-cache --env=development start",
     "build": "pawjs --no-cache --env-config-path=./.prod.env --env=production build",
@@ -9,29 +11,6 @@
     "lint": "pawjs lint",
     "test": "pawjs --no-cache test"
   },
-  "author": {
-    "name": "Atyantik Technologies",
-    "email": "admin@atyantik.com",
-    "url": "https://www.atyantik.com/"
-  },
-  "contributors": [
-    {
-      "name": "Tirth Bodawala",
-      "email": "tirthbodawala@atyantik.com",
-      "url": "https://www.atyantik.com/"
-    },
-    {
-      "name": "Yash Thakur",
-      "email": "thakur.yash514@gmail.com",
-      "url": "http://yashthakur.in/"
-    },
-    {
-      "name": "Ajay Patel",
-      "email": "ajaypatel@atyantik.com",
-      "url": "https://www.atyantik.com/"
-    }
-  ],
-  "license": "MIT",
   "dependencies": {
     "@pawjs/image-optimizer": "^2.2.6",
     "@pawjs/pawjs": "^3.0.2-beta.6",

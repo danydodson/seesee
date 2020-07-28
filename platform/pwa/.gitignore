@@ -23,7 +23,7 @@ jspm_packages/*
 # yarn files
 .yarn-integrity
 
-# dotenv file
+# dotenv files
 .env
 .env.local
 .env.development.local
@@ -32,3 +32,6 @@ jspm_packages/*
 
 # misc
 .DS_Store
+
+# typescript files
+typings/

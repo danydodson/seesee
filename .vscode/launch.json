@@ -8,18 +8,14 @@
       "name": "Launch in Docker",
       // "preLaunchTask": "tsc-watch",
       "runtimeExecutable": "npm",
-      "runtimeArgs": [ "run", "docker-debug" ],
+      "runtimeArgs": ["run", "docker-debug"],
       "port": 5858,
       "restart": true,
       "timeout": 60000,
       "localRoot": "${workspaceFolder}/dist",
       "remoteRoot": "/server",
-      "outFiles": [
-        "${workspaceFolder}/dist/**/*.js"
-      ],
-      "skipFiles": [
-        "<node_internals>/**/*.js",
-      ],
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "skipFiles": ["<node_internals>/**/*.js", ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
     },
@@ -29,7 +25,7 @@
       "request": "launch",
       "type": "pwa-node",
       "program": "${workspaceFolder}/services/sample/dist/index.js",
-      "skipFiles": ["<node_internals>/**"],
+      "skipFiles": ["<node_internals>/**"]
     },
     // launch the users service using node
     {
@@ -37,7 +33,7 @@
       "request": "launch",
       "type": "pwa-node",
       "program": "${workspaceFolder}/services/users/dist/index.js",
-      "skipFiles": ["<node_internals>/**"],
+      "skipFiles": ["<node_internals>/**"]
     },
     // launch the listings service using node
     {
@@ -45,7 +41,7 @@
       "request": "launch",
       "type": "pwa-node",
       "program": "${workspaceFolder}/services/listings/dist/index.js",
-      "skipFiles": ["<node_internals>/**"],
+      "skipFiles": ["<node_internals>/**"]
     },
     // debug a bash script
     {
@@ -55,7 +51,7 @@
       "terminalKind": "integrated",
       "program": "${command:SelectScriptName}",
       "cwd": "${workspaceFolder}",
-      "args": [],
-    },
+      "args": []
+    }
   ]
 }

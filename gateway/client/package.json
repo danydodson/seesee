@@ -1,34 +1,35 @@
 {
-  "name": "gateway-client",
+  "name": "seesee-gateway-client",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Dany Dodson",
-  "description": "gateway-client",
+  "description": "gateway client microservice",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --progress",
-    "watch": "babel-watch -L src/index.js"
+    "build": "npx babel . -d build",
+    "serve": "node build/src/index.js",
+    "start": "babel-watch src/index.js -m '⏳⏳ [ - - - - - restarting - - - - - ] ⏳⏳'",
+    "clean": "rm -rf build && rm -rf node_modules && yarn install && yarn build"
   },
   "dependencies": {
-    "apollo-server": "~2.13.1",
-    "apollo-server-express": "~2.13.1",
-    "cookie-parser": "~1.4.5",
-    "cors": "~2.8.5",
-    "dotenv": "~8.2.0",
-    "express": "~4.17.1",
-    "got": "~11.1.4",
-    "lodash": "~4.17.15"
+    "core-js": "3.6.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "express-jwt": "^6.0.0",
+    "got": "^11.5.1",
+    "helmet": "^3.23.3",
+    "is-docker": "^2.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.20",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.6",
-    "@babel/polyfill": "~7.8.7",
-    "@babel/preset-env": "~7.9.6",
-    "babel-loader": "~8.1.0",
-    "babel-plugin-module-resolver": "~4.0.0",
-    "babel-watch": "~7.0.0",
-    "nodemon": "^2.0.4",
-    "webpack": "~4.43.0",
-    "webpack-cli": "~3.3.11",
-    "webpack-node-externals": "~1.7.2"
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-watch": "^7.0.0"
   }
 }

@@ -1,13 +1,29 @@
-FROM node:14
+FROM node:lts-alpine
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN apk add --update --no-cache \
+  bash \
+  curl \
+  ranger \
+  zsh \
+  git
 
-COPY yarn* /usr/src/app/
-COPY package* /usr/src/app/
+RUN mkdir -p /home/node/app/node_modules && \
+  chown -R node:node /home/node/app
 
-RUN yarn install
+WORKDIR /home/node
 
-COPY . /usr/src/app/
+USER node
 
-CMD ["yarn", "watch"]
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+COPY dotfiles/.zshrc .
+COPY yarn.lock app
+COPY package.json app
+
+WORKDIR /home/node/app
+
+RUN yarn --pure-lockfile
+
+COPY . .
+
+CMD [ "yarn", "start" ]

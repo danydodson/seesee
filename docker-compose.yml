@@ -1,76 +1,70 @@
 version: '3'
 services:
-  
-  users_service:
-    container_name: users_service
-    build: ./services/users/
-    environment:
-      DB_URI: 'mysql://root:password@users_service_db/db?charset=UTF8'
-      SERVICE_NAME: users_service
-    ports:
-      - '7101:7101'
-    links:
-      - users_service_db
 
-  users_service_db:
-    container_name: users_service_db
-    image: 'mysql:5.7.20'
-    environment:
-      MYSQL_DATABASE: db
-      MYSQL_ROOT_PASSWORD: password
-    ports:
-      - '0.0.0.0:7201:3306'
-      
-  listings_service:
-    container_name: listings_service
-    build: ./services/listings/
-    environment:
-      DB_URI: 'mysql://root:password@listings_service_db/db?charset=UTF8'
-      SERVICE_NAME: listings_service
-    ports:
-      - '7100:7100'
-    links:
-      - listings_service_db
-
-  listings_service_db:
-    container_name: listings_service_db
-    image: 'mysql:5.7.20'
-    environment:
-      MYSQL_DATABASE: db
-      MYSQL_ROOT_PASSWORD: password
-    ports:
-      - '0.0.0.0:7200:3306'
-
-  api_gateway:
-    container_name: api_gateway
-    build: ./services/nginx
+  platform_pwa:
+    build: platform/pwa
+    container_name: platform_pwa
     restart: always
+    ports:
+      - '3000'
+    volumes:
+      - /home/node/app/node_modules
+      - './platform/pwa:/home/node/app'
+    networks:
+      - app_network
+    depends_on:
+      - gateway_proxy
+      
+  gateway_proxy:
+    build: gateway/proxy
+    container_name: gateway_proxy
+    restart: always
+    ports:
+      - '3050:80'
+    networks:
+      - app_network
     depends_on:
       - users_service
-      - listings_service
-    ports:
-      - 80
+      - profiles_service
+      - posts_service
+      - gateway_client
+      
+  gateway_client:
+    build: gateway/client
+    container_name: gateway_client
+    restart: always
+    volumes:
+      - /home/node/app/node_modules
+      - './gateway/client:/home/node/app'
+    networks:
+      - app_network
 
-  client_api:
-    container_name: client_api
-    build: ./gateway/client/
-    environment:
-      LISTINGS_SERVICE_URI: 'http://listings_service:7100'
-      USERS_SERVICE_URI: 'http://users_service:7101'
-    ports:
-      - '7000:7000'
-    links:
-      - listings_service
-      - users_service
-    depends_on:
-      - listings_service
-      - users_service
+  users_service:
+    build: services/users
+    container_name: users_service
+    volumes:
+      - /home/node/app/node_modules
+      - './services/users:/home/node/app'
+    networks:
+      - app_network
 
-  datadog:
-    links:
-      - api_gateway
-      - users_service_db
-      - listings_service_db
-    image: 'datadog/agent:latest'
-    environment:
-      DD_API_KEY: d9ea5db53324fb66e0be658b2c66da8c
+  profiles_service:
+    build: services/profiles
+    container_name: profiles_service
+    volumes:
+      - /home/node/app/node_modules
+      - './services/profiles:/home/node/app'
+    networks:
+      - app_network
+
+  posts_service:
+    build: services/posts
+    container_name: posts_service
+    volumes:
+      - /home/node/app/node_modules
+      - './services/posts:/home/node/app'
+    networks:
+      - app_network
+
+networks:
+  app_network: null

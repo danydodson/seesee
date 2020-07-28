@@ -1,36 +1,51 @@
-FROM node:lts-alpine as builder
+FROM node:lts-alpine
 
-RUN apk add --update --no-cache \
-  bash \
-  curl \
-  ranger \
-  zsh \
-  git
+ENV UID=1000
+ENV GID=1000
+ENV BUILD_ENV=demo
 
-RUN mkdir -p /home/node/app/node_modules && \
-  chown -R node:node /home/node/app
+WORKDIR /app/
 
-WORKDIR /home/node
+RUN apk update && \
+  apk  --no-cache add --update \
+  build-base \
+  libtool \
+  autoconf \
+  automake \
+  jq \
+  openssh \
+  python \
+  zlib-dev \
+  jpeg-dev \
+  libpng-dev \
+  tiff-dev \
+  giflib-dev \
+  nasm
 
-USER node
+COPY . /app/
 
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+RUN npm i --production
 
-COPY dotfiles/.zshrc .
-COPY yarn.lock app
-COPY package.json app
+RUN npm run build:${BUILD_ENV}
 
-WORKDIR /home/node/app
+# Clear extra files from we just need dist
+RUN find . -not -path '**/dist/*' -exec rm -f {} + > /dev/null 2>&1 | echo 'OK'
 
-RUN yarn --pure-lockfile
+# Remove build installs
+RUN apk del \
+  build-base \
+  libtool \
+  autoconf \
+  automake \
+  jq \
+  openssh \
+  python \
+  zlib-dev \
+  jpeg-dev \
+  libpng-dev \
+  tiff-dev \
+  giflib-dev \
+  nasm && \
+  rm -rf /var/cache/apk/*
 
-COPY . .
-
-RUN yarn build
-
-FROM nginx:mainline-alpine
-
-EXPOSE 3000
-
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /home/node/app/build /usr/share/nginx/html
+CMD ["node", "dist/server.js"]

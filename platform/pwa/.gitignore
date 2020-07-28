@@ -25,7 +25,7 @@ jspm_packages/*
 
 # dotenv files
 .env
-.env.demo
+.env.dev
 .env.prod
 .env.local
 .env.development.local

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default () => (
   <section className="hero is-info is-fullheight">
@@ -15,4 +15,4 @@ export default () => (
       </div>
     </div>
   </section>
-);
+)

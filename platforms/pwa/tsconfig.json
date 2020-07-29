@@ -10,9 +10,11 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
-    "outDir": "dist"
+    "outDir": "dist",
+    "rootDir": "src",
   },
   "include": [
+    "**/*.js",
     "**/*.ts",
     "**/*.tsx"
   ],

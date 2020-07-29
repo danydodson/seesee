@@ -1,27 +1,28 @@
-export default {
-  title: process.env.APP_NAME,
-  // title: 'SeeSee.Space',
-  description: process.env.APP_DESCRIPTION,
-  // description: 'A highly scalable & plug-able, Progressive Web Application foundation with the best Developer Experience.',
+import SocialShareImg from './resources/img/Social-Share-Image.gif'
 
+export default {
+  title: 'SeeSee',
+  name: 'SeeSee',
+  type: 'website',
+  site_name: 'SeeSee',
+  url: 'https://www.seesee.space',
+  description: 'SeeSee Web App',
   keywords: [],
-  image: 'https://ik.imagekit.io/vdyy86fmjx/github_images/yoda_9CJiDeRne.gif',
+  image: SocialShareImg,
+  type_details: {
+    section: '',
+    published_time: '',
+    modified_time: '',
+  },
   twitter: {
     card: 'summary_large_image',
     site: '@dany_dodson',
     creator: 'Dany Dodson',
     title: 'seesee.space',
-    description: process.env.APP_DESCRIPTION,
-    // description: 'A highly scalable & plug-able, Progressive Web Application foundation with the best Developer Experience.',
-    image: 'https://ik.imagekit.io/vdyy86fmjx/github_images/yoda_9CJiDeRne.gif',
+    description: 'SeeSee Web App',
+    image: SocialShareImg,
   },
   facebook: {
     admins: [],
   },
-  type: 'article', // article/product/music/video
-  type_details: {
-    section: '', // Lifestyle/sports/news
-    published_time: '',
-    modified_time: '',
-  },
-};
+}

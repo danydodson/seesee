@@ -1,9 +1,24 @@
+import ReduxServer from '@pawjs/redux/server'
+import * as reducers from './reducers'
 import React from 'react';
-import ReactPWAIcon from './resources/img/pwa-icon-512x512.png';
+import FavIcon from './resources/img/icon-512x512.png';
 
 export default class Server {
+  
+  constructor({ addPlugin }) {
+    const reduxServer = new ReduxServer({ addPlugin });
+    reduxServer.setReducers(reducers);
+    addPlugin(reduxServer);
+  }
+
   // eslint-disable-next-line
   apply(serverHandler) {
+
+    serverHandler.hooks.reduxInitialState.tapPromise('ReduxInitialState', async ({ getInitialState, setInitialState }) => {
+      const initialState = Object.assign({}, getInitialState(), appInitialState)
+      setInitialState(initialState)
+    })
+
     serverHandler.hooks.beforeHtmlRender.tapPromise('DSNPreCache', async (Application) => {
       const { htmlProps: { head } } = Application;
       head.push(<link key="dns-precache-demo-cdn" rel="preconnect" href="https://demo-cdn.reactpwa.com" />);
@@ -15,7 +30,7 @@ export default class Server {
 
     serverHandler.hooks.beforeHtmlRender.tapPromise('AddFavIcon', async (Application) => {
       const { htmlProps: { head } } = Application;
-      head.push(<link key="favicon" rel="shortcut icon" type="image/png" href={ReactPWAIcon} />);
+      head.push(<link key="favicon" rel="shortcut icon" type="image/png" href={FavIcon} />);
       return true;
     });
 

@@ -3,6 +3,7 @@ import AuthRoutes from './pages/auth';
 import SplashScreen from './pages/splash';
 
 export default class Routes {
+
   // eslint-disable-next-line
   apply(routeHandler) {
     const routes = [
@@ -15,4 +16,5 @@ export default class Routes {
       routeHandler.addRoutes(routes);
     });
   }
+  
 }

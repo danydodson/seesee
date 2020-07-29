@@ -6,8 +6,8 @@ export default [
     exact: true,
     component: () => import('../components/splash'),
     seo: {
-      title: 'ReactPWA: A developer friendly ReactJS boilerplate | ReactPWA Demo',
-      description: 'Create Upgradable, SEO friendly Progressive web applications with ReactPWA. Its fast and developer friendly and more importantly its UPGRADABLE!',
+      title: 'seessee.space',
+      description: 'seessee.space is a platform, gallery, and shop for local artists.',
       image: SplashImage,
     },
   },

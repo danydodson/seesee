@@ -1,30 +1,31 @@
-import PwaIcon192 from './resources/img/pwa-icon-192x192.png';
-import PwaIcon512 from './resources/img/pwa-icon-512x512.png';
+import ShareImg72 from './resources/img/icon-72x72.png'
+import ShareImg96 from './resources/img/icon-96x96.png'
+import ShareImg128 from './resources/img/icon-128x128.png'
+import ShareImg144 from './resources/img/icon-144x144.png'
+import ShareImg152 from './resources/img/icon-152x152.png'
+import ShareImg192 from './resources/img/icon-192x192.png'
+import ShareImg384 from './resources/img/icon-384x384.png'
+import ShareImg512 from './resources/img/icon-512x512.png'
 
 export default {
-  name: process.env.APP_NAME,
-  short_name: process.env.APP_SHORT_NAME,
-  // Possible values ltr(left to right)/rtl(right to left)
+  name: 'SeeSee',
+  short_name: 'seesee',
   dir: 'ltr',
-  // language: Default en-US
-  lang: 'en-US',
-  // Orientation of web-app possible:
-  // any, natural, landscape, landscape-primary, landscape-secondary,
-  // portrait, portrait-primary, portrait-secondary
   orientation: 'any',
+  lang: 'en-US',
   start_url: '/',
-  background_color: '#fff',
   theme_color: '#fff',
+  background_color: '#fff',
   display: 'standalone',
-  description: process.env.APP_DESCRIPTION,
+  description: 'SeeSee Web App',
   icons: [
-    {
-      src: PwaIcon192,
-      sizes: '192x192',
-    },
-    {
-      src: PwaIcon512,
-      sizes: '512x512',
-    },
+    { src: ShareImg72, sizes: '72x72', },
+    { src: ShareImg96, sizes: '96x96', },
+    { src: ShareImg128, sizes: '128x128', },
+    { src: ShareImg144, sizes: '144x144', },
+    { src: ShareImg152, sizes: '152x152', },
+    { src: ShareImg192, sizes: '192x192', },
+    { src: ShareImg384, sizes: '384x384', },
+    { src: ShareImg512, sizes: '512x512', },
   ],
 };

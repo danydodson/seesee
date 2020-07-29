@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:lts-alpine as builder
 
 ENV UID=1000
 ENV GID=1000
@@ -66,4 +66,16 @@ RUN apk del \
   nasm && \
   rm -rf /var/cache/apk/*
 
-CMD ["node", "build/server.js"]
+# production
+FROM nginx:latest
+
+RUN rm -rf /etc/nginx/conf.d
+
+COPY default.conf /etc/nginx
+COPY --from=builder /home/node/app/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+RUN chown nginx.nginx /usr/share/nginx/html/ -R
+
+# CMD ["nginx", "-g", "daemon off;"]

@@ -6,7 +6,7 @@ services:
     container_name: platform_pwa
     restart: always
     ports:
-      - '3000'
+      - '9090'
     volumes:
       - /home/node/app/node_modules
       - './platform/pwa:/home/node/app'

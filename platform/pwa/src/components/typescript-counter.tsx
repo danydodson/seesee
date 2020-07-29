@@ -3,6 +3,7 @@ import GuestLayout from './guest-layout';
 
 const { useState } = React;
 
+// eslint-disable-next-line
 export default function () {
   const [counter, setCounter] = useState(0);
   const incrementCounter = (): void => {
@@ -19,11 +20,11 @@ export default function () {
         <hr />
         Counter:
         <h1 className="title is-size-1">{counter}</h1>
-        <button className="button" onClick={decrementCounter}>
+        <button type="button" className="button" onClick={decrementCounter}>
           - Decrement
         </button>
         {' '}
-        <button className="button" onClick={incrementCounter}>
+        <button type="button" className="button" onClick={incrementCounter}>
           Increment +
         </button>
       </div>

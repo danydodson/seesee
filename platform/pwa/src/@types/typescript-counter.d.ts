@@ -5,8 +5,11 @@ declare module 'guest-layout' {
     alt: string;
     name?: string;
   }
+  // eslint-disable-next-line
   class Picture extends React.Component<IProps, any> {}
   export default Picture;
 }
 
 declare module '*?sizes=400w+800w&placeholder' {}
+
+declare module '*';

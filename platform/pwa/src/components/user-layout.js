@@ -1,10 +1,10 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default class GuestLayout extends React.PureComponent {
   render() {
     // eslint-disable-next-line
-    const { children } = this.props
+    const { children } = this.props;
     return (
       <div>
         <header className="hero is-light">
@@ -42,6 +42,6 @@ export default class GuestLayout extends React.PureComponent {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

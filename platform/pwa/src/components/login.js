@@ -1,51 +1,51 @@
-import React from 'react'
-import { Redirect } from 'react-router-dom'
-import GuestLayout from './guest-layout'
-import cookie from '../libs/cookie'
-import Authenticator from './fake-authenticator'
+import React from 'react';
+import { Redirect } from 'react-router-dom';
+import GuestLayout from './guest-layout';
+import cookie from '../libs/cookie';
+import Authenticator from './fake-authenticator';
 
 export default class Login extends React.Component {
   onLoginRedirectUrl = '/dashboard';
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       loaded: false,
       loggedIn: false,
       error: '',
       errorMsg: '',
-    }
+    };
   }
 
   componentDidMount() {
-    const isLoggedIn = Authenticator.isLoggedIn()
+    const isLoggedIn = Authenticator.isLoggedIn();
     if (isLoggedIn) {
       this.setState({
         loaded: true,
         loggedIn: true,
-      })
+      });
     } else {
       this.setState({
         loaded: true,
-      })
+      });
     }
   }
 
   handleSubmit(e) {
-    if (e && e.preventDefault) e.preventDefault()
-    const loginData = new FormData(e.target)
-    const username = loginData.get('username')
-    const password = loginData.get('password')
+    if (e && e.preventDefault) e.preventDefault();
+    const loginData = new FormData(e.target);
+    const username = loginData.get('username');
+    const password = loginData.get('password');
     if (username !== 'demo' || password !== 'demo') {
       this.setState({
         error: username !== 'demo' ? 'username' : 'password',
         errorMsg: 'Please use username:password as demo:demo',
-      })
+      });
     } else {
-      cookie.setItem('secretKey', 'allowmein')
+      cookie.setItem('secretKey', 'allowmein');
       this.setState({
         loggedIn: true,
-      })
+      });
     }
   }
 
@@ -55,10 +55,10 @@ export default class Login extends React.Component {
       error,
       errorMsg,
       loaded,
-    } = this.state
-    if (!loaded) return null
+    } = this.state;
+    if (!loaded) return null;
     if (loggedIn) {
-      return <Redirect push={false} to={this.onLoginRedirectUrl} />
+      return <Redirect push={false} to={this.onLoginRedirectUrl} />;
     }
     return (
       <GuestLayout>
@@ -114,6 +114,6 @@ export default class Login extends React.Component {
           </div>
         </div>
       </GuestLayout>
-    )
+    );
   }
 }

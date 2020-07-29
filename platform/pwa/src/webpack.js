@@ -1,18 +1,19 @@
-import SassPlugin from '@pawjs/sass/webpack'
-import SrcsetPlugin from '@pawjs/srcset/webpack'
-import ImageOptimizer from '@pawjs/image-optimizer/webpack'
+import SassPlugin from '@pawjs/sass/webpack';
+import SrcsetPlugin from '@pawjs/srcset/webpack';
+import ImageOptimizer from '@pawjs/image-optimizer/webpack';
 
 export default class ProjectWebpack {
   constructor({ addPlugin }) {
-    // add sass compiler
-    addPlugin(new SassPlugin())
+    // Add sass compiler to the project
+    addPlugin(new SassPlugin());
     const optimizerOptions = {
       supportedEnv: [
         'production',
       ],
       configLabel: 'MEDIUM_QUALITY',
-    }
-    addPlugin(new ImageOptimizer(optimizerOptions))
-    addPlugin(new SrcsetPlugin())
+    };
+    addPlugin(new ImageOptimizer(optimizerOptions));
+
+    addPlugin(new SrcsetPlugin());
   }
 }

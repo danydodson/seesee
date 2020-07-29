@@ -1,12 +1,16 @@
 export default {
   title: process.env.APP_NAME,
+  site_name: process.env.APP_NAME,
   description: process.env.APP_DESCRIPTION,
   keywords: [],
-  image: 'https://ik.imagekit.io/vdyy86fmjx/github_images/yoda_9CJiDeRne.gif',
-  site_name: process.env.APP_NAME,
+  image: '',
   twitter: {
-    site: '',
-    creator: '',
+    card: 'summary_large_image',
+    site: '@dany_dodson',
+    creator: 'Dany Dodson',
+    title: 'seesee.space',
+    description: process.env.APP_DESCRIPTION,
+    image: 'https://ik.imagekit.io/vdyy86fmjx/github_images/yoda_9CJiDeRne.gif',
   },
   facebook: {
     admins: [],
@@ -17,4 +21,4 @@ export default {
     published_time: '',
     modified_time: '',
   },
-}
+};

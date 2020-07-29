@@ -28,6 +28,8 @@ typings/
 
 # dotenv files
 .env
+.demo.env
+.prod.env
 .env.dev
 .env.prod
 .env.local

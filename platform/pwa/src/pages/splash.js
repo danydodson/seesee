@@ -1,4 +1,4 @@
-import SplashImage from '../resources/img/seo/home-splash-screen.png'
+import SplashImage from '../resources/img/seo/home-splash-screen.png';
 
 export default [
   {
@@ -11,4 +11,4 @@ export default [
       image: SplashImage,
     },
   },
-]
+];

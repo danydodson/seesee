@@ -1,9 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import GuestLayout from './guest-layout'
+import React from 'react';
+import PropTypes from 'prop-types';
+import GuestLayout from './guest-layout';
 
 const Column = (props) => {
-  const { title, description, link } = props
+  const { title, description, link } = props;
   return (
     <div className="column">
       <div className="card">
@@ -29,13 +29,13 @@ const Column = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 Column.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
-}
+};
 
 export default () => (
   <GuestLayout>
@@ -118,4 +118,4 @@ export default () => (
       </div>
     </section>
   </GuestLayout>
-)
+);

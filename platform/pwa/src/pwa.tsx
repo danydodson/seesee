@@ -1,5 +1,5 @@
-import PwaIcon192 from './resources/img/pwa-icon-192x192.png'
-import PwaIcon512 from './resources/img/pwa-icon-512x512.png'
+import PwaIcon192 from './resources/img/pwa-icon-192x192.png';
+import PwaIcon512 from './resources/img/pwa-icon-512x512.png';
 
 export default {
   name: process.env.APP_NAME,
@@ -10,7 +10,7 @@ export default {
   display: 'standalone',
   start_url: '/',
   background_color: '#fff',
-  theme_color: '#209cee',
+  theme_color: '#fff',
   description: process.env.APP_DESCRIPTION,
   icons: [
     {
@@ -22,4 +22,4 @@ export default {
       sizes: '512x512',
     },
   ],
-}
+};

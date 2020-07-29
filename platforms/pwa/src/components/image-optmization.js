@@ -1,9 +1,7 @@
 import React from 'react'
 import Picture from '@pawjs/srcset/picture'
 import GuestLayout from './guest-layout'
-// eslint-disable-next-line
 import CatDog from '../resources/img/dog-cat.jpg'
-// eslint-disable-next-line
 import CatDogSrcset from '../resources/img/dog-cat.jpg?sizes=1200w+1000w+800w+600w+400w&placeholder'
 
 export default () => (

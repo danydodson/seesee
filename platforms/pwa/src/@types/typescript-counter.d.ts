@@ -5,7 +5,7 @@ declare module 'guest-layout' {
     alt: string;
     name?: string;
   }
-  // eslint-disable-next-line
+
   class Picture extends React.Component<IProps, any> {}
   export default Picture;
 }

@@ -3,7 +3,6 @@ import GuestLayout from './guest-layout'
 
 const { useState } = React
 
-// eslint-disable-next-line
 export default function () {
   const [counter, setCounter] = useState(0)
   const incrementCounter = (): void => {

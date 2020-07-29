@@ -32,7 +32,6 @@ export default class Protected extends React.Component {
 
   render() {
     const { initialized, allow } = this.state
-    // eslint-disable-next-line
     const { children } = this.props
     if (!initialized) {
       return null
@@ -42,7 +41,6 @@ export default class Protected extends React.Component {
     }
     return (
       <Route render={({ staticContext }) => {
-        // eslint-disable-next-line
         if (staticContext) staticContext.status = 403
         return <Redirect to={this.redirectUrl} />
       }}

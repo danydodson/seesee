@@ -40,11 +40,9 @@ COPY package.json app
 
 WORKDIR /home/node/app
 
-RUN yarn --pure-lockfile
-
 COPY . .
 
-RUN yarn build
+RUN yarn --pure-lockfile && yarn build
 
 # clear extra files we just need build
 RUN find . -not -path '**/build/*' -exec rm -f {} + > /dev/null 2>&1 | echo 'OK'

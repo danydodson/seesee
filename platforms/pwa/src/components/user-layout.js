@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 export default class GuestLayout extends React.PureComponent {
   render() {
-    // eslint-disable-next-line
     const { children } = this.props
     return (
       <div>

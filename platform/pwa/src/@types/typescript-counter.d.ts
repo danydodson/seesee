@@ -10,3 +10,5 @@ declare module 'guest-layout' {
 }
 
 declare module '*?sizes=400w+800w&placeholder' { }
+
+declare module "*"

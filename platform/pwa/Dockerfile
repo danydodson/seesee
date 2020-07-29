@@ -2,8 +2,7 @@ FROM node:lts-alpine
 
 ENV UID=1000
 ENV GID=1000
-
-WORKDIR /app/
+ENV BUILD_ENV=demo
 
 RUN apk update && \
   apk --no-cache add --update \
@@ -47,7 +46,7 @@ COPY . .
 
 RUN yarn build
 
-# clear extra files from we just need build
+# clear extra files we just need build
 RUN find . -not -path '**/build/*' -exec rm -f {} + > /dev/null 2>&1 | echo 'OK'
 
 # remove build installs

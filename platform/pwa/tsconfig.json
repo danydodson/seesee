@@ -10,16 +10,16 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
-    "outDir": "dist"
+    "outDir": "build"
   },
   "include": [
     "**/*.ts",
     "**/*.tsx"
   ],
   "exclude": [
-    "dist",
+    "build",
     "node_modules",
-    "**/dist/**/*",
+    "**/build/**/*",
     "src/__tests__/**",
   ]
 }

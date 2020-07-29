@@ -1,0 +1,22 @@
+{
+  "name": "Dany Dodson",
+  "short_name": "Dany",
+  "start_url": ".",
+  "lang": "en-US",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "favs/favicon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "favs/favicon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "description": "I build for the web.",
+  "background_color": "#ffffff",
+  "theme_color": "#74bae9"
+}

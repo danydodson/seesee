@@ -1,6 +1,8 @@
 import * as React from 'react'
 import GuestLayout from './guest-layout'
 
+declare module 'guest-layout'
+
 const { useState } = React
 
 export default function () {

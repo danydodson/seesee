@@ -1,0 +1,15 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Dany Dodson -- Owner -- https://twitter.com/dany_dodson
+
+# THANKS
+
+    Dany Dodson
+
+# TECHNOLOGY COLOPHON
+
+    CSS3, HTML5
+    Nginx Server Configs, React.js, Express.js

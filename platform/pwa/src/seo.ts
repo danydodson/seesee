@@ -2,7 +2,7 @@ export default {
   title: process.env.APP_NAME,
   description: process.env.APP_DESCRIPTION,
   keywords: [],
-  image: '',
+  image: 'https://ik.imagekit.io/vdyy86fmjx/github_images/yoda_9CJiDeRne.gif',
   site_name: process.env.APP_NAME,
   twitter: {
     site: '',
@@ -17,4 +17,4 @@ export default {
     published_time: '',
     modified_time: '',
   },
-};
+}

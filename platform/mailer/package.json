@@ -1,0 +1,15 @@
+{
+  "name": "seesee-platform-mailer",
+  "version": "1.0.0",
+  "author": "Dany Dodson",
+  "description": "news mailer app",
+  "license": "MIT",
+  "scripts": {
+    "build": "pwd",
+    "serve": "pwd",
+    "start": "pwd",
+    "clean": "rm -rf build && rm -rf node_modules && yarn install && yarn build"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

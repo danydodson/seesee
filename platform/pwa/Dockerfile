@@ -2,12 +2,11 @@ FROM node:lts-alpine
 
 ENV UID=1000
 ENV GID=1000
-ENV BUILD_ENV=demo
 
 WORKDIR /app/
 
 RUN apk update && \
-  apk  --no-cache add --update \
+  apk --no-cache add --update \
   build-base \
   libtool \
   autoconf \
@@ -20,18 +19,38 @@ RUN apk update && \
   libpng-dev \
   tiff-dev \
   giflib-dev \
-  nasm
+  nasm \
+  bash \
+  curl \
+  ranger \
+  zsh \
+  git
 
-COPY . /app/
+RUN mkdir -p /home/node/app/node_modules && \
+  chown -R node:node /home/node/app
 
-RUN npm i --production
+WORKDIR /home/node
 
-RUN npm run build:${BUILD_ENV}
+USER node
 
-# Clear extra files from we just need dist
-RUN find . -not -path '**/dist/*' -exec rm -f {} + > /dev/null 2>&1 | echo 'OK'
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-# Remove build installs
+COPY dotfiles/.zshrc .
+COPY yarn.lock app
+COPY package.json app
+
+WORKDIR /home/node/app
+
+RUN yarn --pure-lockfile
+
+COPY . .
+
+RUN yarn build
+
+# clear extra files from we just need build
+RUN find . -not -path '**/build/*' -exec rm -f {} + > /dev/null 2>&1 | echo 'OK'
+
+# remove build installs
 RUN apk del \
   build-base \
   libtool \
@@ -48,4 +67,4 @@ RUN apk del \
   nasm && \
   rm -rf /var/cache/apk/*
 
-CMD ["node", "dist/server.js"]
+CMD ["node", "build/server.js"]

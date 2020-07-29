@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export default () => (
   <footer className="footer">
@@ -26,4 +26,4 @@ export default () => (
       </div>
     </div>
   </footer>
-);
+)

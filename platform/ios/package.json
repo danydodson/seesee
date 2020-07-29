@@ -2,13 +2,12 @@
   "name": "seesee-platform-pwa",
   "version": "1.0.0",
   "author": "Dany Dodson",
-  "description": "seesee.space progressive web app",
+  "description": "progressive web app",
   "license": "MIT",
   "scripts": {
     "start": "pawjs --no-cache --env=development start",
     "build": "pawjs --no-cache --env-config-path=./.env.dev --env=production build && mv dist build",
     "prod": "pawjs --no-cache --env-config-path=./.env.prod --env=production build && mv dist build",
-    "lint": "pawjs lint",
     "test": "pawjs --no-cache test",
     "clean": "rm -rf build && rm -rf node_modules && yarn install && yarn build"
   },

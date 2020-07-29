@@ -1,4 +1,4 @@
-import LoginImage from '../resources/img/seo/login.png';
+import LoginImage from '../resources/img/seo/login.png'
 
 export default [
   {
@@ -27,4 +27,4 @@ export default [
       title: 'User dashboard | ReactPWA Demo',
     },
   },
-];
+]

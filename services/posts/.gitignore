@@ -23,12 +23,11 @@ jspm_packages/*
 # yarn files
 .yarn-integrity
 
-# dotenv file
+# dotenv files
 .env
+.env.dev
+.env.prod
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
 
 # misc
 .DS_Store

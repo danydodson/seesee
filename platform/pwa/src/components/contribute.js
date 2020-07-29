@@ -1,5 +1,5 @@
-import React from 'react';
-import GuestLayout from './guest-layout';
+import React from 'react'
+import GuestLayout from './guest-layout'
 
 export default () => (
   <GuestLayout>
@@ -57,4 +57,4 @@ export default () => (
       <script async src="https://opencollective.com/react-pwa/banner.js" />
     </div>
   </GuestLayout>
-);
+)

@@ -1,12 +1,12 @@
 {
   "version": "0.2.0",
   "configurations": [
+
     // debug in docker
     {
       "type": "node",
       "request": "launch",
       "name": "Launch in Docker",
-      // "preLaunchTask": "tsc-watch",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "docker-debug"],
       "port": 5858,
@@ -19,6 +19,7 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
     },
+
     // launch the sample service using node
     {
       "name": "Sample API",
@@ -27,6 +28,7 @@
       "program": "${workspaceFolder}/services/sample/dist/index.js",
       "skipFiles": ["<node_internals>/**"]
     },
+
     // launch the users service using node
     {
       "name": "Users API",
@@ -35,6 +37,7 @@
       "program": "${workspaceFolder}/services/users/dist/index.js",
       "skipFiles": ["<node_internals>/**"]
     },
+
     // launch the listings service using node
     {
       "name": "Listings API",
@@ -43,6 +46,7 @@
       "program": "${workspaceFolder}/services/listings/dist/index.js",
       "skipFiles": ["<node_internals>/**"]
     },
+
     // debug a bash script
     {
       "name": "Bash Debug",

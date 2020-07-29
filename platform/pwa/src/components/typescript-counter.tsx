@@ -1,18 +1,18 @@
-import * as React from 'react';
-import GuestLayout from './guest-layout';
+import * as React from 'react'
+import GuestLayout from './guest-layout'
 
-const { useState } = React;
+const { useState } = React
 
 export default function () {
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState(0)
   const incrementCounter = (): void => {
-    setCounter(counter + 1);
-  };
+    setCounter(counter + 1)
+  }
   const decrementCounter = (): void => {
     if (counter > 0) {
-      setCounter(counter - 1);
+      setCounter(counter - 1)
     }
-  };
+  }
   return (
     <GuestLayout>
       <div className="container p-b-md p-r-md p-l-md has-text-centered">
@@ -28,5 +28,5 @@ export default function () {
         </button>
       </div>
     </GuestLayout>
-  );
+  )
 }

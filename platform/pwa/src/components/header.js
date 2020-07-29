@@ -1,30 +1,30 @@
-import React, { PureComponent } from 'react';
-import { Link } from 'react-router-dom';
+import React, { PureComponent } from 'react'
+import { Link } from 'react-router-dom'
 
 export default class Header extends PureComponent {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       open: false,
-    };
+    }
   }
 
   toggleMenuBar(e) {
-    const { open } = this.state;
+    const { open } = this.state
     if (e && e.preventDefault) {
-      e.preventDefault();
+      e.preventDefault()
     }
     this.setState({
       open: !open,
-    });
+    })
   }
 
   closeMenuBar() {
-    this.setState({ open: false });
+    this.setState({ open: false })
   }
 
   render() {
-    const { open } = this.state;
+    const { open } = this.state
     return (
       <div>
         <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -81,6 +81,6 @@ export default class Header extends PureComponent {
           </div>
         </nav>
       </div>
-    );
+    )
   }
 }

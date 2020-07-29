@@ -1,9 +1,9 @@
-import fetch from 'universal-fetch';
-import skeleton from '../components/skeleton';
-import FeaturesImage from '../resources/img/seo/features.png';
-import CSSGlobalLocalImage from '../resources/img/seo/css-global-local.png';
-import SkeletonImage from '../resources/img/seo/skeleton-loading.png';
-import ImageOptimizationImage from '../resources/img/seo/image-optimization.png';
+import fetch from 'universal-fetch'
+import skeleton from '../components/skeleton'
+import FeaturesImage from '../resources/img/seo/features.png'
+import CSSGlobalLocalImage from '../resources/img/seo/css-global-local.png'
+import SkeletonImage from '../resources/img/seo/skeleton-loading.png'
+import ImageOptimizationImage from '../resources/img/seo/image-optimization.png'
 
 export default [
   {
@@ -43,8 +43,8 @@ export default [
       setTimeout(() => {
         fetch('https://www.atyantik.com/wp-json/wp/v2/posts/?per_page=4&_fields[]=title&_fields[]=excerpt&_fields[]=jetpack_featured_media_url')
           .then(res => res.json())
-          .then(res => r(res));
-      }, 1000);
+          .then(res => r(res))
+      }, 1000)
     }),
     component: () => import('../components/skeleton-loading'),
     skeleton,
@@ -73,4 +73,4 @@ export default [
       description: 'Be a part of larger family. Get involved with us and support our project ReactPWA',
     },
   },
-];
+]

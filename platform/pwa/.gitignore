@@ -20,6 +20,9 @@ pids
 node_modules/*
 jspm_packages/*
 
+# Typescript v1 declaration files
+typings/
+
 # yarn files
 .yarn-integrity
 
@@ -35,5 +38,8 @@ jspm_packages/*
 # misc
 .DS_Store
 
-# typescript files
-typings/
+# Ignore sass cache
+.sass-cache
+
+# ignore config assets
+src/config/assets.js

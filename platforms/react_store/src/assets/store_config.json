@@ -1,0 +1,97 @@
+{
+  "store_name": "Awesome E-Commerce Store",
+  "store_slug": "react-stripe-store",
+  "api_key": "Your Stripe Public Key Here",
+  "colors": {
+    "primary": {
+      "main": "#003b6f",
+      "dark": "#1d1d1d",
+      "contrastText": "#FFF"
+    },
+    "secondary": {
+      "main": "#ff5100"
+    }
+  },
+  "products": [
+    {
+      "name": "Hoodie",
+      "url": "hoodie",
+      "stripe_id": "Your Stripe Product ID here",
+      "description": "Hoodie!",
+      "photos": ["blackHoodie.jpg", "greyHoodie.jpg"],
+      "details": ["Perfect Hoodie"],
+      "variants": [
+        {
+          "name": "Size",
+          "options": [
+            { "label": "Small" },
+            { "label": "Medium" },
+            { "label": "Large" },
+            { "label": "X-Large" },
+            { "label": "XX-Large" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shirt",
+      "url": "shirt",
+      "stripe_id": "Your Stripe Procuct ID Here",
+      "description": "Cool Shirt!",
+      "photos": ["blackShirt.jpg", "whiteShirt.jpg"],
+      "details": ["Perfect Shirt"],
+      "variants": [
+        {
+          "name": "Size",
+          "options": [
+            { "label": "Small" },
+            { "label": "Medium" },
+            { "label": "Large" },
+            { "label": "X-Large" },
+            { "label": "XX-Large" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Cool Hoodie",
+      "url": "hoodieReverse",
+      "stripe_id": "Stripe Product ID Again",
+      "description": "Even Better Hoodie",
+      "photos": ["greyHoodie.jpg", "blackHoodie.jpg"],
+      "details": ["Even Better Hoodie Than The First One"],
+      "variants": [
+        {
+          "name": "Size",
+          "options": [
+            { "label": "Small" },
+            { "label": "Medium" },
+            { "label": "Large" },
+            { "label": "X-Large" },
+            { "label": "XX-Large" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Way to Cool of a Shirt",
+      "url": "shirtReverse",
+      "stripe_id": "Oh Look Another Stripe Product ID",
+      "description": "The Coolest Shirt Ever!",
+      "photos": ["whiteShirt.jpg", "blackShirt.jpg"],
+      "details": ["This Shirt Is Cooler Than Your Shirt"],
+      "variants": [
+        {
+          "name": "Size",
+          "options": [
+            { "label": "Small" },
+            { "label": "Medium" },
+            { "label": "Large" },
+            { "label": "X-Large" },
+            { "label": "XX-Large" }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -9,7 +9,6 @@ coverage
 
 # production
 build/*
-dist/*
 
 # runtime
 pids
@@ -29,12 +28,6 @@ jspm_packages/*
 .env.dev
 .env.prod
 .env.local
-
-# config assets
-src/config/assets.js
-
-# sass cache
-.sass-cache
 
 # misc
 .DS_Store

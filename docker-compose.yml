@@ -1,13 +1,13 @@
 version: '3'
 services:
 
-  platform_pwa:
-    build: platform/pwa
-    container_name: platform_pwa
+  platforms_pwa:
+    build: platforms/pwa
+    container_name: platforms_pwa
     restart: always
     volumes:
       - /home/node/app/node_modules
-      - './platform/pwa:/home/node/app'
+      - './platforms/pwa:/home/node/app'
     depends_on:
       - gateway_proxy
     networks:

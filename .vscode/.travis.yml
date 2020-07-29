@@ -15,9 +15,9 @@ after_success:
   # Build gateway images
   — docker build -t danydodson/seesee_gateway_client ./gateway/client
   — docker build -t danydodson/seesee_gateway_proxy ./gateway/proxy
-  # Build platform images
-  — docker build -t danydodson/seesee_platforms_pwa ./platform/pwa
-  — docker build -t danydodson/seesee_platforms_redux ./platform/redux
+  # Build platforms images
+  — docker build -t danydodson/seesee_platforms_pwa ./platforms/pwa
+  — docker build -t danydodson/seesee_platforms_redux ./platforms/redux
   # Build services images
   — docker build -t danydodson/seesee_services_users ./services/users
   — docker build -t danydodson/seesee_services_profiles ./services/profiles

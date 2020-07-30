@@ -1,18 +1,6 @@
 version: '3'
 services:
 
-  platforms_pwa:
-    build: platforms/pwa
-    container_name: platforms_pwa
-    restart: always
-    volumes:
-      - /home/node/app/node_modules
-      - './platforms/pwa:/home/node/app'
-    depends_on:
-      - gateway_proxy
-    networks:
-      - client_network
-
   gateway_proxy:
     build: gateway/proxy
     container_name: gateway_proxy
@@ -25,8 +13,7 @@ services:
       - posts_service
       - gateway_client
     networks:
-      - client_network
-      - secure_network
+      - apis_network
       
   gateway_client:
     build: gateway/client
@@ -36,7 +23,7 @@ services:
       - /home/node/app/node_modules
       - './gateway/client:/home/node/app'
     networks:
-      - secure_network
+      - apis_network
 
   users_service:
     build: services/users
@@ -45,7 +32,7 @@ services:
       - /home/node/app/node_modules
       - './services/users:/home/node/app'
     networks:
-      - secure_network
+      - apis_network
 
   profiles_service:
     build: services/profiles
@@ -54,7 +41,7 @@ services:
       - /home/node/app/node_modules
       - './services/profiles:/home/node/app'
     networks:
-      - secure_network
+      - apis_network
 
   posts_service:
     build: services/posts
@@ -63,8 +50,7 @@ services:
       - /home/node/app/node_modules
       - './services/posts:/home/node/app'
     networks:
-      - secure_network
+      - apis_network
 
 networks:
-  client_network: null
-  secure_network: null
+  apis_network: null

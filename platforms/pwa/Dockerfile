@@ -1,4 +1,4 @@
-FROM node:lts-alpine as builder
+FROM node:lts-alpine
 
 RUN apk update && \
   apk --no-cache add --update \
@@ -43,36 +43,28 @@ COPY . .
 
 RUN yarn build
 
+CMD [ "yarn", "start" ]
+
 # clear extra files we just need build
-RUN find . -not -path '**/dist/*' -exec rm -f {} + > /dev/null 2>&1 | echo 'OK'
+# RUN find . -not -path '**/dist/*' -exec rm -f {} + > /dev/null 2>&1 | echo 'OK'
 
-# remove build installs
-RUN apk del \
-  build-base \
-  libtool \
-  autoconf \
-  automake \
-  jq \
-  openssh \
-  python \
-  zlib-dev \
-  jpeg-dev \
-  libpng-dev \
-  tiff-dev \
-  giflib-dev \
-  nasm && \
-  rm -rf /var/cache/apk/*
+# USER root
 
-# production
-FROM nginx:latest
+# # remove build installs
+# RUN apk del \
+#   build-base \
+#   libtool \
+#   autoconf \
+#   automake \
+#   jq \
+#   openssh \
+#   python \
+#   zlib-dev \
+#   jpeg-dev \
+#   libpng-dev \
+#   tiff-dev \
+#   giflib-dev \
+#   nasm && \
+#   rm -rf /var/cache/apk/*
 
-RUN rm -rf /etc/nginx/conf.d
-
-COPY default.conf /etc/nginx
-COPY --from=builder /home/node/app/dist /usr/share/nginx/html
-
-EXPOSE 80
-
-RUN chown nginx.nginx /usr/share/nginx/html/ -R
-
-# CMD ["nginx", "-g", "daemon off;"]
+# USER node

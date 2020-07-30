@@ -5,31 +5,30 @@ services:
 
 before_install:
   # Build platforms_pwa image for testing 
-  — cd ../ && docker build -t danydodson/seesee_pwa_test -f ./platforms/pwa/Dockerfile.test ./platforms/pwa
+  — cd ../ && docker build -t danydodson/pwa_test -f ./platforms/pwa/Dockerfile.test ./platforms/pwa
 
 script:
   # Run test script inside seesee_pwa_test image 
-  — docker run -e CI=true danydodson/seesee_pwa_test yarn run test — — coverage
+  — docker run -e CI=true danydodson/pwa_test yarn run test — — coverage
 
 after_success:
   # Build gateway images
-  — docker build -t danydodson/seesee_gateway_client ./gateway/client
-  — docker build -t danydodson/seesee_gateway_proxy ./gateway/proxy
+  — docker build -t danydodson/gateway_client ./gateway/client
+  — docker build -t danydodson/gateway_proxy ./gateway/proxy
   # Build platforms images
-  — docker build -t danydodson/seesee_platforms_pwa ./platforms/pwa
-  — docker build -t danydodson/seesee_platforms_redux ./platforms/redux
+  — docker build -t danydodson/platforms_pwa ./platforms/pwa
+  — docker build -t danydodson/platforms_redux ./platforms/redux
   # Build services images
-  — docker build -t danydodson/seesee_services_users ./services/users
-  — docker build -t danydodson/seesee_services_profiles ./services/profiles
-  — docker build -t danydodson/seesee_services_posts ./services/posts
+  — docker build -t danydodson/services_users ./services/users
+  — docker build -t danydodson/services_profiles ./services/profiles
+  — docker build -t danydodson/services_posts ./services/posts
   # Login to the docker CLI
   — echo “$DOCKER_PASSWORD” | docker login -u “$DOCKER_ID” — password-stdin
-  
   # Push these images to Docker Hub
-  — docker push danydodson/seesee_gateway_client
-  — docker push danydodson/seesee_gateway_proxy
-  — docker push danydodson/seesee_platforms_pwa
-  — docker push danydodson/seesee_platforms_redux
-  — docker push danydodson/seesee_services_users
-  — docker push danydodson/seesee_services_profiles
-  — docker push danydodson/seesee_services_posts
+  — docker push danydodson/gateway_client
+  — docker push danydodson/gateway_proxy
+  — docker push danydodson/platforms_pwa
+  — docker push danydodson/platforms_redux
+  — docker push danydodson/services_users
+  — docker push danydodson/services_profiles
+  — docker push danydodson/services_posts

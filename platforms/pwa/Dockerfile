@@ -1,9 +1,5 @@
 FROM node:lts-alpine as builder
 
-ENV UID=1000
-ENV GID=1000
-ENV BUILD_ENV=demo
-
 RUN apk update && \
   apk --no-cache add --update \
   build-base \
@@ -26,6 +22,7 @@ RUN apk update && \
   git
 
 RUN mkdir -p /home/node/app/node_modules && \
+  mkdir -p /home/node/app/dist && \
   chown -R node:node /home/node/app
 
 WORKDIR /home/node
@@ -40,12 +37,14 @@ COPY package.json app
 
 WORKDIR /home/node/app
 
+RUN yarn --pure-lockfile
+
 COPY . .
 
-RUN yarn --pure-lockfile && yarn build
+RUN yarn build
 
 # clear extra files we just need build
-RUN find . -not -path '**/build/*' -exec rm -f {} + > /dev/null 2>&1 | echo 'OK'
+RUN find . -not -path '**/dist/*' -exec rm -f {} + > /dev/null 2>&1 | echo 'OK'
 
 # remove build installs
 RUN apk del \

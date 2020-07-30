@@ -5,12 +5,11 @@
   "description": "seesee.space progressive web app",
   "license": "MIT",
   "scripts": {
-    "build": "yarn clean && pawjs --no-cache --env-config-path=./.prod.env --env=production build",
+    "build": "pawjs --no-cache --env-config-path=./.prod.env --env=production build",
     "build:demo": "yarn clean && pawjs --no-cache --env-config-path=./.demo.env --env=production build",
     "start": "pawjs --no-cache --env=development start",
     "clean": "rm -rf ./dist && rm -rf ./node_modules && yarn install",
-    "test": "pawjs --no-cache test",
-    "lint": "pawjs lint"
+    "test": "pawjs --no-cache test"
   },
   "dependencies": {
     "@pawjs/image-optimizer": "^2.2.6",
@@ -24,9 +23,8 @@
     "eslint-import-resolver-webpack": "^0.12.1",
     "fork-ts-checker-webpack-plugin": "^4.1.3",
     "prop-types": "^15.7.2",
-    "universal-fetch": "^1.0.0"
-  },
-  "devDependencies": {
+    "universal-fetch": "^1.0.0",
     "webpack-bundle-analyzer": "^3.6.1"
-  }
+  },
+  "devDependencies": {}
 }

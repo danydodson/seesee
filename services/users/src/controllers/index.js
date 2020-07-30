@@ -7,7 +7,6 @@ import logoutAll from '#root/controllers/logoutAll'
 import logoutUser from '#root/controllers/logoutUser'
 import registerUser from '#root/controllers/registerUser'
 import resetPassword from '#root/controllers/resetPassword'
-import testing from '#root/controllers/testing'
 
 export {
   changeEmail,
@@ -19,5 +18,4 @@ export {
   logoutUser,
   registerUser,
   resetPassword,
-  testing,
 }

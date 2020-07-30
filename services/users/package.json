@@ -6,10 +6,10 @@
   "description": "users microservice",
   "license": "MIT",
   "scripts": {
-    "build": "npx babel . -d build",
+    "build": "yarn clean && yarn install && npx babel . -d build",
     "serve": "node build/src/index.js",
     "start": "babel-watch src/index.js -m '⏳⏳ [ - - - - - restarting - - - - - ] ⏳⏳'",
-    "clean": "rm -rf build && rm -rf node_modules && yarn install && yarn build"
+    "clean": "rm -rf build && rm -rf node_modules && rm -rf logs"
   },
   "dependencies": {
     "core-js": "3.6.5",
@@ -21,14 +21,14 @@
     "express-validator": "^6.6.0",
     "helmet": "^3.23.3",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.20",
-    "uuidv4": "6.1.1",
+    "mongoose": "^5.9.26",
+    "uuidv4": "6.2.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "@babel/preset-env": "^7.10.3",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-watch": "^7.0.0"
   }

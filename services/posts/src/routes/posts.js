@@ -3,9 +3,9 @@ import asyncHandler from 'express-async-handler'
 import auth from '#root/middleware/auth'
 
 import {
-  testing,
   getPosts,
   createPost,
+  getUsersPosts,
   getPost,
   editPost,
   createComment,
@@ -27,12 +27,7 @@ export default (app, route = Router()) => {
   app.use('/posts', route)
 
   route.get(
-    '/testing',
-    asyncHandler(testing)
-  )
-
-  route.get(
-    '/all',
+    '/see',
     asyncHandler(getPosts)
   )
 
@@ -42,6 +37,12 @@ export default (app, route = Router()) => {
     validatePost,
     validateResults,
     asyncHandler(createPost)
+  )
+
+  route.get(
+    '/me',
+    auth,
+    asyncHandler(getUsersPosts)
   )
 
   route.get(

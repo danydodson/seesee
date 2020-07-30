@@ -11,7 +11,7 @@ import User from '#root/models/User'
 
 export default asyncHandler(async (req, res, next) => {
 
-  console.debug('⏳⏳ [service] calling sign in endpoint ⏳⏳')
+  console.debug('⏳⏳ [service] calling login api endpoint ⏳⏳')
 
   const userRecord = await User.findOne({ email: req.body.email })
 

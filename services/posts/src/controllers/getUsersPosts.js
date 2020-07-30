@@ -9,7 +9,13 @@ import Post from '#root/models/Post'
 */
 
 export default asyncHandler(async (req, res, next) => {
-  console.debug('⏳⏳ [service] calling get all posts api endpoint ⏳⏳')
-  let foundPosts = await Post.find()
-  return res.json(foundPosts)
+
+  console.debug('⏳⏳ [service] calling get auth users posts api endpoint ⏳⏳')
+
+  // const user_id = req.user._id
+
+  const posts = await Post.find({ 'author': req.user._id })
+
+  return res.json(posts)
+
 })

@@ -1,11 +1,11 @@
 import { Router } from 'express'
 
-import auth from '#root/routes/auth'
-import gallery from '#root/routes/gallery'
+import user from '#root/routes/user'
+import posts from '#root/routes/posts'
 
 export default () => {
   const app = Router()
-  auth(app)
-  gallery(app)
+  user(app)
+  posts(app)
   return app
 }

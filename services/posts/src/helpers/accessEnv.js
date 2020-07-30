@@ -5,11 +5,8 @@
 
 /**
  * Cache env variable
- *
  * @param {string} key
  * @param {string} defaultValue
- * 
- * 
  */
 
 const cache = {}

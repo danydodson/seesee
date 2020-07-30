@@ -8,10 +8,10 @@ services:
     ports:
       - '3050:80'
     depends_on:
+      - gateway_client
       - users_service
       - profiles_service
       - posts_service
-      - gateway_client
     networks:
       - apis_network
       

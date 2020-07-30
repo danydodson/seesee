@@ -1,0 +1,145 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Generate CDP API",
+      "program": "${workspaceFolder}/scripts/generate-cdp-api.js"
+    },
+    // ----------------------------------------------------------------
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Generate DAP API",
+      "program": "${workspaceFolder}/scripts/generate-dap-api.js"
+    },
+    // ----------------------------------------------------------------
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Server",
+      "program": "${workspaceFolder}/out/src/debugServerMain.js",
+      "args": ["4711"],
+      // "preLaunchTask": "npm: watch"
+    },
+    // ----------------------------------------------------------------
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Server (Flat Session)",
+      "trace": true,
+      "program": "${workspaceFolder}/out/src/flatSessionLauncher.js",
+      "args": ["4712"],
+      "skipFiles": ["<node_internals>/**/*.js"]
+      // "preLaunchTask": "npm: watch"
+    },
+    // ----------------------------------------------------------------
+    {
+      "name": "Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "--enable-proposed-api=ms-vscode.js-debug",
+        "--extensionDevelopmentPath=${workspaceFolder}/out"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/out/**/*.js"
+      ],
+      // "preLaunchTask": "npm: watch"
+    },
+    // ----------------------------------------------------------------
+    {
+      "name": "Extension (packaged)",
+      "type": "extensionHost",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "--enable-proposed-api=ms-vscode.js-debug",
+        "--extensionDevelopmentPath=${workspaceFolder}/dist"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/dist/**/*.js"
+      ],
+      // "preLaunchTask": "npm: watch"
+    },
+    // ----------------------------------------------------------------
+    {
+      "name": "Extension Dogfood",
+      "type": "pwa-extensionHost",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "--enable-proposed-api=ms-vscode.js-debug",
+        "--extensionDevelopmentPath=${workspaceFolder}/out"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/out/**/*.js"
+      ],
+    },
+    // ----------------------------------------------------------------
+    {
+      "name": "Extension and Companion",
+      "type": "pwa-extensionHost",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "--enable-proposed-api=ms-vscode.js-debug",
+        "--extensionDevelopmentPath=${workspaceFolder}/../vscode-js-debug-companion",
+        "--extensionDevelopmentPath=${workspaceFolder}/out"
+      ],
+      "trace": true,
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "${workspaceFolder}/../vscode-js-debug-companion/**",
+        "!**/node_modules/**"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/out/**/*.js",
+        "${workspaceFolder}/../vscode-js-debug-companion/out/**/*.js",
+      ],
+    },
+    // ----------------------------------------------------------------
+    {
+      "name": "Run Tests",
+      "type": "extensionHost",
+      "request": "launch",
+      "runtimeExecutable": "${execPath}",
+      "skipFiles": ["<node_internals>/**"],
+      "args": [
+				"--extensionDevelopmentPath=${workspaceFolder}",
+				"--extensionTestsPath=${workspaceFolder}/out/src/test/testRunner"
+			],
+      "outFiles": ["${workspaceFolder}/out/src/test/**/*.js"],
+      // "preLaunchTask": "npm: watch"
+    },
+    // ----------------------------------------------------------------
+    {
+      "name": "Reset Results",
+      "type": "extensionHost",
+      "request": "launch",
+      "runtimeExecutable": "${execPath}",
+      "args": [
+				"--extensionDevelopmentPath=${workspaceFolder}",
+				"--extensionTestsPath=${workspaceFolder}/out/src/test/testRunner"
+      ],
+      "env": {
+        "RESET_RESULTS": "true"
+      },
+      "outFiles": ["${workspaceFolder}/out/src/test/**/*.js"],
+      // "preLaunchTask": "npm: watch"
+    },
+    {
+      "name": "Debug Gulp",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/gulp/bin/gulp.js",
+      "args": ["move-bundle-files"]
+    }
+  ]
+}

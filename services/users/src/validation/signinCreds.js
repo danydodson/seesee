@@ -6,13 +6,13 @@ export default [
     .escape()
     .unescape()
     .isString()
-    .isEmail().withMessage('a valid email is required')
+    .isEmail().withMessage('Email address is invalid.')
     .normalizeEmail()
-    .exists({ checkFalsy: true, checkNull: true }).withMessage('username is required'),
+    .exists({ checkFalsy: true, checkNull: true }).withMessage('Username is required.'),
   check('password')
     .trim()
     .escape()
     .unescape()
     .isString()
-    .exists({ checkFalsy: true, checkNull: true }).withMessage('password is required')
+    .exists({ checkFalsy: true, checkNull: true }).withMessage('Password is required.')
 ]

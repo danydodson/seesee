@@ -1,7 +1,8 @@
 import express from 'express'
 
-import accessEnv from '#root/helpers/accessEnv'
 import expressApp from '#root/loaders'
+import accessEnv from '#root/helpers/accessEnv'
+import logger from '#root/loaders/logger'
 
 const ENV = accessEnv('NODE_ENV')
 const PORT = accessEnv('PORT')
@@ -13,11 +14,11 @@ const startServer = async () => {
   await expressApp({ expressApp: app })
   app.listen(PORT, e => {
     if (e) {
-      console.error(e)
+      logger.error(`🔥🔥 [users_server] ${e} 🔥🔥`)
       process.exit(1)
       return
     }
-    console.info(`🚀🚀 [users_service] listening on ${HOST}:${PORT} in [${ENV}] 🚀🚀`)
+    logger.info(`🚀🚀 [users_service] listening on ${HOST}:${PORT} in [${ENV}] 🚀🚀`)
   })
 }
 

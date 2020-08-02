@@ -1,7 +1,7 @@
 import { check } from 'express-validator'
 
 export default [
-  check('newPassword')
+  check('password')
     .trim()
     .escape()
     .unescape()
@@ -10,7 +10,7 @@ export default [
     .matches(/(?=.*[A-Za-z])/).withMessage('password requires at least one letter')
     .matches(/(?=.*[@$.!%*#?&])/).withMessage('password requires at least one special character')
     .isLength({ min: 8 }).withMessage('Password requires a minimum eight characters'),
-  check('newPassword2')
+  check('password2')
     .trim()
     .escape()
     .unescape()

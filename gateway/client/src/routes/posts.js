@@ -5,12 +5,10 @@ import auth from '#root/middleware/auth'
 import {
   getPosts,
   createPost,
-  getUsersPosts,
-  getFollowingPosts,
-  getFavoritePosts,
   getPost,
-  getPostComments,
-} from '#root/controllers'
+  updatePost,
+  deletePost,
+} from '#root/controllers/posts'
 
 import { Router } from 'express'
 
@@ -19,7 +17,7 @@ export default (app, route = Router()) => {
   app.use('/gallery', route)
 
   route.get(
-    '/see',
+    '/',
     asyncHandler(getPosts)
   )
 
@@ -30,31 +28,19 @@ export default (app, route = Router()) => {
   )
 
   route.get(
-    '/me',
-    auth,
-    asyncHandler(getUsersPosts)
-  )
-
-  route.get(
-    '/following',
-    auth,
-    asyncHandler(getFollowingPosts)
-  )
-
-  route.get(
-    '/favorites',
-    auth,
-    asyncHandler(getFavoritePosts)
-  )
-
-  route.get(
-    '/see/:post_id',
+    '/:id',
     asyncHandler(getPost)
   )
 
-  route.get(
-    '/comments/:post_id',
-    asyncHandler(getPostComments)
+  route.put(
+    '/:id',
+    auth,
+    asyncHandler(updatePost)
   )
 
+  route.delete(
+    '/:id',
+    auth,
+    asyncHandler(deletePost)
+  )
 }

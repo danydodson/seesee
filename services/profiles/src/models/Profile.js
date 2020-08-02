@@ -1,35 +1,72 @@
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
+const ObjectId = Schema.Types.ObjectId
 
 // Profiles schema that has reference to User schemas
 
 const ProfileSchema = Schema(
   {
-    bio: {
-      type: String,
+    details: {
+      name: String,
+      email: String,
+      about: String,
+      image: String,
+      active: Boolean,
+      dob: { type: String, required: true },
+      username: { type: String, unique: true, index: 1 },
     },
-    username: {
-      type: String,
+    links: {
+      url: String
     },
-    phone: {
-      type: String,
+    friends: {
+      following: [{ type: ObjectId, ref: 'User' }],
+      followers: [{ type: ObjectId, ref: 'User' }],
+      followingCount: { type: Number, default: 0 },
+      followersCount: { type: Number, default: 0 },
     },
-    address: {
-      street: {
-        type: String,
+    favorites: {
+      favorited: [{ type: ObjectId, ref: 'Post' }],
+      favoritedCount: { type: Number, default: 0 },
+    },
+    socials: {
+      blog: String,
+      instagram: String,
+      twitter: String,
+      facebook: String,
+      youtube: String,
+      linkedin: String,
+    },
+    colors: {
+      bg: { type: String, default: '#FFFFFF' },
+      fg: { type: String, default: '#AAAAAA' },
+      mbg: { type: String, default: '#FFEDD4' },
+      mfg: { type: String, default: '#7A7A7A' },
+      ln: { type: String, default: '#24DADA' },
+    },
+    vender: {
+      role: { type: String, default: 'selling' },
+      status: { type: String, default: 'dormant' },
+      contact: {
+        address: {
+          street: String,
+          city: String,
+          state: String,
+          zip: Number,
+        },
+        geo: {
+          type: { type: String, default: 'Point' },
+          points: [{ type: Array }],
+        },
+        phone: Number,
       },
-      city: {
-        type: String,
+      reviews: {
+        critique: String,
+        stars: { type: Number, default: 0 },
       },
-      state: {
-        type: String,
-      }
     },
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    }
+    user: { type: ObjectId, ref: 'User' },
+    posts: [{ type: ObjectId, ref: 'Post' }],
   },
   { timestamps: true }
 )

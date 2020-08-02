@@ -13,6 +13,12 @@ const PostSchema = Schema(
       type: String,
       required: true
     },
+    images: {
+      thumb: { type: String },
+      medium: { type: String },
+      default: { type: String },
+      large: { type: String },
+    },
     imagePublicId: {
       type: String,
     },

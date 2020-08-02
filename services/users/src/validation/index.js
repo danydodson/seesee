@@ -1,28 +1,27 @@
-import validateRegister from './register'
-import validateLogin from './login'
-import validateAuth from './auth'
-import validateReset from './reset'
-import validateIsVerified from './verify'
+import validateSignup from '#root/validation/signupCreds'
+import validateSignin from '#root/validation/signinCreds'
+import validateChangeEmail from '#root/validation/changeEmail'
+import validateIsEmail from '#root/validation/isEmail'
+import validateResetPassword from '#root/validation/resetPassword'
+import validateIsVerified from '#root/validation/verify'
 
 import { validationResult } from 'express-validator'
 
 const validateResults = (req, res, next) => {
-  // const format = ({ location, param, msg }) => `${location} [${param}]: ${msg}`
-  const format = ({ location, param, msg }) => `${msg}`
+  const format = ({ msg }) => msg
   const results = validationResult(req).formatWith(format)
   if (!results.isEmpty()) {
-    return res.status(422).json({
-      errors: results.array({ onlyFirstError: true })
-    })
+    return res.status(422).json({ errors: results.mapped({ onlyFirstError: true }) })
   }
   next()
 }
 
 export {
-  validateRegister,
-  validateLogin,
-  validateAuth,
-  validateReset,
+  validateSignup,
+  validateSignin,
+  validateChangeEmail,
+  validateIsEmail,
+  validateResetPassword,
   validateIsVerified,
   validateResults
 }

@@ -1,5 +1,6 @@
 import express from 'express'
 
+import logger from '#root/loaders/logger'
 import accessEnv from '#root/helpers/accessEnv'
 import expressApp from '#root/loaders'
 
@@ -13,11 +14,11 @@ const startServer = async () => {
   await expressApp({ expressApp: app })
   app.listen(PORT, e => {
     if (e) {
-      console.error(e)
+      logger.error(`🔥🔥 [users_server] ${e} 🔥🔥`)
       process.exit(1)
       return
     }
-    console.info(`🚀🚀 [gateway_client] listening on ${HOST}:${PORT} in [${ENV}] 🚀🚀`)
+    logger.debug(`🚀🚀 [gateway_client] listening on ${HOST}:${PORT} in [${ENV}] 🚀🚀`)
   })
 }
 

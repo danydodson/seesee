@@ -9,7 +9,16 @@ import {
   changeEmail,
   resetPassword,
   deleteUser,
-} from '#root/controllers/user'
+} from '#root/controllers'
+
+
+import {
+  validateSignup,
+  validateSignin,
+  validateChangeEmail,
+  validateIsEmail,
+  validateResults,
+} from '#root/validation'
 
 import { Router } from 'express'
 
@@ -19,11 +28,15 @@ export default (app, route = Router()) => {
 
   route.post(
     '/signup',
+    validateSignup,
+    validateResults,
     asyncHandler(signupUser)
   )
 
   route.post(
     '/signin',
+    validateSignin,
+    validateResults,
     asyncHandler(signinUser)
   )
 
@@ -36,11 +49,15 @@ export default (app, route = Router()) => {
   route.put(
     '/change-email',
     auth,
+    validateChangeEmail,
+    validateResults,
     asyncHandler(changeEmail)
   )
 
-  route.put(
+  route.post(
     '/reset-password',
+    validateIsEmail,
+    validateResults,
     asyncHandler(resetPassword)
   )
 

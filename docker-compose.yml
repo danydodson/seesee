@@ -10,10 +10,10 @@ services:
     depends_on:
       - gateway_client
       - users_service
-      - profiles_service
-      - posts_service
+      # - profiles_service
+      # - posts_service
     networks:
-      - apis_network
+      - api_network
       
   gateway_client:
     build: gateway/client
@@ -23,7 +23,7 @@ services:
       - /home/node/app/node_modules
       - './gateway/client:/home/node/app'
     networks:
-      - apis_network
+      - api_network
 
   users_service:
     build: services/users
@@ -32,25 +32,25 @@ services:
       - /home/node/app/node_modules
       - './services/users:/home/node/app'
     networks:
-      - apis_network
+      - api_network
 
-  profiles_service:
-    build: services/profiles
-    container_name: profiles_service
-    volumes:
-      - /home/node/app/node_modules
-      - './services/profiles:/home/node/app'
-    networks:
-      - apis_network
+  # profiles_service:
+  #   build: services/profiles
+  #   container_name: profiles_service
+  #   volumes:
+  #     - /home/node/app/node_modules
+  #     - './services/profiles:/home/node/app'
+  #   networks:
+  #     - api_network
 
-  posts_service:
-    build: services/posts
-    container_name: posts_service
-    volumes:
-      - /home/node/app/node_modules
-      - './services/posts:/home/node/app'
-    networks:
-      - apis_network
+  # posts_service:
+  #   build: services/posts
+  #   container_name: posts_service
+  #   volumes:
+  #     - /home/node/app/node_modules
+  #     - './services/posts:/home/node/app'
+  #   networks:
+  #     - api_network
 
 networks:
-  apis_network: null
+  api_network: null

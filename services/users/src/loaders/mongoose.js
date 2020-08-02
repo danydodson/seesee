@@ -1,6 +1,7 @@
 import { connect } from 'mongoose'
 
 import accessEnv from '#root/helpers/accessEnv'
+import logger from '#root/loaders/logger'
 
 const URI = accessEnv('MONGO_ATLAS_URI')
 
@@ -14,7 +15,7 @@ const mongooseLoader = async () => {
     })
     return connection.connection.db
   } catch (e) {
-    return console.error(`🔥🔥 [users_db_error] ${e} 🔥🔥`)
+    return logger.error(`🔥🔥 [users_db] ${e} 🔥🔥`)
   }
 }
 

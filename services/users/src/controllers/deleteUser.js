@@ -1,25 +1,24 @@
 import asyncHandler from 'express-async-handler'
+
+import logger from '#root/loaders/logger'
 import User from '#root/models/User'
 
 /**
-@desc deletes one user
-@route DELETE /api/users/delete
+@desc delete user
+@route DELETE /api/user
 @auth private
 */
 
 export default asyncHandler(async (req, res, next) => {
-  
-  console.debug('⏳⏳ [service] calling destroy user endpoint ⏳⏳')
-  
+  logger.debug('⏳⏳ [service] calling delete user endpoint ⏳⏳')
+
   const foundUser = await User.findOne({ _id: req.user.id })
-  
-  if (!foundUser) {
-    throw new Error('🔥🔥 [service] user not found 🔥🔥')
-  }
+  if (!foundUser) throw new Error('🔥🔥 [service] user not found 🔥🔥')
+
+  const deleteUser = await User.findOneAndRemove({ _id: req.user.id })
   // const deleteListings = await Listing.deleteMany({ author: user._id })
   // const deleteComments = await Comment.deleteMany({ user: user._id })
   // const deleteListings = await Like.deleteMany({ user: user._id })
-  const deleteUser = await User.findOneAndRemove({ _id: req.user._id })
 
   if (!deleteUser) {
     throw new Error('🔥🔥 [service] error deleting user 🔥🔥')

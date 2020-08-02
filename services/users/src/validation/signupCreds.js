@@ -1,5 +1,5 @@
 import { check } from 'express-validator'
-import User from '../models/User'
+import User from '#root/models/User'
 
 export default [
   check('email')
@@ -7,20 +7,10 @@ export default [
     .escape()
     .unescape()
     .isString()
-    .isEmail().withMessage('a valid email is required')
+    .isEmail().withMessage('A valid email is required.')
     .normalizeEmail()
     .bail()
-    .custom((value, { req }) => { return User.findOne({ email: req.body.email }).then(user => { if (user) { return Promise.reject('email already in use') } }) }),
-  check('username')
-    .trim()
-    .escape()
-    .unescape()
-    .isString()
-    .exists({ checkFalsy: true, checkNull: true }).withMessage('username cant be empty')
-    .bail()
-    .isAlphanumeric().withMessage('username can only contain letters and numbers')
-    .isLength({ min: 3, max: 30 }).withMessage('username requires a minimum of 3 characters')
-    .custom((value, { req }) => { return User.findOne({ 'username': req.body.username }).then(user => { if (user) { return Promise.reject('username already in use') } }) }),
+    .custom((value, { req }) => { return User.findOne({ email: req.body.email }).then(user => { if (user) { throw new Error('Email address already in use.') } }) }),
   check('password')
     .trim()
     .escape()

@@ -1,9 +1,9 @@
 import { Router } from 'express'
 
-import users from '#root/routes/users'
+import user from '#root/routes/user'
 
 export default () => {
   const app = Router()
-  users(app)
+  user(app)
   return app
 }

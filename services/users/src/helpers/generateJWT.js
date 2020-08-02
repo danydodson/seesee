@@ -10,21 +10,18 @@ import accessEnv from '#root/helpers/accessEnv'
  * 
  */
 
-const geterateJWT = async (user) => {
+const geterateJWT = async (user, options) => {
   return jwt.sign(
     {
-      _id: user._id, // this could be used in the middleware 'isAuthenticated'
-      sub: user._id,
+      id: user._id, // this could be used in the middleware 'isAuthenticated'
       iss: 'seesee.space',
-      aud: 'app_id-or-client_id',
       email: user.email,
-      fullName: user.fullName,
       roles: user.roles, // this could be used in the middleware 'isAuthorized'
-      username: user.username,
-      exp: Math.floor(Date.now() / 1000) + (60 * 60),
+      options,
       iat: Math.floor(Date.now() / 1000) - 30,
+      exp: Math.floor(Date.now() / 1000) + (60 * 60)
     },
-    accessEnv('JWT_SECRET')
+    accessEnv('JWT_SECRET'),
   )
 }
 

@@ -1,9 +1,11 @@
 {
   "eslint.enable": true,
+  // "git.enableStatusBarSync": false,
+  // "git.ignoreLimitWarning": true,
   //
-  "codedeploy.region": "us-east-1",
-  "codedeploy.applicationName": "seesee",
-  "codedeploy.isApplicationWorkspace": true,
+  // "codedeploy.region": "us-east-1",
+  // "codedeploy.applicationName": "seesee",
+  // "codedeploy.isApplicationWorkspace": true,
   // 
   "sync-rsync.sites": [
     {
@@ -72,14 +74,10 @@
     "**/dist": true,
   },
   // 
-  "git.ignoreLimitWarning": true,
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
     "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    ".vscode": true
+    // "**/CVS": true,
   },
-  "explorerExclude.backup": null,
 }

@@ -19,7 +19,7 @@
     "express-async-handler": "^1.1.4",
     "express-jwt": "^6.0.0",
     "got": "^11.5.1",
-    "helmet": "^3.23.3",
+    "helmet": "^4.0.0",
     "is-docker": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.27",
@@ -28,7 +28,7 @@
   "devDependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.0",
-    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-env": "^7.11.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-watch": "^7.0.0"
   }

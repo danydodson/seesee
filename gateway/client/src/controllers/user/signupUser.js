@@ -1,4 +1,4 @@
-import asyncHandler from 'express-async-handler'
+// import asyncHandler from 'express-async-handler'
 import got from 'got'
 
 import { USERS_SERVICE } from '#root/adapters'

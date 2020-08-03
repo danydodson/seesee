@@ -11,7 +11,6 @@ import {
   deleteUser,
 } from '#root/controllers'
 
-
 import {
   validateSignup,
   validateSignin,

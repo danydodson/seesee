@@ -12,11 +12,6 @@ const authMiddleware = async (req, res, next) => {
 
   const decoded = jwt.verify(token, accessEnv('JWT_SECRET'))
 
-  // const user = await User.findOne({
-  //   _id: decoded._id,
-  //   'tokens.token': token
-  // })
-
   req.token = token
   req.user = decoded
 
@@ -24,3 +19,4 @@ const authMiddleware = async (req, res, next) => {
 }
 
 export default authMiddleware
+

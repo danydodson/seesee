@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import bodyParser from 'body-parser'
 import helmet from 'helmet'
 
 import errors from '#root/middleware/errors'
@@ -32,7 +33,8 @@ const expressLoader = ({ app: app }) => {
   )
 
   app.use(helmet())
-  app.use(express.json())
+  // app.use(express.json())
+  app.use(bodyParser.json())
   app.use('/api', routes())
 
   app.use(errors.notFound)

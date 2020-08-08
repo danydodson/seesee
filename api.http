@@ -1,37 +1,30 @@
 ###
 
-GET https://api.github.com/users/danydodson
+GET https://api.github.com/users/danydodson HTTP/1.1
 
 ###
 
-GET https://api.github.com/repos/danydodson/seesee HTTP/1.1
-
-###
-
-POST https://d03e13a036bd60613bf12b906bc7b0bc.m.pipedream.net HTTP/1.1
-Date: {{$guid}}
-
-{
-    "key": "{{$guid}}",
-   
-} 
-
-###
-
-curl -H "Authorization: Bearer 649ada6aed401b241cee8cab08f17ec9" \
-  "https://api.pipedream.com/sources/dc_0dukdk/sse"
-
-###
-
-POST http://localhost:3050/user HTTP/1.1
+POST http://localhost:3050/user/signup HTTP/1.1
 content-type: application/json
 
 {
-    "name": "sample",
-    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+  "email": "danydodson@gmail.com",
+  "password": "W2O7%%3R3QyDMue9",
+  "password2": "W2O7%%3R3QyDMue9"
 }
 
 ###
-curl --location --request GET 'http://localhost:3050/user' \
---header 'Content-Type: application/json' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMjUyMDViMGVmYTI3N2Y4ZThjYzQwNCIsImlzcyI6InNlZXNlZS5zcGFjZSIsImVtYWlsIjoiZGFueWRvZHNvbkBnbWFpbC5jb20iLCJyb2xlcyI6WyJ1bnZlcmlmaWVkIl0sImlhdCI6MTU5NjQxMTYxNCwiZXhwIjoxNTk2NDE1MjQ0fQ.Qqi4hq5widXeceLhN_n8XJbw0HstFIivYemzCPpjhUc'
+
+POST http://localhost:3050/user/signin HTTP/1.1
+content-type: application/json
+
+{
+  "email": "dan@gmail.com",
+  "password": "W2O7%%3R3QyDMue9"
+}
+
+###
+
+GET http://localhost:3050/user HTTP/1.1
+content-type: application/json
+Authorization: {{token}}

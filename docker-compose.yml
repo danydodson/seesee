@@ -7,6 +7,10 @@ services:
     restart: always
     ports:
       - '3050:80'
+    volumes:
+      # - /etc/nginx/conf.d
+      - ./gateway/proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./gateway/proxy/conf.d/user.conf:/etc/nginx/conf.d/user.conf:ro
     depends_on:
       - gateway_client
       - users_service

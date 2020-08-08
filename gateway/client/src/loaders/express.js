@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import bodyParser from 'body-parser'
 import helmet from 'helmet'
 
 import routes from '#root/routes'
@@ -11,6 +12,7 @@ const expressLoader = ({ app: app }) => {
     res.status(200).end()
   })
 
+  
   app.head('/status', (req, res) => {
     res.status(200).end()
   })
@@ -33,6 +35,7 @@ const expressLoader = ({ app: app }) => {
 
   app.use(helmet())
   app.use(express.json())
+  app.use(bodyParser.json())
   app.use(routes())
 
   app.use(errors.notFound)

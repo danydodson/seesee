@@ -11,7 +11,7 @@ const validateResults = (req, res, next) => {
   const format = ({ msg }) => msg
   const results = validationResult(req).formatWith(format)
   if (!results.isEmpty()) {
-    return res.status(422).json({ errors: results.mapped({ onlyFirstError: true }) })
+    return res.send({ errors: results.mapped({ onlyFirstError: true }) })
   }
   next()
 }

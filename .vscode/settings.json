@@ -1,29 +1,12 @@
 {
   "eslint.enable": true,
-  "git.enableStatusBarSync": false,
-  // "codedeploy.region": "us-east-1",
-  // "codedeploy.applicationName": "seesee",
-  // "codedeploy.isApplicationWorkspace": true,
-  // 
   "rest-client.environmentVariables": {
-    "$shared": {
-      "version": "v1",
-      "prodToken": "foo",
-      "nonProdToken": "bar"
-    },
     "local": {
-      "version": "v2",
-      "host": "localhost",
-      "token": "{{$shared nonProdToken}}",
-      "secretKey": "devSecret"
-    },
-    "production": {
-      "host": "example.com",
-      "token": "{{$shared prodToken}}",
-      "secretKey": "prodSecret"
+      "version": "v1",
+      "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMjUzMjVlMTM5YTZjMDAyM2I4YjQ5YSIsImlzcyI6InNlZXNlZS5zcGFjZSIsImVtYWlsIjoiZGFuQGdtYWlsLmNvbSIsInJvbGVzIjpbInVudmVyaWZpZWQiXSwiaWF0IjoxNTk2NTQyODUyLCJleHAiOjE1OTY1NDY0ODJ9.rQUguPA8Lkqj13PUeQzQnJY595zzJ_cW2ZbIUcUvflI",
+      "token2": "Authorization: Bearer 649ada6aed401b241cee8cab08f17ec9"
     }
   },
-  // 
   "sync-rsync.sites": [
     {
       "name": "pwa",
@@ -83,17 +66,15 @@
       ]
     }
   ],
-  // 
   "files.exclude": {
     "**/.hg": true,
     "**/.git": true,
-    "**/.svn": true,
+    "**/.svn": true
   },
-  // 
   "search.exclude": {
     "**/*.log": true,
     "**/build": true,
     "**/dist": true,
-    "**/node_modules": true,
-  },
+    "**/node_modules": true
+  }
 }

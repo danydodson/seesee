@@ -1,6 +1,6 @@
 
 export default {
-  
+
   notFound: (req, res, next) => {
     const err = new Error('Not Found')
     err.status = 404
@@ -24,5 +24,5 @@ export default {
     res.status(status)
     res.json({ error })
   }
-  
+
 }

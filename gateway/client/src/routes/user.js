@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler'
 
-import auth from '#root/middleware/auth'
+import authenticate from '#root/middleware/authenticate'
+import authorize from '#root/middleware/authorize'
 
 import {
   signupUser,
@@ -29,13 +30,14 @@ export default (app, route = Router()) => {
 
   route.get(
     '/',
-    auth,
+    authenticate,
+    authorize('unverified'),
     asyncHandler(getAuthUser)
   )
 
   route.put(
     '/change-email',
-    auth,
+    authenticate,
     asyncHandler(changeEmail)
   )
 
@@ -46,7 +48,7 @@ export default (app, route = Router()) => {
 
   route.delete(
     '/',
-    auth,
+    authenticate,
     asyncHandler(deleteUser)
   )
 }

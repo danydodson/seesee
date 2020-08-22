@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler'
 
-import auth from '#root/middleware/auth'
+import authenticate from '#root/middleware/authenticate'
+import authorize from '#root/middleware/authorize'
 
 import {
   getPosts,
@@ -23,7 +24,8 @@ export default (app, route = Router()) => {
 
   route.post(
     '/create',
-    auth,
+    authenticate,
+    authorize('user'),
     asyncHandler(createPost)
   )
 
@@ -34,13 +36,15 @@ export default (app, route = Router()) => {
 
   route.put(
     '/:id',
-    auth,
+    authenticate,
+    authorize('user'),
     asyncHandler(updatePost)
   )
 
   route.delete(
     '/:id',
-    auth,
+    authenticate,
+    authorize('user'),
     asyncHandler(deletePost)
   )
 }

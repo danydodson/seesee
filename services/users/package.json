@@ -19,15 +19,15 @@
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
     "express-validator": "^6.6.1",
-    "helmet": "^4.0.0",
+    "helmet": "^4.1.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.27",
-    "uuidv4": "6.2.1",
+    "mongoose": "^5.10.0",
+    "uuidv4": "6.2.3",
     "winston": "^3.3.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.0",
+    "@babel/core": "^7.11.1",
     "@babel/preset-env": "^7.11.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-watch": "^7.0.0"

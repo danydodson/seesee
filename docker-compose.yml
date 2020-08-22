@@ -1,6 +1,5 @@
 version: '3'
 services:
-
   gateway_proxy:
     build: gateway/proxy
     container_name: gateway_proxy
@@ -8,17 +7,13 @@ services:
     ports:
       - '3050:80'
     volumes:
-      # - /etc/nginx/conf.d
-      - ./gateway/proxy/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./gateway/proxy/conf.d/user.conf:/etc/nginx/conf.d/user.conf:ro
+      - './gateway/proxy/nginx.conf:/etc/nginx/nginx.conf:ro'
+      - './gateway/proxy/conf.d/user.conf:/etc/nginx/conf.d/user.conf:ro'
     depends_on:
       - gateway_client
       - users_service
-      # - profiles_service
-      # - posts_service
     networks:
       - api_network
-      
   gateway_client:
     build: gateway/client
     container_name: gateway_client
@@ -28,7 +23,6 @@ services:
       - './gateway/client:/home/node/app'
     networks:
       - api_network
-
   users_service:
     build: services/users
     container_name: users_service
@@ -37,24 +31,5 @@ services:
       - './services/users:/home/node/app'
     networks:
       - api_network
-
-  # profiles_service:
-  #   build: services/profiles
-  #   container_name: profiles_service
-  #   volumes:
-  #     - /home/node/app/node_modules
-  #     - './services/profiles:/home/node/app'
-  #   networks:
-  #     - api_network
-
-  # posts_service:
-  #   build: services/posts
-  #   container_name: posts_service
-  #   volumes:
-  #     - /home/node/app/node_modules
-  #     - './services/posts:/home/node/app'
-  #   networks:
-  #     - api_network
-
 networks:
   api_network: null

@@ -31,13 +31,14 @@ export default (app, route = Router()) => {
   route.get(
     '/',
     authenticate,
-    authorize('unverified'),
+    authorize('user'),
     asyncHandler(getAuthUser)
   )
 
   route.put(
     '/change-email',
     authenticate,
+    authorize('user'),
     asyncHandler(changeEmail)
   )
 
@@ -49,6 +50,7 @@ export default (app, route = Router()) => {
   route.delete(
     '/',
     authenticate,
+    authorize('user'),
     asyncHandler(deleteUser)
   )
 }

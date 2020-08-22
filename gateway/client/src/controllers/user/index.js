@@ -1,4 +1,3 @@
-
 import signupUser from '#root/controllers/user/signupUser'
 import signinUser from '#root/controllers/user/signinUser'
 import getAuthUser from '#root/controllers/user/getAuthUser'

@@ -6,12 +6,44 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 
 const UserSchema = mongoose.Schema(
   {
-    email: { type: String },
-    hash: { type: String },
-    salt: { type: String },
-    tokens: [{ token: { type: String } }],
-    roles: { type: [String], default: 'unverified' },
-    profile: { type: ObjectId, ref: 'Profile' }
+    email: {
+      type: String
+    },
+    hash: {
+      type: String
+    },
+    isVerified: {
+      type: Boolean,
+      default: false
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false
+    },
+    roles: {
+      type: [String],
+      default: ['user']
+    },
+    roleId: {
+      type: Number,
+      default: 0
+    },
+    salt: {
+      type: String
+    },
+    tokens: [{
+      token: {
+        type: String
+      }
+    }],
+    verificationToken: {
+      type: String,
+      default: ''
+    },
+    profile: {
+      type: ObjectId,
+      ref: 'Profile'
+    }
   },
   { timestamps: true }
 )

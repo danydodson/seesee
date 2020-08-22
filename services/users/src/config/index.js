@@ -1,15 +1,18 @@
+import { accessEnv } from "#root/helpers/accessEnv"
+
 const config = {
-    port: 4001,
-    db: {
-        host: `mongodb://${process.env.MONGO_HOST || 'localhost'}/`,
-        database: 'UsersMongo',
-        user: '',
-        password: '',
-        port: 3306
-    },
-    rabbit: {
-        host: 'amqp://admin:mypass@localhost'
-    }
+  port: 5000,
+  host: '0.0.0.0',
+  db: {
+    base: accessEnv('MONGO_BASE'),
+    user: accessEnv('MONGO_USER'),
+    password: accessEnv('MONGO_PASSWORD'),
+    host: accessEnv('MONGO_HOST'),
+    database: accessEnv('MONGO_DATABASE')
+  },
+  rabbit: {
+    host: accessEnv('RABBIT_HOST'),
+  }
 }
 
 export default config

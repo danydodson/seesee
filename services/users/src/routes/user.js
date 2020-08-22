@@ -1,11 +1,12 @@
 import asyncHandler from 'express-async-handler'
 
-import auth from '#root/middleware/auth'
+import authenticate from '#root/middleware/authenticate'
 
 import {
   signupUser,
   signinUser,
   getAuthUser,
+  logoutUser,
   changeEmail,
   resetPassword,
   deleteUser,
@@ -41,13 +42,19 @@ export default (app, route = Router()) => {
 
   route.get(
     '/',
-    auth,
+    authenticate,
     asyncHandler(getAuthUser)
   )
 
   route.put(
+    '/logout',
+    authenticate,
+    asyncHandler(logoutUser)
+  )
+
+  route.put(
     '/change-email',
-    auth,
+    authenticate,
     validateChangeEmail,
     validateResults,
     asyncHandler(changeEmail)
@@ -62,7 +69,7 @@ export default (app, route = Router()) => {
 
   route.delete(
     '/',
-    auth,
+    authenticate,
     asyncHandler(deleteUser)
   )
 }

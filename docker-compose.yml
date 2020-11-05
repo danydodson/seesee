@@ -1,18 +1,24 @@
 version: '3.8'
 
 networks:
-  back_tier:
+  back-tier:
     driver: bridge
-    name: seesee-ms-back
+    name: seesee-back
 
 services:
-  gateway:
-    build: 
-      - context: gateway
-      - dockerfile: Dockerfile
-    image: seesee-gateway-service
+  gateway-proxy:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
     restart: always
+    container_name: seesee-gateway-proxy
+    image: danydodson/seesee-gateway-proxy
     ports:
       - 80:80
+    env_file:
+      - ./gateway/.env
+    volumes: 
+      - ./gateway/conf/nginx.conf:/nginx.conf
+      - ./gateway/lua/bearer.lua:/bearer.lua
     networks:
-      - back_tier
+      - back-tier

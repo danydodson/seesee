@@ -1,3 +1,7 @@
+# other
+.vscode
+assets/*
+
 # logs
 logs/*
 npm-debug.log*

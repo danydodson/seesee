@@ -15,10 +15,30 @@ services:
     image: danydodson/seesee-gateway-proxy
     ports:
       - 80:80
+      - 443:443
     env_file:
       - ./gateway/.env
     volumes: 
       - ./gateway/conf/nginx.conf:/nginx.conf
       - ./gateway/lua/bearer.lua:/bearer.lua
+    networks:
+      - back-tier
+    depends_on: 
+      - users-api
+
+  users-api:
+    build:
+      context: ./users-api
+      dockerfile: Dockerfile
+    restart: always
+    container_name: seesee-users-api
+    image: danydodson/seesee-users-api
+    ports:
+      - 3000:3000
+    env_file:
+      - ./users-api/.env
+    volumes: 
+      - ./users-api:/usr/src/app
+      - /usr/src/app/node_modules
     networks:
       - back-tier

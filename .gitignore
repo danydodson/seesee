@@ -1,5 +1,5 @@
 # other
-.vscode
+.vscode/*
 assets/*
 
 # logs
@@ -35,3 +35,5 @@ jspm_packages/*
 
 # misc
 .DS_Store
+**/node_modules
+gateway/certs/*

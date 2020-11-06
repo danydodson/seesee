@@ -9,7 +9,7 @@ services:
   gateway-proxy:
     build:
       context: gateway
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     restart: always
     container_name: seesee-gateway-proxy
     image: danydodson/seesee-gateway-proxy
@@ -18,18 +18,18 @@ services:
       - 443:443
     env_file:
       - ./gateway/.env
-    volumes: 
+    volumes:
       - ./gateway/conf/nginx.conf:/nginx.conf
       - ./gateway/lua/bearer.lua:/bearer.lua
     networks:
       - back-tier
-    depends_on: 
+    depends_on:
       - users-api
 
   users-api:
     build:
       context: users-api
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     restart: always
     container_name: seesee-users-api
     image: danydodson/seesee-users-api
@@ -37,8 +37,16 @@ services:
       - 3000:3000
     env_file:
       - ./users-api/.env
-    volumes: 
+    volumes:
       - ./users-api:/usr/src/app
       - /usr/src/app/node_modules
+    networks:
+      - back-tier
+
+  redis-cluster:
+    image: grokzen/redis-cluster:latest
+    container_name: seesee-redis-cluster
+    ports:
+      - '7000-7005:7000-7005'
     networks:
       - back-tier

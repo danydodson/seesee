@@ -35,4 +35,4 @@ gateway/certs/*
 # misc
 .vscode/*
 assets/*
-.DS_Store
+book/*

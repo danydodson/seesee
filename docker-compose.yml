@@ -1,3 +1,5 @@
+# check for openresty network bottleneck
+
 version: '3.8'
 
 networks:
@@ -6,26 +8,30 @@ networks:
     name: seesee-back
 
 services:
-  gateway-proxy:
+  gateway:
     build:
       context: gateway
       dockerfile: Dockerfile
     restart: always
-    container_name: seesee-gateway-proxy
-    image: danydodson/seesee-gateway-proxy
+    container_name: seesee-gateway
+    image: danydodson/seesee-gateway
     ports:
-      - 80:80
-      - 443:443
+      - '80:80'
+      - '443:443'
     env_file:
       - ./gateway/.env
-    volumes: 
-      - ./gateway/conf/nginx.conf:/nginx.conf
-      - ./gateway/lua/bearer.lua:/bearer.lua
+    volumes:
+      - './gateway/nginx/nginx.conf:/nginx.conf'
+      - './gateway/lua/test.lua:/test.lua'
+      - './gateway/lua/req.lua:/req.lua'
+      - './gateway/lua/sign.lua:/sign.lua'
+      - './gateway/lua/verify.lua:/verify.lua'
     networks:
       - back-tier
-    depends_on: 
+    depends_on:
       - users-api
-
+      - posts-api
+  
   users-api:
     build:
       context: users-api
@@ -33,12 +39,26 @@ services:
     restart: always
     container_name: seesee-users-api
     image: danydodson/seesee-users-api
-    ports:
-      - 3000:3000
     env_file:
       - ./users-api/.env
-    volumes: 
-      - ./users-api:/usr/src/app
+    volumes:
+      - './users-api:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - back-tier
+    # command: node --inspect=0.0.0.0:9229 ./app.js
+
+  posts-api:
+    build:
+      context: posts-api
+      dockerfile: Dockerfile
+    restart: always
+    container_name: seesee-posts-api
+    image: danydodson/seesee-posts-api
+    env_file:
+      - ./posts-api/.env
+    volumes:
+      - './posts-api:/usr/src/app'
       - /usr/src/app/node_modules
     networks:
       - back-tier

@@ -1,7 +1,7 @@
 FROM openresty/openresty:alpine-fat
 
-COPY certs/certificate.crt /etc/ssl/certificate.crt
-COPY certs/private.key /etc/ssl/private.key
+COPY ssl/seesee.space/certificate.crt /etc/ssl/certificate.crt
+COPY ssl/seesee.space/private.key /etc/ssl/private.key
 
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt
 

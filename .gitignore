@@ -24,15 +24,15 @@ jspm_packages/*
 .yarn-integrity
 
 # dotenv files
-.env
-.env.dev
-.env.prod
-.env.local
+**/.env
+**/.env.*
 
 # certs
-gateway/certs/*
+**/*.key
+**/*.crt
 
 # misc
 .vscode/*
+.refs/*
 assets/*
 book/*

@@ -36,3 +36,4 @@ jspm_packages/*
 .refs/*
 assets/*
 book/*
+.todo

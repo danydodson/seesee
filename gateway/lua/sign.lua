@@ -1,11 +1,5 @@
-
--- local req = require 'req'
 local cjson = require 'cjson'
 local jwt = require 'resty.jwt'
-
--- local args = req.getArgs()
-
--- local name = args['name']
 
 local data = ngx.req.get_body_data()
 local json = cjson.decode(data)
@@ -25,4 +19,7 @@ local jwt_token = jwt:sign(
   }
 )
 
+
 ngx.say(jwt_token)
+
+-- ngx.req.set_header('Authorization', 'Bearer ' .. jts)

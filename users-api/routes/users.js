@@ -6,15 +6,18 @@ const config = require('../config/database')
 const User = require('../models/user')
 
 // Get All Users
-router.get('/', (req, res) => {
-  User.find()
-    .sort({ date: -1 })
-    .then((users) => res.json(users))
-    .catch((err) => res.status(404).json({ nousersfound: 'No users found' }))
-})
+// router.get('/', (req, res) => {
+//   User.find()
+//     .sort({ date: -1 })
+//     .then((users) => res.json(users))
+//     .catch((err) => res.status(404).json({ nousersfound: 'No users found' }))
+// })
 
 // Register
 router.post('/register', (req, res, next) => {
+
+  // let luaCookie = req.cookies()
+
   let newUser = new User({
     name: req.body.name,
     email: req.body.email,
@@ -26,6 +29,7 @@ router.post('/register', (req, res, next) => {
     if (err) {
       res.json({ success: false, msg: 'Failed to register user' })
     } else {
+      console.log(newUser)
       res.json({ success: true, msg: 'You are registered!' })
     }
   })

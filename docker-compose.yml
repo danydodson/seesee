@@ -1,5 +1,3 @@
-# check for openresty network bottleneck
-
 version: '3.8'
 
 networks:
@@ -21,23 +19,20 @@ services:
     env_file:
       - ./gateway/.env
     volumes:
-      - './gateway/nginx/nginx.conf:/nginx.conf'
-      - './gateway/lua/test.lua:/test.lua'
-      - './gateway/lua/req.lua:/req.lua'
-      - './gateway/lua/sign.lua:/sign.lua'
-      - './gateway/lua/verify.lua:/verify.lua'
+      - './gateway/nginx:/etc/nginx/conf.d'
+      - './gateway/lua:/usr/local/openresty/lualib/conf'
     networks:
       - back-tier
     depends_on:
       - users-api
       - posts-api
-  
+
   users-api:
     build:
       context: users-api
       dockerfile: Dockerfile
     restart: always
-    container_name: seesee-users-api
+    container_name: users-api
     image: danydodson/seesee-users-api
     env_file:
       - ./users-api/.env
@@ -52,7 +47,7 @@ services:
       context: posts-api
       dockerfile: Dockerfile
     restart: always
-    container_name: seesee-posts-api
+    container_name: posts-api
     image: danydodson/seesee-posts-api
     env_file:
       - ./posts-api/.env

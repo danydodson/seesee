@@ -43,7 +43,7 @@ require('./config/passport')(passport)
 app.use(express.static(path.join(__dirname, 'public')))
 
 //Users
-app.use('/api/v1/auth', users)
+app.use('/api/v1/user', users)
 
 //Start Server
 app.listen(port, () => {

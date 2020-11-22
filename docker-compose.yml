@@ -1,11 +1,6 @@
 version: '3.8'
-
-networks:
-  back-tier:
-    driver: bridge
-    name: seesee-back
-
 services:
+
   gateway:
     build:
       context: gateway
@@ -55,3 +50,8 @@ services:
       - /usr/src/app/node_modules
     networks:
       - back-tier
+
+networks:
+  back-tier:
+    driver: bridge
+    name: seesee-back

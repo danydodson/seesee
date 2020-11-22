@@ -32,8 +32,6 @@ jspm_packages/*
 **/*.crt
 
 # misc
-.vscode/*
 .refs/*
 assets/*
 book/*
-.todo

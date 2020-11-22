@@ -4,9 +4,7 @@ const config = require('../config/database')
 const User = require('../models/user')
 
 module.exports = function (passport) {
-  let opts = {
-    // iss:"http://seesee.space"
-  }
+  let opts = {}
   opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('bearer')
   opts.secretOrKey = config.secret
   passport.use(

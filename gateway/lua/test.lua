@@ -1,4 +1,3 @@
-
 local req = require '/usr/local/openresty/lualib/conf/req'
 
 local args = req.getArgs()

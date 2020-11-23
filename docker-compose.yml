@@ -6,8 +6,8 @@ services:
       context: gateway
       dockerfile: Dockerfile
     restart: always
-    container_name: seesee-gateway
-    image: danydodson/seesee-gateway
+    container_name: gateway
+    image: danydodson/ss-gateway
     ports:
       - '80:80'
     env_file:
@@ -27,7 +27,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     container_name: users-api
-    image: danydodson/seesee-users-api
+    image: danydodson/ss-users-api
     env_file:
       - ./users-api/.env
     volumes:
@@ -42,7 +42,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     container_name: posts-api
-    image: danydodson/seesee-posts-api
+    image: danydodson/ss-posts-api
     env_file:
       - ./posts-api/.env
     volumes:

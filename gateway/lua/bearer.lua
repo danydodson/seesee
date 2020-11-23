@@ -29,11 +29,11 @@ end
 -- https://github.com/SkyLothar/lua-resty-jwt#jwt-validators
 local validators = require 'resty.jwt-validators'
 local claim_spec = {
-    -- validators.set_system_leeway(15), -- time in seconds
-    -- exp = validators.is_not_expired(),
+    validators.set_system_leeway(15), -- time in seconds
+    exp = validators.is_not_expired(),
     -- iat = validators.is_not_before(),
-    -- iss = validators.opt_matches('^http[s]?://seesee.space/$'),
-    -- role = validators.equals_any_of({ 'user', 'admin' }),
+    iss = validators.opt_matches('^http[s]?://seesee.space/$'),
+    role = validators.equals_any_of({ 'user', 'admin' }),
     -- sub = validators.opt_matches('^[0-9]+$'),
 }
 
@@ -51,5 +51,7 @@ ngx.say(cjson.encode(jwt_obj))
 
 -- optionally set Authorization header Bearer token style regardless of how token received
 -- if you want to forward it by setting your nginx.conf something like:
---     proxy_set_header Authorization $http_authorization;`
+    -- proxy_set_header Authorization $http_authorization;`
+    -- proxy_pass_header Authorization;
+
 ngx.req.set_header('Authorization', 'Bearer ' .. token)

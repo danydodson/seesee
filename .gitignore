@@ -7,6 +7,9 @@ yarn-error.log*
 # testing
 coverage
 
+# 
+*.http
+
 # production
 build/*
 

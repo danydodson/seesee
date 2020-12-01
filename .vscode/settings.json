@@ -5,7 +5,6 @@
       "upOnly": true,
       "localPath": "/home/dany/Projects/Websites/seesee/gateway",
       "remotePath": "ubuntu@seesee.space:/home/ubuntu/seesee/gateway",
-      // "shell": "/bin/ssh -i /home/dany/seesee.pem",
     },
   ],
   "sync-rsync.exclude": [ "**/node_modules", "**/assets", "**/dist", "**/.git" ],

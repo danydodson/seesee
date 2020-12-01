@@ -1,8 +1,8 @@
-FROM openresty/openresty:1.19.3.1-focal
+FROM openresty/openresty:alpine-fat
 
-RUN apt update && apt install -y git
+RUN apk add --no-cache git
 
-RUN rm -rf /etc/nginx/*
+RUN rm -rf /etc/nginx/conf.d*
 
 COPY nginx/* /etc/nginx/conf.d/
 COPY lua/* /usr/local/openresty/lualib/conf/

@@ -1,28 +1,32 @@
 version: '3.8'
 services:
 
-  gateway:
+  nginx-gateway:
     build:
       context: gateway
       dockerfile: Dockerfile
     restart: always
-    container_name: gateway
-    image: danydodson/ss-gateway
+    container_name: nginx-gateway
+    image: danydodson/ss-nginx-gateway
     ports:
       - '443:443'
       - '80:80'
     environment: 
       - USERS_SERVICES=http://users-api
+      - REDIS_SERVICES=http://redis-auth
     env_file:
       - ./gateway/.env
-    volumes:
-      - ./gateway:/etc/nginx/:ro
-      - './gateway/lua:/usr/local/openresty/lualib/conf'
     networks:
       - back-tier
     depends_on:
       - users-api
     #   - posts-api
+
+  redis-auth:
+    image: redis
+    container_name: redis-auth
+    ports:
+      - 6379:6379
 
   users-api:
     build:

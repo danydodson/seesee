@@ -1,0 +1,12 @@
+# logs
+logs
+
+# dotfiles
+.*
+
+# markdowns
+*.md
+
+# docker
+Dockerfile
+docker-compose.*

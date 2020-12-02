@@ -3,10 +3,6 @@
 		{
 			"name": "seesee ( local )",
 			"path": ".."
-		},
-		{
-			"name": "docker-labs",
-			"path": "../../seesee-docs/docker-labs"
 		}
 	],
 	"settings": {

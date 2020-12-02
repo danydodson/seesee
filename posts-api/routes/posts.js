@@ -14,7 +14,6 @@ router.get('/:id', (req, res, next) => {
   res.json({ post: found })
 })
 
-
 // New Post
 router.post('/', (req, res, next) => {
   let newPost = new Post({

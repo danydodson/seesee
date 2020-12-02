@@ -22,7 +22,7 @@ services:
       - ./gateway/logs/:/var/log/nginx/
       - ./gateway/conf:/etc/nginx/conf/:ro
       - ./gateway/servers/:/etc/nginx/servers/:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # - /var/run/docker.sock:/var/run/docker.sock:ro
     secrets:
       - cert.crt
       - cert.key
@@ -47,6 +47,10 @@ services:
     restart: always
     container_name: users-api
     image: danydodson/ss-users-api
+    command: nodemon -L --inspect=0.0.0.0:5858
+    ports:
+      - 3100:3100
+      - 5858:5858
     environment:
       - NODE_ENV=development
     env_file:

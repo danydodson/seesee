@@ -1,9 +1,11 @@
-version: '3.1'
-
+version: '3.8'
 services:
-  gateway:
-    container_name: gateway
-    build: .
+
+  nginx-gateway:
+    build:
+      context: gateway
+      dockerfile: Dockerfile
+    container_name: nginx-gateway
     # volumes:
       # - ./gateway:/etc/nginx/:ro
       # - './gateway/lua:/usr/local/openresty/lualib/conf'

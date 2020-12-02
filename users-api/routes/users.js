@@ -3,13 +3,18 @@ const router = express.Router()
 
 const User = require('../models/user')
 
+// Ping auth routes
+router.get('/ping', (req, res, next) => {
+  return res.json({ success: true, msg: 'users-api-ping' })
+})
+
 // get auth user
-router.get('/', (req, res, next) => {
+router.get('/me', (req, res, next) => {
   res.json({ user: req.user })
 })
 
 // user signup
-router.post('/signup', (req, res, next) => {
+router.post('/register', (req, res, next) => {
   let newUser = new User({
     name: req.body.name,
     email: req.body.email,
@@ -27,7 +32,7 @@ router.post('/signup', (req, res, next) => {
 })
 
 // user signin
-router.post('/signin', (req, res, next) => {
+router.post('/authenticate', (req, res, next) => {
   const username = req.body.username
   const password = req.body.password
   User.getUserByUsername(username, (err, user) => {

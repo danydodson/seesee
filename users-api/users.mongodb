@@ -1,30 +1,21 @@
 
-// To disable this template go to Settings | MongoDB | Use Default Template For Playground.
-// Make sure you are connected to enable completions and to be able to run a playground.
-// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+use('users-api');
 
-// Select the database to use.
-use('seesee_users');
-
-db.seesee_users.drop();
-db.seesee_users.insertMany([
-  { '_id': 1, 'username': 'dany', 'email': 'dany@gmail.com', 'date': new Date('2014-03-01T08:00:00Z') },
-  { '_id': 2, 'username': 'tammy', 'email': 'tammy@gmail.com', 'date': new Date('2014-03-01T09:00:00Z') },
-  { '_id': 3, 'username': 'jill', 'email': 'jill@gmail.com', 'date': new Date('2014-03-15T09:00:00Z') },
-  { '_id': 4, 'username': 'joana', 'email': 'joana@gmail.com', 'date': new Date('2014-04-04T11:21:39.736Z') },
-  { '_id': 5, 'username': 'molly', 'email': 'molly@gmail.com', 'date': new Date('2014-04-04T21:23:13.331Z') },
-  { '_id': 6, 'username': 'lucy', 'email': 'lucy@gmail.com', 'date': new Date('2015-06-04T05:08:13Z') },
-  { '_id': 7, 'username': 'bill', 'email': 'bill@gmail.com', 'date': new Date('2015-09-10T08:43:00Z') },
-  { '_id': 8, 'username': 'tanya', 'email': 'tanya@gmail.com', 'date': new Date('2016-02-06T20:20:13Z') },
+db.users.drop();
+db.users.insertMany([
+  { 'name': 'Dany Dodson', 'username': 'danydodson', 'email': 'danydodson@gmail.com', 'date': new Date('2014-03-01T08:00:00Z') },
+  { 'name': 'Tamy Knealy', 'username': 'tammy', 'email': 'tammy@gmail.com', 'date': new Date('2014-03-01T09:00:00Z') },
+  { 'name': 'Jill Bates', 'username': 'jill', 'email': 'jill@gmail.com', 'date': new Date('2014-03-15T09:00:00Z') },
+  { 'name': 'Joana Newsome', 'username': 'joana', 'email': 'joana@gmail.com', 'date': new Date('2014-04-04T11:21:39.736Z') },
+  { 'name': 'Molly Grilz', 'username': 'molly', 'email': 'molly@gmail.com', 'date': new Date('2014-04-04T21:23:13.331Z') },
+  { 'name': 'Lucy Begotten', 'username': 'lucy', 'email': 'lucy@gmail.com', 'date': new Date('2015-06-04T05:08:13Z') },
+  { 'name': 'Bill Buffalo', 'username': 'bill', 'email': 'bill@gmail.com', 'date': new Date('2015-09-10T08:43:00Z') },
+  { 'name': 'Tayna Harding', 'username': 'tanya', 'email': 'tanya@gmail.com', 'date': new Date('2016-02-06T20:20:13Z') },
 ]);
 
-// Run a find command to view items sold on April 4th, 2014.
-db.seesee_users.find({ date: { $gte: new Date('2014-04-04'), $lt: new Date('2014-04-05') } });
-
-// Run an aggregation to view total seesee_users for each product in 2014.
 const aggregation = [
   { $match: { date: { $gte: new Date('2014-01-01'), $lt: new Date('2015-01-01') } } },
   { $group: { _id : '$item', totalSaleAmount: { $sum: { $multiply: [ '$price', '$quantity' ] } } } }
 ];
 
-db.seesee_users.aggregate(aggregation);
+db.users.aggregate(aggregation);

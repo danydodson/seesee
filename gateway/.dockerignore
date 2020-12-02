@@ -6,7 +6,3 @@ logs
 
 # markdowns
 *.md
-
-# docker
-Dockerfile
-docker-compose.*

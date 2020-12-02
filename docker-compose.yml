@@ -1,6 +1,6 @@
 version: '3.8'
-services:
 
+services:
   nginx-gateway:
     build:
       context: gateway
@@ -11,14 +11,16 @@ services:
     ports:
       - '80:80'
     environment: 
-      - USERS_SERVICES=http://users-api
-      - POSTS_SERVICES=http://posts-api
-      - REDIS_SERVICES=http://redis-auth
+      - USERS_API=http://users-api
+      - POSTS_API=http://posts-api
+      - REDIS_AUTH=http://redis-auth
     env_file:
       - ./gateway/.env
     volumes: 
-      - ./gateway/conf.d:/etc/nginx/conf.d/:ro
+      - ./gateway/logs/:/var/log/nginx/
+      - ./gateway/conf:/etc/nginx/conf/:ro
       - ./gateway/servers:/etc/nginx/servers/:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - back-tier
     depends_on:
@@ -33,6 +35,18 @@ services:
     networks:
       - back-tier
 
+  web-pwa:
+    build:
+      context: web-pwa
+      dockerfile: Dockerfile.dev
+    restart: always
+    container_name: web-pwa
+    image: danydodson/ss-web-pwa
+    ports:
+      - '8089:8089'
+    networks:
+      - back-tier
+
   users-api:
     build:
       context: users-api
@@ -43,8 +57,8 @@ services:
     env_file:
       - ./users-api/.env
     volumes:
-      - ./users-api:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./users-api:/home/node/app
+      - /home/node/app/node_modules
     networks:
       - back-tier
 
@@ -58,12 +72,12 @@ services:
     env_file:
       - ./posts-api/.env
     volumes:
-      - ./posts-api:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./posts-api:/home/node/app
+      - /home/node/app/node_modules
     networks:
       - back-tier
 
 networks:
   back-tier:
     driver: bridge
-    name: seesee-back-tier
+    name: back-tier

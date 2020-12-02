@@ -1,16 +1,19 @@
 FROM node:14.15.1-alpine
 
-WORKDIR /usr/src/app
+RUN mkdir -p /home/node/app/node_modules && \
+  chown -R node:node /home/node/app
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
+WORKDIR /home/node/app
 
-RUN npm install
+USER node
+
+COPY package.json .
+COPY yarn.lock .
+
+RUN yarn --pure-lockfile
 
 COPY . .
 
 EXPOSE 3050
 
-CMD [ "npm", "start" ]
+CMD [ "yarn", "start" ]

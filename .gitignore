@@ -1,9 +1,10 @@
 # vscode
 .vscode/*
 !.vscode/settings.json
+!.vscode/launch.json
 
 # logs
-logs/*
+**/*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -16,7 +17,8 @@ coverage
 nginx-auth
 
 # production
-build/*
+**/build/*
+data/certbot
 
 # runtime
 pids

@@ -1,0 +1,57 @@
+{
+  "name": "web-pwa",
+  "version": "1.0.0",
+  "description": "web-pwa",
+  "private": true,
+  "scripts": {
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "start": "react-scripts start",
+    "prod": "yarn build && yarn serve",
+    "serve": "node hoster/server.js",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.1",
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/user-event": "^12.3.0",
+    "axios": "^0.21.0",
+    "dotenv": "^8.2.0",
+    "dayjs": "^1.9.6",
+    "is-mobile": "^2.2.2",
+    "jwt-decode": "^3.1.2",
+    "notistack": "^1.0.2",
+    "overmind": "^26.0.0",
+    "overmind-react": "^27.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-error-boundary": "^3.1.0",
+    "react-helmet": "^6.1.0",
+    "react-icons": "^4.1.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.1",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
+  },
+  "author": "Dany Dodson",
+  "license": "ISC",
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

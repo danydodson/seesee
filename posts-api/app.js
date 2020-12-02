@@ -1,15 +1,16 @@
 require('dotenv').config()
 
 const express = require('express')
-const path = require('path')
-const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const config = require('./config/database')
-
 const app = express()
-const port = process.env.PORT || 3050
+
 const posts = require('./routes/posts')
+
+const env = process.env.NODE_ENV
+const host = process.env.HOST || '0.0.0.0'
+const port = process.env.PORT || 3050
 
 // MongoDB
 mongoose.connect(config.database, {
@@ -17,32 +18,26 @@ mongoose.connect(config.database, {
   useNewUrlParser: true
 })
 
-//On connection
+// On connection
 mongoose.connection.on('connected', () => {
-  console.log('Connected to posts-api db') // + config.database
+  console.log('Connected to posts-api db')
 })
-//If error
+
+// If error
 mongoose.connection.on('error', (err) => {
   console.log('Database error  ' + config.database)
 })
 
-//CORS
+// CORS
 app.use(cors())
-//Body Parser
-app.use(bodyParser.json())
 
-//Set Static Folder
-app.use(express.static(path.join(__dirname, 'public')))
+// Body Parser
+app.use(express.json());
 
-//Posts
+// Users
 app.use('/api/v1/posts', posts)
 
-//Start Server
+// Start Server
 app.listen(port, () => {
-  console.log('Posts server started on port ' + port)
+  console.log(`Posts API started in (${env}) at ${host}:${port}`)
 })
-
-//Routes
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'public/index.html'))
-// })

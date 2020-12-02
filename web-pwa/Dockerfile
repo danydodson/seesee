@@ -1,0 +1,28 @@
+FROM node:14.15.1-alpine as builder
+
+RUN mkdir -p /home/node/app/node_modules && \
+  chown -R node:node /home/node/app
+
+WORKDIR /home/node/app
+
+USER node
+
+COPY package.json .
+COPY yarn.lock app
+
+RUN yarn --pure-lockfile
+
+COPY . .
+
+RUN yarn run build
+
+FROM nginx
+
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /home/node/app/build /usr/share/nginx/html
+
+EXPOSE 80
+
+# RUN chown -R nginx:nginx /usr/share/nginx/html/

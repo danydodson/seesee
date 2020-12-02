@@ -7,5 +7,13 @@
       "remotePath": "ubuntu@seesee.space:/home/ubuntu/seesee/gateway",
     },
   ],
-  "sync-rsync.exclude": [ "**/node_modules", "**/assets", "**/dist", "**/.git" ],
+  "sync-rsync.exclude": [
+    "**/node_modules",
+    "**/assets",
+    "**/dist",
+    "**/.git"
+  ],
+  "Lua.diagnostics.disable": [
+    "undefined-global"
+  ],
 }

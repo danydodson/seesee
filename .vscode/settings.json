@@ -1,16 +1,35 @@
 {
   "sync-rsync.sites": [
     {
-      "name": "seesee-gateway",
+      "name": "gateway",
       "upOnly": true,
       "localPath": "/home/dany/Projects/Websites/seesee/gateway",
       "remotePath": "ubuntu@seesee.space:/home/ubuntu/seesee/gateway",
+    },
+    {
+      "name": "posts-api",
+      "upOnly": true,
+      "localPath": "/home/dany/Projects/Websites/seesee/posts-api",
+      "remotePath": "ubuntu@seesee.space:/home/ubuntu/seesee/posts-api",
+    },
+    {
+      "name": "users-api",
+      "upOnly": true,
+      "localPath": "/home/dany/Projects/Websites/seesee/users-api",
+      "remotePath": "ubuntu@seesee.space:/home/ubuntu/seesee/users-api",
+    },
+    {
+      "name": "web-pwa",
+      "upOnly": true,
+      "localPath": "/home/dany/Projects/Websites/seesee/web-pwa",
+      "remotePath": "ubuntu@seesee.space:/home/ubuntu/seesee/web-pwa",
     },
   ],
   "sync-rsync.exclude": [
     "**/node_modules",
     "**/assets",
     "**/dist",
+    "**/build",
     "**/.git"
   ],
   "Lua.diagnostics.disable": [

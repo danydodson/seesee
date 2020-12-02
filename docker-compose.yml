@@ -9,19 +9,25 @@ services:
     restart: always
     container_name: gateway
     image: danydodson/ss-gateway
-    ports:
-      - '443:443'
-      - '80:80'
+    env_file:
+      - ./gateway/.env
     environment:
+      - API_HOST=http://localhost:3000
+      - APP_SERVER_PORT=8000
       - USERS_API=http://users-api
       - POSTS_API=http://posts-api
       - REDIS_AUTH=http://redis-auth
-    env_file:
-      - ./gateway/.env
+    expose:
+      - 8000
+    ports:
+      - 443:443
+      - 80:80
+      - 8000:8000
     volumes: 
-      - ./gateway/logs/:/var/log/nginx/
+      # - ./gateway/logs/:/var/log/nginx/
       - ./gateway/conf:/etc/nginx/conf/:ro
       - ./gateway/servers/:/etc/nginx/servers/:ro
+      - ./gateway/ssl/seesee.space/:/etc/ssl/:ro
     networks:
       - back-tier
     depends_on:
@@ -35,6 +41,28 @@ services:
       - 6379:6379
     networks:
       - back-tier
+  
+  web-pwa:
+    build:
+      context: web-pwa
+      dockerfile: Dockerfile
+    container_name: web-pwa
+    image: danydodson/ss-web-pwa
+    env_file:
+      - ./web-pwa/.env
+    environment: 
+      - REACT_APP_PORT=4000
+    expose: 
+      - 4000
+    ports:
+      - 4000:4000
+    volumes:
+      - ./web-pwa:/home/node/app
+      - pwa-nm:/home/node/app/node_modules
+    links:
+      - gateway
+    command: yarn start
+
 
   users-api:
     build:
@@ -43,10 +71,6 @@ services:
     restart: always
     container_name: users-api
     image: danydodson/ss-users-api
-    command: nodemon -L --inspect=0.0.0.0:5858
-    ports:
-      - 3100:3100
-      - 5858:5858
     environment:
       - NODE_ENV=development
     env_file:
@@ -80,5 +104,6 @@ networks:
     name: back-tier
 
 volumes: 
+  pwa-nm:
   users-nm:
   posts-nm:

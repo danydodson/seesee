@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "web-pwa",
   "private": true,
+  "proxy": "http://gateway:8000",
   "scripts": {
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "start": "react-scripts start",

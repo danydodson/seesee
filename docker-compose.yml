@@ -10,7 +10,7 @@ services:
     image: danydodson/ss-gateway
     ports:
       - '80:80'
-    environment: 
+    environment:
       - USERS_API=http://users-api
       - POSTS_API=http://posts-api
       - REDIS_AUTH=http://redis-auth
@@ -35,18 +35,6 @@ services:
     networks:
       - back-tier
 
-  # web-pwa:
-  #   build:
-  #     context: web-pwa
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   container_name: web-pwa
-  #   image: danydodson/ss-web-pwa
-  #   ports:
-  #     - '8089:8089'
-  #   networks:
-  #     - back-tier
-
   users-api:
     build:
       context: users-api
@@ -54,11 +42,15 @@ services:
     restart: always
     container_name: users-api
     image: danydodson/ss-users-api
+    environment:
+      - NODE_ENV=development
     env_file:
       - ./users-api/.env
     volumes:
       - ./users-api:/home/node/app
       - /home/node/app/node_modules
+      - ./users-api./package.json:/home/node/app/package.json
+      - ./users-api./yarn.lock:/home/node/app/yarn.lock
     networks:
       - back-tier
 
@@ -69,11 +61,15 @@ services:
     restart: always
     container_name: posts-api
     image: danydodson/ss-posts-api
+    environment: 
+      - NODE_ENV=development
     env_file:
       - ./posts-api/.env
     volumes:
       - ./posts-api:/home/node/app
       - /home/node/app/node_modules
+      - ./posts-api./package.json:/home/node/app/package.json
+      - ./posts-api./yarn.lock:/home/node/app/yarn.lock
     networks:
       - back-tier
 

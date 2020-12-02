@@ -6,13 +6,15 @@ RUN apk add --no-cache git
 
 RUN rm -rf /etc/nginx/* && mkdir -p /var/log/nginx
 
-RUN ${openresty}/luajit/bin/luarocks install lua-resty-jwt
-RUN ${openresty}/luajit/bin/luarocks install lua-resty-cookie
-
 COPY conf /etc/nginx/conf
 COPY servers/* /etc/nginx/
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY lua/* ${openresty}/lualib/
+COPY html/favicon.ico /usr/local/openresty/nginx/html/favicon.ico
+
+RUN ${openresty}/luajit/bin/luarocks install lua-resty-jwt
+RUN ${openresty}/luajit/bin/luarocks install lua-resty-cookie
+RUN ${openresty}/luajit/bin/luarocks install luacov
 
 RUN ln -sf /dev/stdout /var/log/nginx/bots.access.log
 

@@ -5,20 +5,8 @@
 			"path": ".."
 		},
 		{
-			"name": "seesee ( ssh )",
-			"uri": "ssh://seesee/"
-		},
-		{
 			"name": "docker-labs",
 			"path": "../../seesee-docs/docker-labs"
-		},
-		{
-			"name": "resty-demo",
-			"path": "../../seesee-docs/resty-demo"
-		},
-		{
-			"name": "resty-nginx-jwt",
-			"path": "../../seesee-docs/resty-nginx-jwt"
 		}
 	],
 	"settings": {

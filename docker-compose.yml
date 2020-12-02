@@ -24,8 +24,8 @@ services:
       - ./gateway/servers/:/etc/nginx/servers/:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
     secrets:
-      - seesee.space.crt
-      - seesee.space.key
+      - cert.crt
+      - cert.key
     networks:
       - back-tier
     depends_on:
@@ -80,9 +80,9 @@ networks:
     name: back-tier
 
 secrets:
-  seesee.space.crt:
+  cert.crt:
     external: true
-  seesee.space.key:
+  cert.key:
     external: true
 
 volumes: 

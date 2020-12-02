@@ -17,13 +17,9 @@
 			"path": "../../seesee-docs/resty-demo"
 		},
 		{
-			"name": "resty-dev",
-			"path": "../../seesee-docs/resty-dev"
-		},
-		{
 			"name": "resty-nginx-jwt",
 			"path": "../../seesee-docs/resty-nginx-jwt"
-		},
+		}
 	],
 	"settings": {
 		"files.exclude": { "**/node_modules/*": true, "**/node_modules/.*": true }

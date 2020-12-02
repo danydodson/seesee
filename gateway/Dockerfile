@@ -9,8 +9,8 @@ RUN rm -rf /etc/nginx/* && mkdir -p /var/log/nginx
 RUN ${openresty}/luajit/bin/luarocks install lua-resty-jwt
 RUN ${openresty}/luajit/bin/luarocks install lua-resty-cookie
 
-COPY servers /etc/nginx
 COPY conf /etc/nginx/conf
+COPY servers/* /etc/nginx/
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY lua/* ${openresty}/lualib/
 

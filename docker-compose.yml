@@ -19,7 +19,7 @@ services:
     volumes: 
       - ./gateway/logs/:/var/log/nginx/
       - ./gateway/conf:/etc/nginx/conf/:ro
-      - ./gateway/servers:/etc/nginx/servers/:ro
+      - ./gateway/servers/:/etc/nginx/servers/:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - back-tier
@@ -35,17 +35,17 @@ services:
     networks:
       - back-tier
 
-  web-pwa:
-    build:
-      context: web-pwa
-      dockerfile: Dockerfile
-    restart: always
-    container_name: web-pwa
-    image: danydodson/ss-web-pwa
-    ports:
-      - '8089:8089'
-    networks:
-      - back-tier
+  # web-pwa:
+  #   build:
+  #     context: web-pwa
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   container_name: web-pwa
+  #   image: danydodson/ss-web-pwa
+  #   ports:
+  #     - '8089:8089'
+  #   networks:
+  #     - back-tier
 
   users-api:
     build:

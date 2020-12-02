@@ -47,4 +47,4 @@ jspm_packages/*
 assets/*
 book/*
 .openresty/*
-docker-labs/*
+.docker-labs/*

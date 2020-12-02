@@ -1,13 +1,13 @@
 version: '3.8'
 
 services:
-  nginx-gateway:
+  gateway:
     build:
       context: gateway
       dockerfile: Dockerfile
     restart: always
-    container_name: nginx-gateway
-    image: danydodson/ss-nginx-gateway
+    container_name: gateway
+    image: danydodson/ss-gateway
     ports:
       - '80:80'
     environment: 
@@ -38,7 +38,7 @@ services:
   web-pwa:
     build:
       context: web-pwa
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     restart: always
     container_name: web-pwa
     image: danydodson/ss-web-pwa

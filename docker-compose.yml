@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   gateway:
+    hostname: ${HOST_NAME}
     build:
       context: gateway
       dockerfile: Dockerfile
@@ -9,6 +10,7 @@ services:
     container_name: gateway
     image: danydodson/ss-gateway
     ports:
+      - '443:443'
       - '80:80'
     environment:
       - USERS_API=http://users-api
@@ -21,6 +23,9 @@ services:
       - ./gateway/conf:/etc/nginx/conf/:ro
       - ./gateway/servers/:/etc/nginx/servers/:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    secrets:
+      - seesee.space.crt
+      - seesee.space.key
     networks:
       - back-tier
     depends_on:
@@ -48,7 +53,7 @@ services:
       - ./users-api/.env
     volumes:
       - ./users-api:/home/node/app
-      - /home/node/app/node_modules
+      - users-nm:/home/node/app/node_modules
     networks:
       - back-tier
 
@@ -65,7 +70,7 @@ services:
       - ./posts-api/.env
     volumes:
       - ./posts-api:/home/node/app
-      - /home/node/app/node_modules
+      - users-nm:/home/node/app/node_modules
     networks:
       - back-tier
 
@@ -73,3 +78,13 @@ networks:
   back-tier:
     driver: bridge
     name: back-tier
+
+secrets:
+  seesee.space.crt:
+    external: true
+  seesee.space.key:
+    external: true
+
+volumes: 
+  users-nm:
+  posts-nm:

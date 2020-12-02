@@ -1,8 +1,12 @@
 {
 	"folders": [
 		{
-			"name": "seesee - local",
+			"name": "seesee ( local )",
 			"path": ".."
+		},
+		{
+			"name": "seesee ( ssh )",
+			"uri": "ssh://seesee/"
 		},
 		{
 			"name": "docker-labs",
@@ -19,7 +23,7 @@
 		{
 			"name": "resty-nginx-jwt",
 			"path": "../../seesee-docs/resty-nginx-jwt"
-		}
+		},
 	],
 	"settings": {
 		"files.exclude": { "**/node_modules/*": true, "**/node_modules/.*": true }

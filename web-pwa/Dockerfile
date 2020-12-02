@@ -8,13 +8,13 @@ WORKDIR /home/node/app
 USER node
 
 COPY package.json .
-COPY yarn.lock app
+COPY yarn.lock .
 
 RUN yarn --pure-lockfile
 
 COPY . .
 
-RUN yarn run build
+RUN yarn build
 
 FROM nginx
 

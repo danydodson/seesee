@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 })
 
 //New Post
-router.post('/new', (req, res, next) => {
+router.post('/create', (req, res, next) => {
   let newPost = new Post({
     title: req.body.title,
     desc: req.body.desc

@@ -33,11 +33,11 @@ app.use(cors())
 app.use(bodyParser.json())
 
 //Passport
-app.use(passport.initialize())
-app.use(passport.session())
+// app.use(passport.initialize())
+// app.use(passport.session())
 
-//JWT
-require('./config/passport')(passport)
+// //JWT
+// require('./config/passport')(passport)
 
 //Set Static Folder
 app.use(express.static(path.join(__dirname, 'public')))

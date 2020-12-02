@@ -9,24 +9,28 @@ services:
     container_name: nginx-gateway
     image: danydodson/ss-nginx-gateway
     ports:
-      - '443:443'
       - '80:80'
     environment: 
       - USERS_SERVICES=http://users-api
       - REDIS_SERVICES=http://redis-auth
     env_file:
       - ./gateway/.env
+    volumes: 
+      - ./gateway/conf.d:/etc/nginx/conf.d/
+      - ./gateway/servers:/etc/nginx/servers/
     networks:
       - back-tier
     depends_on:
       - users-api
-    #   - posts-api
+      - posts-api
 
   redis-auth:
     image: redis
     container_name: redis-auth
     ports:
       - 6379:6379
+    networks:
+      - back-tier
 
   users-api:
     build:
@@ -38,25 +42,25 @@ services:
     env_file:
       - ./users-api/.env
     volumes:
-      - './users-api:/usr/src/app'
+      - ./users-api:/usr/src/app
       - /usr/src/app/node_modules
     networks:
       - back-tier
 
-  # posts-api:
-  #   build:
-  #     context: posts-api
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   container_name: posts-api
-  #   image: danydodson/ss-posts-api
-  #   env_file:
-  #     - ./posts-api/.env
-  #   volumes:
-  #     - './posts-api:/usr/src/app'
-  #     - /usr/src/app/node_modules
-  #   networks:
-  #     - back-tier
+  posts-api:
+    build:
+      context: posts-api
+      dockerfile: Dockerfile
+    restart: always
+    container_name: posts-api
+    image: danydodson/ss-posts-api
+    env_file:
+      - ./posts-api/.env
+    volumes:
+      - ./posts-api:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - back-tier
 
 networks:
   back-tier:

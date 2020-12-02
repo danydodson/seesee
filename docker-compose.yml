@@ -12,12 +12,13 @@ services:
       - '80:80'
     environment: 
       - USERS_SERVICES=http://users-api
+      - POSTS_SERVICES=http://posts-api
       - REDIS_SERVICES=http://redis-auth
     env_file:
       - ./gateway/.env
     volumes: 
-      - ./gateway/conf.d:/etc/nginx/conf.d/
-      - ./gateway/servers:/etc/nginx/servers/
+      - ./gateway/conf.d:/etc/nginx/conf.d/:ro
+      - ./gateway/servers:/etc/nginx/servers/:ro
     networks:
       - back-tier
     depends_on:

@@ -1,3 +1,7 @@
+# vscode
+.vscode/*
+!.vscode/settings.json
+
 # logs
 logs/*
 npm-debug.log*
@@ -34,6 +38,7 @@ jspm_packages/*
 # certs
 **/*.key
 **/*.crt
+**/*.pem
 
 # misc
 .refs/*

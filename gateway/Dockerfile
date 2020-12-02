@@ -4,10 +4,9 @@ FROM openresty/openresty:alpine-fat
 # ENV RESTY_PCRE_VERSION=8.42
 # ENV RESTY_VERSION=1.13.6.2
 
-ENV openresty /usr/local/openresty
-ENV seesee_certs /etc/ssl
-
 RUN apk add --no-cache git openssl
+
+ENV openresty /usr/local/openresty
 
 RUN ${openresty}/luajit/bin/luarocks install lua-resty-jwt
 RUN ${openresty}/luajit/bin/luarocks install lua-resty-cookie
@@ -20,11 +19,13 @@ COPY conf.d/* /etc/nginx/conf.d/
 # RUN mkdir -p /run/secrets/
 # RUN openssl req -new -newkey rsa:2048 -sha1 -days 3650 -nodes -x509 -keyout /run/secrets/cert.key -out /run/secrets/cert.crt -config openssl.cnf
 
+ENV seesee_certs /etc/ssl
+
 COPY ssl/seesee.space/certificate.crt $seesee_certs/certificate.crt
 COPY ssl/seesee.space/private.key $seesee_certs/private.key
 # COPY ssl/seesee.space/seesee.pem $seesee_certs/seesee.pem
 
-RUN ln -sf /dev/stdout /var/log/nginx/bots.access.log
+# RUN ln -sf /dev/stdout /var/log/nginx/bots.access.log
 # RUN rm openssl.cnf
 RUN apk del git openssl
 

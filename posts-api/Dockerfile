@@ -14,6 +14,6 @@ RUN yarn --pure-lockfile
 
 COPY . .
 
-EXPOSE 3050
+EXPOSE 3200
 
 CMD [ "yarn", "start" ]

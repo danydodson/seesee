@@ -4,11 +4,11 @@ local ck = require 'resty.cookie'
 
 
 local function return_rf_cookie(cookie, key)
-  
+
   -- Make JWT
   local data = ngx.req.get_body_data()
   local json = cjson.decode(data)
-  
+
   local jwt_token = jwt:sign(key,
     {
       header={typ='JWT', alg='HS256'},
@@ -49,7 +49,7 @@ _M._VERSION = '0.1'
 
 
 function _M.run(key)
-  
+
   local cookie, err = ck:new()
   if not cookie then
     ngx.log(ngx.ERR, err)

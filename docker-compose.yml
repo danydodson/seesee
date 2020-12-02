@@ -22,10 +22,6 @@ services:
       - ./gateway/logs/:/var/log/nginx/
       - ./gateway/conf:/etc/nginx/conf/:ro
       - ./gateway/servers/:/etc/nginx/servers/:ro
-      # - /var/run/docker.sock:/var/run/docker.sock:ro
-    secrets:
-      - cert.crt
-      - cert.key
     networks:
       - back-tier
     depends_on:
@@ -82,12 +78,6 @@ networks:
   back-tier:
     driver: bridge
     name: back-tier
-
-secrets:
-  cert.crt:
-    external: true
-  cert.key:
-    external: true
 
 volumes: 
   users-nm:

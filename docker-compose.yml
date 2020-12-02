@@ -9,17 +9,20 @@ services:
     container_name: gateway
     image: danydodson/ss-gateway
     ports:
+      - '443:443'
       - '80:80'
+    environment: 
+      - USERS_SERVICES=http://users-api
     env_file:
       - ./gateway/.env
     volumes:
-      - './gateway/nginx:/etc/nginx/conf.d'
+      - ./gateway:/etc/nginx/:ro
       - './gateway/lua:/usr/local/openresty/lualib/conf'
     networks:
       - back-tier
     depends_on:
       - users-api
-      - posts-api
+    #   - posts-api
 
   users-api:
     build:
@@ -36,22 +39,22 @@ services:
     networks:
       - back-tier
 
-  posts-api:
-    build:
-      context: posts-api
-      dockerfile: Dockerfile
-    restart: always
-    container_name: posts-api
-    image: danydodson/ss-posts-api
-    env_file:
-      - ./posts-api/.env
-    volumes:
-      - './posts-api:/usr/src/app'
-      - /usr/src/app/node_modules
-    networks:
-      - back-tier
+  # posts-api:
+  #   build:
+  #     context: posts-api
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   container_name: posts-api
+  #   image: danydodson/ss-posts-api
+  #   env_file:
+  #     - ./posts-api/.env
+  #   volumes:
+  #     - './posts-api:/usr/src/app'
+  #     - /usr/src/app/node_modules
+  #   networks:
+  #     - back-tier
 
 networks:
   back-tier:
     driver: bridge
-    name: seesee-back
+    name: seesee-back-tier

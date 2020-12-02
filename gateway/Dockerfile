@@ -1,6 +1,7 @@
 FROM openresty/openresty:alpine-fat
 
 ENV openresty /usr/local/openresty
+ENV luarocks /usr/local/openresty/luajit/bin/luarocks
 
 RUN apk add --no-cache git
 
@@ -10,11 +11,11 @@ COPY conf /etc/nginx/conf
 COPY servers/* /etc/nginx/
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY lua/* ${openresty}/lualib/
-COPY html/favicon.ico /usr/local/openresty/nginx/html/favicon.ico
+COPY html/favicon.ico ${openresty}/nginx/html/favicon.ico
 
-RUN ${openresty}/luajit/bin/luarocks install lua-resty-jwt
-RUN ${openresty}/luajit/bin/luarocks install lua-resty-cookie
-RUN ${openresty}/luajit/bin/luarocks install luacov
+RUN ${luarocks} install lua-resty-jwt
+RUN ${luarocks} install lua-resty-cookie
+RUN ${luarocks} install luacov
 
 RUN ln -sf /dev/stdout /var/log/nginx/bots.access.log
 

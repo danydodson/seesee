@@ -49,8 +49,6 @@ services:
     volumes:
       - ./users-api:/home/node/app
       - /home/node/app/node_modules
-      - ./users-api./package.json:/home/node/app/package.json
-      - ./users-api./yarn.lock:/home/node/app/yarn.lock
     networks:
       - back-tier
 
@@ -68,8 +66,6 @@ services:
     volumes:
       - ./posts-api:/home/node/app
       - /home/node/app/node_modules
-      - ./posts-api./package.json:/home/node/app/package.json
-      - ./posts-api./yarn.lock:/home/node/app/yarn.lock
     networks:
       - back-tier
 

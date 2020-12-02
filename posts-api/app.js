@@ -9,8 +9,8 @@ const app = express()
 const posts = require('./routes/posts')
 
 const env = process.env.NODE_ENV
-const host = process.env.HOST || '0.0.0.0'
-const port = process.env.PORT || 3050
+const host = process.env.HOST
+const port = process.env.PORT || 3200
 
 // MongoDB
 mongoose.connect(config.database, {

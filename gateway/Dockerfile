@@ -7,14 +7,14 @@ distinguished_name = req_distinguished_name \n\
 x509_extensions = v3_req \n\
 prompt = no \n\
 [req_distinguished_name] \n\
-CN = *.localhost \n\
+CN = *.seesee.space \n\
 [v3_req] \n\
 keyUsage = keyEncipherment, dataEncipherment \n\
 extendedKeyUsage = serverAuth \n\
 subjectAltName = @alt_names \n\
 [alt_names] \n\
-DNS.1 = *.localhost \n\
-DNS.2 = localhost' > openssl.cnf
+DNS.1 = *.seesee.space \n\
+DNS.2 = seesee.space' > openssl.cnf
 
 RUN rm -rf /etc/nginx/* && \
   mkdir -p /var/log/nginx && \
@@ -27,9 +27,6 @@ COPY servers/* /etc/nginx/
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY lua/* /usr/local/openresty/lualib/
 COPY html/favicon.ico /usr/local/openresty/nginx/html/favicon.ico
-
-# COPY ssl/seesee.space/seesee.space.crt /etc/ssl/seesee.space.crt
-# COPY ssl/seesee.space/seesee.space.key /etc/ssl/seesee.space.key
 
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-cookie

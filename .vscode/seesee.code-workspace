@@ -5,12 +5,12 @@
 			"path": ".."
 		},
 		{
-			"name": "wok-cognito-tuts",
-			"path": "../../seesee-docs/wok-cognito-tuts"
+			"name": "nodejs auth",
+			"path": "../../seesee-docs/nodejs auth"
 		},
 		{
-			"name": "nodejs-auth",
-			"path": "../../seesee-docs/nodejs-auth"
+			"name": "cognito tuts",
+			"path": "../../seesee-docs/cognito tuts"
 		}
 	],
 	"settings": {

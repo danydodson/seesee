@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   gateway:
-    hostname: localhost
     build:
       context: gateway
       dockerfile: Dockerfile
@@ -11,10 +10,7 @@ services:
     image: danydodson/ss-gateway
     ports:
       - 80:80
-    env_file:
-      - ./gateway/.env
     volumes: 
-      - ./gateway/logs/:/var/log/nginx/
       - ./gateway/conf:/etc/nginx/conf/:ro
       - ./gateway/servers/:/etc/nginx/servers/:ro
     networks:
@@ -30,8 +26,6 @@ services:
     restart: always
     container_name: users-api
     image: danydodson/ss-users-api
-    env_file:
-      - ./users-api/.env
     volumes:
       - ./users-api:/home/node/app
       - users-nm:/home/node/app/node_modules
@@ -45,8 +39,6 @@ services:
     restart: always
     container_name: posts-api
     image: danydodson/ss-posts-api
-    env_file:
-      - ./posts-api/.env
     volumes:
       - ./posts-api:/home/node/app
       - users-nm:/home/node/app/node_modules

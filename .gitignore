@@ -44,6 +44,7 @@ jspm_packages/*
 **/*.pem
 
 # misc
+.eslintcache
 .refs/*
 assets/*
 book/*

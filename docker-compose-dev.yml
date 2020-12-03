@@ -2,62 +2,31 @@ version: '3.8'
 
 services:
   gateway:
-    hostname: seesee.space
+    hostname: localhost
     build:
       context: gateway
       dockerfile: Dockerfile
     restart: always
     container_name: gateway
     image: danydodson/ss-gateway
+    ports:
+      - 80:80
     env_file:
       - ./gateway/.env
     environment:
       - USERS_API=http://users-api
       - POSTS_API=http://posts-api
       - REDIS_AUTH=http://redis-auth
-    ports:
-      # - 443:443
-      - 3050:80
     volumes: 
-      # - ./gateway/logs/:/var/log/nginx/
+      - ./gateway/logs/:/var/log/nginx/
       - ./gateway/conf:/etc/nginx/conf/:ro
       - ./gateway/servers/:/etc/nginx/servers/:ro
-      - ./gateway/ssl/seesee.space/:/etc/ssl/:ro
     networks:
       - back-tier
     depends_on:
       - users-api
       - posts-api
-
-  redis-auth:
-    image: redis
-    container_name: redis-auth
-    ports:
-      - 6379:6379
-    networks:
-      - back-tier
   
-  web-pwa:
-    build:
-      context: web-pwa
-      dockerfile: Dockerfile
-    container_name: web-pwa
-    image: danydodson/ss-web-pwa
-    env_file:
-      - ./web-pwa/.env
-    environment:
-      - REACT_APP_PORT=${REACT_APP_PORT}
-      - CHOKIDAR_USEPOLLING=${CHOKIDAR_USEPOLLING}
-    ports:
-      - ${REACT_APP_PORT}:${REACT_APP_PORT}
-    volumes:
-      - ./web-pwa:/home/node/app
-      - pwa-nm:/home/node/app/node_modules
-    depends_on:
-      - gateway
-    networks:
-      - back-tier
-
   users-api:
     build:
       context: users-api

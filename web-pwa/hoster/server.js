@@ -1,7 +1,7 @@
 const express = require('express')
 const path = require('path')
 
-const port = process.env.PORT || 8089
+const port = process.env.REACT_APP_PORT || 8080
 
 const indexTmplPath = path.join(__dirname, '../build/index.html')
 

@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "web-pwa",
   "private": true,
-  "proxy": "http://gateway:8000",
   "scripts": {
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "start": "react-scripts start",
     "prod": "yarn build && yarn serve",
     "serve": "node hoster/server.js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "GENERATE_SOURCEMAP=false react-scripts build && aws s3 rm s3://seesee.space/ --recursive && aws s3 cp ./build s3://seesee.space/ --recursive --acl public-read"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.1",

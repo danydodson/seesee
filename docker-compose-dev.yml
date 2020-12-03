@@ -13,10 +13,6 @@ services:
       - 80:80
     env_file:
       - ./gateway/.env
-    environment:
-      - USERS_API=http://users-api
-      - POSTS_API=http://posts-api
-      - REDIS_AUTH=http://redis-auth
     volumes: 
       - ./gateway/logs/:/var/log/nginx/
       - ./gateway/conf:/etc/nginx/conf/:ro
@@ -63,6 +59,5 @@ networks:
     name: back-tier
 
 volumes: 
-  pwa-nm:
   users-nm:
   posts-nm:

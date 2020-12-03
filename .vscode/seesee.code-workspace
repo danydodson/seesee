@@ -5,10 +5,6 @@
 			"path": ".."
 		},
 		{
-			"name": "mongo-multi-go",
-			"path": "../../seesee-docs/mongo-multi-go"
-		},
-		{
 			"name": "wok-cognito-tuts",
 			"path": "../../seesee-docs/wok-cognito-tuts"
 		},

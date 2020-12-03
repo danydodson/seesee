@@ -4,10 +4,9 @@
 			"name": "seese local",
 			"path": ".."
 		},
-		{
-			"name": "cognito tuts",
-			"path": "../../seesee-docs/cognito tuts"
-		}
+		// {
+		// 	"path": "../../seesee-docs/vouch-proxy"
+		// }
 	],
 	"settings": {
 		"files.exclude": { "**/node_modules/*": true, "**/node_modules/.*": true }

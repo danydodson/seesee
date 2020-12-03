@@ -13,7 +13,6 @@ services:
     volumes: 
       - ./gateway/conf:/etc/nginx/conf/:ro
       - ./gateway/servers/:/etc/nginx/servers/:ro
-      - ./gateway/lua/:/usr/local/openresty/lualib/
     networks:
       - back-tier
     depends_on:

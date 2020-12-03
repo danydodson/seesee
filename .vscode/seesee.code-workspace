@@ -4,14 +4,14 @@
 			"name": "seese local",
 			"path": ".."
 		},
-		// {
-		// 	"name": "nodejs auth",
-		// 	"path": "../../seesee-docs/nodejs auth"
-		// },
-		// {
-		// 	"name": "cognito tuts",
-		// 	"path": "../../seesee-docs/cognito tuts"
-		// }
+		{
+			"name": "nodejs auth",
+			"path": "../../seesee-docs/nodejs auth"
+		},
+		{
+			"name": "cognito tuts",
+			"path": "../../seesee-docs/cognito tuts"
+		}
 	],
 	"settings": {
 		"files.exclude": { "**/node_modules/*": true, "**/node_modules/.*": true }

@@ -35,7 +35,7 @@ app.use(cors())
 app.use(express.json());
 
 // Users
-app.use('/api/v1/users', users)
+app.use('/api/v1/auth', users)
 
 // Start Server
 app.listen(port, () => {

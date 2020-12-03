@@ -3,10 +3,8 @@ FROM openresty/openresty:alpine-fat
 RUN apk add --no-cache git
 
 RUN rm -rf /etc/nginx/* && mkdir -p /var/log/nginx
-
 # COPY certs/seesee.space.crt /etc/ssl/seesee.space.crt
 # COPY certs/seesee.space.key /etc/ssl/seesee.space.key
-
 COPY servers/* /etc/nginx/
 COPY conf /etc/nginx/conf
 COPY nginx.conf /etc/nginx/nginx.conf

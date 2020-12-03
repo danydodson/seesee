@@ -5,10 +5,6 @@
 			"path": ".."
 		},
 		{
-			"name": "nodejs auth",
-			"path": "../../seesee-docs/nodejs auth"
-		},
-		{
 			"name": "cognito tuts",
 			"path": "../../seesee-docs/cognito tuts"
 		}

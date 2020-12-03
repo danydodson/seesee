@@ -3,6 +3,18 @@
 		{
 			"name": "seese local",
 			"path": ".."
+		},
+		{
+			"name": "mongo-multi-go",
+			"path": "../../seesee-docs/mongo-multi-go"
+		},
+		{
+			"name": "wok-cognito-tuts",
+			"path": "../../seesee-docs/wok-cognito-tuts"
+		},
+		{
+			"name": "nodejs-auth",
+			"path": "../../seesee-docs/nodejs-auth"
 		}
 	],
 	"settings": {

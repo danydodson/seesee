@@ -18,4 +18,6 @@ RUN /usr/local/openresty/luajit/bin/luarocks install luacov
 
 RUN ln -sf /dev/stdout /var/log/nginx/bots.access.log
 
+# EXPOSE 80
+
 ENTRYPOINT ["/usr/local/openresty/bin/openresty", "-g", "daemon off;", "-c", "/etc/nginx/nginx.conf"]

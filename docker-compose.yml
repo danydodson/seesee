@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   gateway:
+    hostname: gateway
     build:
       context: gateway
       dockerfile: Dockerfile
@@ -20,6 +21,7 @@ services:
       - posts-api
   
   users-api:
+    hostname: users-api
     build:
       context: users-api
       dockerfile: Dockerfile
@@ -33,6 +35,7 @@ services:
       - back-tier
 
   posts-api:
+    hostname: posts-api
     build:
       context: posts-api
       dockerfile: Dockerfile

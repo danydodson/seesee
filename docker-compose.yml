@@ -12,8 +12,7 @@ services:
     ports:
       - 80:80
     volumes: 
-      - ./gateway/nginx/conf:/etc/nginx/conf/
-      - ./gateway/nginx/server/:/etc/nginx/server/
+      - ./gateway/nginx:/etc/nginx
     networks:
       - back-tier
     depends_on:
@@ -21,7 +20,6 @@ services:
       - posts-api
 
   voucher:
-    hostname: voucher
     image: voucher/vouch-proxy
     restart: always
     container_name: voucher
@@ -37,8 +35,8 @@ services:
       - OAUTH_USER_INFO_URL=https://seesee.auth.us-east-1.amazoncognito.com/oauth2/userInfo
       - OAUTH_SCOPES='openid,email,profile'
       - OAUTH_CALLBACK_URL=http://vouch.seesee.space:9090/auth
-    volumes:
-      - ./voucher/config:/config
+    # volumes:
+    #   - ./voucher/config:/config
     networks:
       - back-tier
 

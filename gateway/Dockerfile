@@ -8,7 +8,6 @@ RUN rm -rf /etc/nginx/* && mkdir -p /var/log/nginx
 # COPY certs/seesee.space.key /etc/ssl/seesee.space.key
 
 COPY nginx /etc/nginx
-COPY lua/* /usr/local/openresty/lualib/
 
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-cookie

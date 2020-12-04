@@ -20,10 +20,17 @@ services:
       - users-api
       - posts-api
 
-  voucher-oauth:
+  voucher:
+    hostname: voucher
     image: voucher/vouch-proxy
     restart: always
-    container_name: 
+    container_name: voucher
+    ports:
+      - 9090:9090
+    volumes:
+      - ./voucher/config:/config
+    networks:
+      - back-tier
 
   users-api:
     hostname: users-api

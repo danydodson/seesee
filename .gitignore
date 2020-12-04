@@ -45,5 +45,6 @@ jspm_packages/*
 
 # misc
 .eslintcache
-vouch/config/*
+voucher/config/*
+voucher/examples/*
 

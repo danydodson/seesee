@@ -14,6 +14,8 @@ services:
       - 443:443
     volumes: 
       - ./gateway/nginx:/etc/nginx
+      - ./gateway/certs/seesee.space:/etc/ssl/seesee.space
+      - ./gateway/certs/voucher.seesee.space:/etc/ssl/voucher.seesee.space
     networks:
       - back-tier
     depends_on:

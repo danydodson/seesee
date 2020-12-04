@@ -45,13 +45,5 @@ jspm_packages/*
 
 # misc
 .eslintcache
-.refs/*
-assets/*
-book/*
-.openresty/*
-.docker-labs/*
-.external-auth-server/*
-.micro-auth/*
-.resty-dev/*
-.resty-nginx-jwt/*
-.resty-toolkit/*
+vouch/config/*
+

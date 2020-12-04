@@ -19,7 +19,12 @@ services:
     depends_on:
       - users-api
       - posts-api
-  
+
+  voucher-oauth:
+    image: voucher/vouch-proxy
+    restart: always
+    container_name: 
+
   users-api:
     hostname: users-api
     build:

@@ -3,6 +3,9 @@
 		{
 			"name": "seese local",
 			"path": ".."
+		},
+		{
+			"path": "../../seesee-docs/vouch-proxy"
 		}
 	],
 	"settings": {

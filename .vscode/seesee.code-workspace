@@ -5,7 +5,7 @@
 			"path": ".."
 		},
 		{
-			"name": "SSH FS - seesee",
+			"name": "seesee ssh",
 			"uri": "ssh://seesee/"
 		}
 	],

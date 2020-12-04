@@ -1,0 +1,19 @@
+
+vouch:
+  domains:
+    - seesee.space
+  cookie: 
+    secure: false
+    
+oauth:
+  provider: oidc
+  client_id: 17a5v1sogv6t019643rid5q5mi
+  client_secret: 1ou1ekob5rv5msbg2e858dd3mpt0qpdlfgi1mk6qamk5dsoatvug
+  auth_url: https://seesee.auth.us-east-1.amazoncognito.com/oauth2/authorize
+  token_url: https://seesee.auth.us-east-1.amazoncognito.com/oauth2/token
+  user_info_url: https://seesee.auth.us-east-1.amazoncognito.com/oauth2/userInfo
+  scopes:
+    - openid
+    - email
+    - profile
+  callback_url: http://vouch.seesee.space:9090/auth

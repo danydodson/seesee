@@ -3,10 +3,6 @@
 		{
 			"name": "seese local",
 			"path": ".."
-		},
-		{
-			"name": "seesee ssh",
-			"uri": "ssh://seesee/"
 		}
 	],
 	"settings": {

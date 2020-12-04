@@ -12,8 +12,8 @@ services:
     ports:
       - 80:80
     volumes: 
-      - ./gateway/nginx/conf:/etc/nginx/conf/:ro
-      - ./gateway/nginx/server/:/etc/nginx/server/:ro
+      - ./gateway/nginx/conf:/etc/nginx/conf/
+      - ./gateway/nginx/server/:/etc/nginx/server/
     networks:
       - back-tier
     depends_on:

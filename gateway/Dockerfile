@@ -7,9 +7,9 @@ RUN rm -rf /etc/nginx/* && mkdir -p /var/log/nginx
 # COPY certs/seesee.space.crt /etc/ssl/seesee.space.crt
 # COPY certs/seesee.space.key /etc/ssl/seesee.space.key
 
-COPY servers/* /etc/nginx/
-COPY conf /etc/nginx/conf
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx/server/* /etc/nginx/
+COPY nginx/conf /etc/nginx/conf
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY lua/* /usr/local/openresty/lualib/
 
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt

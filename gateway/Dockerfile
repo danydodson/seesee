@@ -4,11 +4,10 @@ RUN apk add --no-cache git
 
 RUN rm -rf /etc/nginx/* && \
   mkdir -p /var/log/nginx && \
-  mkdir -p /etc/ssl/seesee.space && \
-  mkdir -p /etc/ssl/vouch.seesee.space
+  mkdir -p /etc/ssl/seesee.space/ && \
+  mkdir -p /etc/ssl/vouch.seesee.space/
 
-COPY certs/seesee.space/* /etc/ssl/seesee.space/
-COPY certs/vouch.seesee.space/* /etc/ssl/vouch.seesee.space/
+COPY certs/* /etc/ssl/
 
 COPY nginx /etc/nginx
 COPY lua /usr/local/openresty/nginx/lua

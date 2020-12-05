@@ -10,41 +10,19 @@ services:
     container_name: gateway
     image: danydodson/ss-gateway
     ports:
-      - 80:80
+      # - 80:80
       - 443:443
     volumes: 
       - ./gateway/nginx:/etc/nginx
       - ./gateway/certs/seesee.space:/etc/ssl/seesee.space
-      - ./gateway/certs/voucher.seesee.space:/etc/ssl/voucher.seesee.space
+      - ./gateway/certs/vouch.seesee.space:/etc/ssl/vouch.seesee.space
     networks:
       - back-tier
     depends_on:
       - users-api
       - posts-api
 
-  voucher:
-    image: voucher/vouch-proxy
-    restart: always
-    container_name: voucher
-    ports:
-      - 9090:9090
-    environment: 
-      - VOUCH_DOMAINS=seesee.space
-      - OAUTH_PROVIDER=oidc
-      - OAUTH_CLIENT_ID=17a5v1sogv6t019643rid5q5mi
-      - OAUTH_CLIENT_SECRET=1ou1ekob5rv5msbg2e858dd3mpt0qpdlfgi1mk6qamk5dsoatvug
-      - OAUTH_AUTH_URL=https://seesee.auth.us-east-1.amazoncognito.com/oauth2/authorize
-      - OAUTH_TOKEN_URL=https://seesee.auth.us-east-1.amazoncognito.com/oauth2/token
-      - OAUTH_USER_INFO_URL=https://seesee.auth.us-east-1.amazoncognito.com/oauth2/userInfo
-      - OAUTH_SCOPES='openid,email,profile'
-      - OAUTH_CALLBACK_URL=http://vouch.seesee.space:9090/auth
-    # volumes:
-    #   - ./voucher/config:/config
-    networks:
-      - back-tier
-
   users-api:
-    hostname: users-api
     build:
       context: users-api
       dockerfile: Dockerfile
@@ -58,7 +36,6 @@ services:
       - back-tier
 
   posts-api:
-    hostname: posts-api
     build:
       context: posts-api
       dockerfile: Dockerfile

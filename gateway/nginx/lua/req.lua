@@ -19,6 +19,7 @@ function _M.getArgs()
         args[k] = v
       end
     end
+
   end
 
   return args

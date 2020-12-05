@@ -4,7 +4,6 @@ RUN apk add --no-cache git
 
 RUN rm -rf /etc/nginx/* && mkdir -p /var/log/nginx
 
-COPY certs /etc/ssl/certs
 COPY nginx/* /etc/nginx/
 
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt

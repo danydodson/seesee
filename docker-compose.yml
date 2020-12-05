@@ -10,12 +10,10 @@ services:
     container_name: gateway
     image: danydodson/ss-gateway
     ports:
-      # - 80:80
-      - 443:443
+      - 80:80
+      # - 443:443
     volumes: 
       - ./gateway/nginx:/etc/nginx
-      - ./gateway/certs/seesee.space:/etc/ssl/seesee.space
-      - ./gateway/certs/vouch.seesee.space:/etc/ssl/vouch.seesee.space
     networks:
       - back-tier
     depends_on:

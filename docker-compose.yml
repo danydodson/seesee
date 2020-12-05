@@ -13,6 +13,8 @@ services:
       - 80:80
     volumes: 
       - ./gateway/nginx:/etc/nginx
+      - ./gateway/certs:/etc/ssl/certs
+      - ./gateway/lua:/usr/local/openresty/nginx/lua
     networks:
       - back-tier
     depends_on:

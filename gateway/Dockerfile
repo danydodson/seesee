@@ -2,16 +2,10 @@ FROM openresty/openresty:alpine-fat
 
 RUN apk add --no-cache git
 
-RUN rm -rf /etc/nginx/* && \
-  mkdir -p /etc/nginx/sites-available && \
-  mkdir -p /etc/nginx/sites-enabled && \
-  mkdir -p /var/log/nginx
+RUN rm -rf /etc/nginx/* && mkdir -p /var/log/nginx
 
-# COPY certs/* /etc/ssl/certs
-
-# COPY nginx /etc/nginx
-COPY lua /etc/nginx/lua
-# COPY lua /usr/local/openresty/nginx/lua
+COPY certs /etc/ssl/certs
+COPY nginx/* /etc/nginx/
 
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-cookie

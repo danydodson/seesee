@@ -3,9 +3,15 @@
 		{
 			"name": "seese local",
 			"path": ".."
-		}
+		},
+		// {
+		// 	"path": "../../____aws/nodejs-auth"
+		// }
 	],
 	"settings": {
+		"files.exclude": {
+			".gitignore": true,
+		},
 		"Lua.diagnostics.disable": [
 			"undefined-global",
 			"lowercase-global"

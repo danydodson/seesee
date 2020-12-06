@@ -35,5 +35,5 @@ async function init() {
 }
 
 init()
-  .then(() => console.info(`Listening on port ${port}`))
-  .catch(err => console.error('Something went wrong', err))
+  .then(() => console.info(`React pwa listening on port ${port}`))
+  .catch(err => console.error('Something went wrong | React pwa', err))

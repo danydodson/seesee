@@ -47,7 +47,7 @@ For store management [overmind](https://github.com/cerebral/overmind) has been u
 
 You can use `useStore` hook exported from `store`. It'll give you `state`, `actions` and `effects`, which you can use.
 
-```js
+```jsx
 // ...
 import { useStore } from 'store';
 
@@ -62,7 +62,7 @@ function SomeCoolComponent() {
 
 The [theme system](https://github.com/suren-atoyan/react-pwa/blob/master/src/theme/ThemeProvider.js) is based on MUI theme. It's integrated with store, so, see how you can use it:
 
-```js
+```jsx
 // ...
 import { useStore } from 'store';
 

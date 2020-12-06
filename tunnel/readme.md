@@ -12,10 +12,11 @@ Launch an Ubuntu 18.04 Virtual Private Server using any provider and open port 8
 
 ## 1. Build the container image
 
-```bash
+```sh
 git clone https://github.com/robzhu/nginx-local-tunnel
 cd nginx-local-tunnel
 
+# build the image
 docker build -t {DOCKERUSER}/dev-proxy . --build-arg ROOTPW={PASSWORD}
 
 # launch the container
@@ -24,28 +25,29 @@ docker run -d -P 80:80 -p 2222:22 {DOCKERUSER}/dev-proxy
 
 ## 2. On your dev machine, create a reverse tunnel with SSH
 
-```bash
+```sh
 # Ports explained:
 # 3000 refers to the port that your app is running on localhost.
 # 2222 is the forwarded port on the host that we use to directly SSH into the container.
 # 80 is the default HTTP port, forwarded from the host
+
 ssh -R :80:localhost:3000 -p 2222 root@seesee.space
 ```
 
 ## 3. Start the sample app on localhost
 
-```bash
+```sh
 cd node-hello && npm i
 nodemon main.js
 ```
 
-Now you should be able to access your app from either http://localhost:3000 or http://YOURDOMAIN.com.
+Now you should be able to access your app from either http://localhost:3000 or http://seesee.space
 
 # SSL
 
 On the server, launch [nginx-proxy](https://github.com/jwilder/nginx-proxy) and [docker-letsencrypt-nginx-proxy-companion](https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion), then launch your container, specifying the subdomain.
 
-```bash
+```sh
 docker run --detach \
     --name nginx-proxy \
     --publish 80:80 \
@@ -60,21 +62,21 @@ docker run --detach \
     --name nginx-proxy-letsencrypt \
     --volumes-from nginx-proxy \
     --volume /var/run/docker.sock:/var/run/docker.sock:ro \
-    --env "DEFAULT_EMAIL={YOUREMAIL}" \
+    --env 'DEFAULT_EMAIL=danydodson@gmail.com' \
     jrcs/letsencrypt-nginx-proxy-companion
 
 docker run --detach \
-    --name dev-proxy \
+    --name ss-tunnel \
     --publish 2222:22 \
-    --env "VIRTUAL_HOST=dev.seesee.space" \
-    --env "LETSENCRYPT_HOST=dev.seesee.space" \
-    {DOCKERUSER}/dev-proxy
+    --env 'VIRTUAL_HOST=dev.seesee.space' \
+    --env 'LETSENCRYPT_HOST=dev.seesee.space' \
+    danydodson/ss-tunnel
 
 ```
 
 On your local dev machine:
 
-```bash
+```sh
 ssh -NR :80:localhost:3000 -p 2222 root@seesee.space
 # run something on localhost:3000
 ```

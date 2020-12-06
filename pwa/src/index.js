@@ -1,8 +1,8 @@
-import * as serviceWorker from './serviceWorker'
+import * as serviceWorker from './serviceWorker';
 
-import store from 'store'
+import { getActions as getSWActions } from 'store/sw';
 
-import './global.css'
+import './global.css';
 
 if (!document.ie) { // check for ie
   Promise.all([
@@ -17,11 +17,11 @@ if (!document.ie) { // check for ie
     ReactDOM.render(
       <App />,
       document.getElementById('root'),
-    )
-  })
+    );
+  });
 
   serviceWorker.register({
-    onSuccess: store.actions.sw.handleSuccess,
-    onUpdate: reg => store.actions.sw.handleUpdate(reg),
-  })
+    onSuccess: () => getSWActions().handleSuccess(),
+    onUpdate: reg => getSWActions().handleUpdate(reg),
+  });
 }

@@ -4,10 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
-import DividerMU from '@material-ui/core/Divider';
 import Tooltip from '@material-ui/core/Tooltip';
-import { withStyles } from '@material-ui/core/styles';
 
 import {
   FaBrush as BrushIcon,
@@ -17,29 +14,27 @@ import {
 } from 'react-icons/fa';
 
 import Link from 'components/Link';
+import Fb from 'components/Fb';
+import Divider from 'components/Divider';
 
-import { useStore } from 'store';
+import useTheme from 'store/theme';
+import useSW from 'store/sw';
+
 import { title, repository } from 'config';
 
 import useStyles from './styles';
 
-const Divider = withStyles({
-  root: {
-    'margin-left': 7,
-    'margin-right': 7,
-  },
-})(props => <DividerMU flexItem orientation="vertical" {...props} />);
-
-function AppBar_({ isMenuOpen, onMenuOpen }) {
+function AppBar_({ onMenuOpen }) {
   const classes = useStyles();
-  const { state, actions } = useStore();
+  const [, themeActions] = useTheme();
+  const [swState, swActions] = useSW();
 
   function handleToggleTheme() {
-    actions.theme.toggle();
+    themeActions.toggle();
   }
 
   function handleAppUpdate() {
-    actions.sw.update();
+    swActions.update();
   }
 
   return (
@@ -50,7 +45,7 @@ function AppBar_({ isMenuOpen, onMenuOpen }) {
       elevation={1}
     >
       <Toolbar className={classes.toolbar}>
-        <Box display="flex" className={classes.main}>
+        <Fb className={classes.main}>
           <IconButton
             edge="start"
             aria-label="open menu"
@@ -63,17 +58,17 @@ function AppBar_({ isMenuOpen, onMenuOpen }) {
               {title}
             </Button>
           </Link>
-        </Box>
-        <Box display="flex">
+        </Fb>
+        <Fb>
           {
-            state.sw.isUpdated && (
+            swState.isUpdated && (
               <>
                 <Tooltip title="The application has newer version; press to update" arrow>
                   <IconButton aria-label="update the application" color="secondary" onClick={handleAppUpdate}>
                     <RedoIcon />
                   </IconButton>
                 </Tooltip>
-                <Divider />
+                <Divider orientation="vertical" flexItem />
               </>
             )
           }
@@ -88,7 +83,7 @@ function AppBar_({ isMenuOpen, onMenuOpen }) {
               <GithubIcon /> 
             </IconButton>
           </Tooltip>
-          <Divider />
+          <Divider orientation="vertical" flexItem />
           <Tooltip title="Change theme" arrow>
             <IconButton
               aria-label="toggle theme"
@@ -98,7 +93,7 @@ function AppBar_({ isMenuOpen, onMenuOpen }) {
               <BrushIcon />
             </IconButton>
           </Tooltip>
-        </Box>
+        </Fb>
       </Toolbar>
     </AppBar>
   );

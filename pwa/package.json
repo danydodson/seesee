@@ -1,31 +1,26 @@
 {
-  "name": "web-pwa",
-  "version": "1.0.0",
-  "description": "web-pwa",
+  "name": "react-pwa",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
-    "build": "rm -rf build && GENERATE_SOURCEMAP=false react-scripts build && cp -r build ../gateway",
-    "build2": "GENERATE_SOURCEMAP=false react-scripts build && cp -r build ../gateway",
     "start": "react-scripts start",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "clean": "rm -rf build && rm -rf ../gateway/build",
+    "send": "yarn clean && PUBLIC_URL=/app react-scripts build && cp -R build ../gateway",
     "prod": "yarn build && yarn serve",
     "serve": "node hoster/server.js",
+    "lint": "npx eslint src",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "deploy": "GENERATE_SOURCEMAP=false react-scripts build && aws s3 rm s3://seesee.space/ --recursive && aws s3 cp ./build s3://seesee.space/ --recursive --acl public-read"
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.5.0",
-    "axios": "^0.21.0",
-    "dotenv": "^8.2.0",
     "dayjs": "^1.9.7",
     "is-mobile": "^2.2.2",
-    "jwt-decode": "^3.1.2",
     "notistack": "^1.0.2",
-    "overmind": "^26.0.0",
-    "overmind-react": "^27.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-error-boundary": "^3.1.0",
@@ -33,14 +28,21 @@
     "react-icons": "^4.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "recoil": "^0.1.2",
+    "state-local": "^1.0.4",
     "uuid": "^8.3.1"
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "express": "^4.17.1",
-    "nodemon": "^2.0.6"
+    "husky": "^4.3.4"
   },
-  "author": "Dany Dodson",
-  "license": "ISC",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -55,5 +57,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   }
 }

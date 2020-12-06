@@ -19,7 +19,7 @@ import {
   FaBug as BugIcon,
 } from 'react-icons/fa';
 
-import { isMobile } from 'utils';
+import isMobile from 'utils/isMobile';
 
 import useStyles from './styles';
 
@@ -66,11 +66,11 @@ function Menu({ isOpen, onClose, onOpen }) {
           </ListItemIcon>
           <ListItemText primary="Page 3" />
         </StyledMenuItem>
-        <StyledMenuItem onClick={onClose} component={RouterLink} to="/user/signin">
+        <StyledMenuItem onClick={onClose} component={RouterLink} to="/page-4">
           <ListItemIcon>
             <BugIcon />
           </ListItemIcon>
-          <ListItemText primary="Signin" />
+          <ListItemText primary="Page 4" />
         </StyledMenuItem>
       </List>
     </SwipeableDrawer>

@@ -1,6 +1,6 @@
 import React, { Suspense, useState, useEffect, lazy } from 'react';
 
-import { sleep } from 'utils';
+import sleep from 'utils/sleep';
 
 // a little bit complex staff is going on here
 // let me explain it
@@ -26,10 +26,10 @@ import { sleep } from 'utils';
 const getDelayedFallback = (Fallback, delay) => props => {
   const [isDelayPassed, setIsDelayPassed] = useState(false);
 
-  useEffect(_ => {
-    const timerId = setTimeout(_ => setIsDelayPassed(true), delay);
+  useEffect(() => {
+    const timerId = setTimeout(() => setIsDelayPassed(true), delay);
 
-    return _ => clearTimeout(timerId);
+    return () => clearTimeout(timerId);
   }, []);
 
   return isDelayPassed && <Fallback {...props} />;
@@ -48,7 +48,7 @@ const getDelayedFallback = (Fallback, delay) => props => {
 // The solution of the second problem is to set of a minimum timeout, which will
 // ensure that the falback component will be rendered for that minimum amount of time
 
-const getLazyComponent = (loadComponent, loaderOptions, FallbackFail) => lazy(_ => {
+const getLazyComponent = (loadComponent, loaderOptions, FallbackFail) => lazy(() => {
   // fix the moment of starting loading
   const start = performance.now();
   // start loading
@@ -84,10 +84,10 @@ const getLazyComponent = (loadComponent, loaderOptions, FallbackFail) => lazy(_ 
       if ((diff < delay) || ((diff > delay) && (diff > delay + minimumLoading))) {
         return moduleExports;
       } else {
-        return sleep(delay + minimumLoading - diff).then(_ => moduleExports);
+        return sleep(delay + minimumLoading - diff).then(() => moduleExports);
       }
     })
-    .catch(_ => ({ default: FallbackFail }));
+    .catch(() => ({ default: FallbackFail }));
 });
 
 /* ================================================================================== */
@@ -96,30 +96,33 @@ const getLazyComponent = (loadComponent, loaderOptions, FallbackFail) => lazy(_ 
 // will secure us from having any kind of blinking in the process of asynchronous loadings
 
 // INFO: the usage of `asyncComponentLoader` looks like this:
-// asyncComponentLoader(_ => import('pages/Welcome'))
+// asyncComponentLoader(() => import('pages/Welcome'))
 
-const asyncComponentLoader = (
+function asyncComponentLoader(
   loadComponent,
   loaderOptions,
   FallbackWaiting,
   FallbackFail,
-) => props => {
+) {
+  return function AsyncComponent(props) {
+    const Fallback = loaderOptions.delay
+      ? getDelayedFallback(FallbackWaiting, loaderOptions.delay)
+      : FallbackWaiting;
 
-  const Fallback = loaderOptions.delay
-    ? getDelayedFallback(FallbackWaiting, loaderOptions.delay)
-    : FallbackWaiting;
+    const LazyComponent = getLazyComponent(
+      loadComponent,
+      loaderOptions,
+      FallbackFail,
+    );
 
-  const LazyComponent = getLazyComponent(
-    loadComponent,
-    loaderOptions,
-    FallbackFail,
-  );
+    return (
+      <Suspense fallback={<Fallback />}>
+        <LazyComponent {...props} />
+      </Suspense>
+    );
+  }
+}
 
-  return (
-    <Suspense fallback={<Fallback />}>
-      <LazyComponent {...props} />
-    </Suspense>
-  );
-};
+export { getDelayedFallback };
 
 export default asyncComponentLoader;

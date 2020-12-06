@@ -1,56 +1,30 @@
-import React from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
-// import React, { Fragment, useEffect } from 'react'
-// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import React from 'react';
 
-import store from './store'
+import { RecoilRoot } from 'recoil';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
-import setAuthToken from './utils/set-token'
-import jwt_decode from 'jwt-decode'
+import withErrorHandler from 'errorHandling';
+import { App as ErrorBoundaryFallback } from 'errorHandling/Fallbacks';
 
+import Layout from 'sections/Layout';
+import Fb from 'components/Fb';
+import { ThemeProvider } from 'theme';
 
-import {
-  setCurrentUser,
-  // logoutUser,
-  // clearCurrentProfile,
-} from './store/actions/auth.js'
-
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Box from '@material-ui/core/Box'
-
-import withErrorHandler from 'errorHandling'
-import { App as ErrorBoundaryFallback } from 'errorHandling/Fallbacks'
-
-import Layout from 'sections/Layout'
-import { ThemeProvider } from 'theme'
-import { StoreProvider } from 'store'
-
-if (localStorage.jwtToken) {
-  setAuthToken(localStorage.jwtToken)
-  const decoded = jwt_decode(localStorage.jwtToken, { session: false })
-  store.dispatch(setCurrentUser(decoded))
-
-  const currentTime = Date.now() / 1000
-  if (decoded.exp < currentTime) {
-    // store.dispatch(logoutUser())
-    // store.dispatch(clearCurrentProfile())
-    window.location.href = '/signin'
-  }
-}
+import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
   return (
-    <StoreProvider>
+    <RecoilRoot>
       <ThemeProvider>
-        <Box display="flex">
+        <Fb>
           <CssBaseline />
           <Router>
             <Layout />
           </Router>
-        </Box>
+        </Fb>
       </ThemeProvider>
-    </StoreProvider>
-  )
+    </RecoilRoot>
+  );
 }
 
-export default withErrorHandler(App, ErrorBoundaryFallback)
+export default withErrorHandler(App, ErrorBoundaryFallback);

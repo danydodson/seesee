@@ -1,9 +1,11 @@
-import { isMobile } from 'utils'
+import isMobile from 'utils/isMobile';
 
-const email = 'dany@seesee.space'
-const domain = 'seesee.space'
+/* set your data here */
+const email = 'super-email-of-the-auther@gmail.com';
+const domain = 'your-project-domain.com'
+/* ***************** */
 
-const repository = 'https://github.com/seesee-platform'
+const repository = 'https://github.com/suren-atoyan/react-pwa';
 
 const messages = {
   app: {
@@ -22,12 +24,12 @@ const messages = {
     failed: 'something went wrong during image loading :(',
   },
   404: 'Hey bro? What are you looking for?',
-}
+};
 
 const copyright = {
   title: 'copyright © ',
   link: domain,
-}
+};
 
 const themes = {
   light: {
@@ -61,15 +63,15 @@ const themes = {
       },
     },
   },
-}
+};
 
-const cancelationMessage = 'operation is manually canceled'
+const cancelationMessage = 'operation is manually canceled';
 
-const dateFormat = 'MMMM DD, YYYY'
+const dateFormat = 'MMMM DD, YYYY';
 
-const title = 'SeeSee'
+const title = 'React PWA';
 
-const themePair = ['dark', 'light']
+const themePair = ['dark', 'light'];
 
 const notifications = {
   options: {
@@ -80,19 +82,15 @@ const notifications = {
     autoHideDuration: 3000,
   },
   maxSnack: isMobile ? 3 : 4,
-}
+};
 
 const loader = {
   // no more blinking in your app
   delay: 300, // if your asynchronous process is finished during 300 milliseconds you will not see the loader at all
   minimumLoading: 700, // but if it appears, it will stay for at least 700 milliseconds
-}
+};
 
-const api = {
-  url: process.env.NODE_ENV === 'production'
-    ? process.env.REACT_APP_API_URL
-    : process.env.REACT_APP_LOCAL_URL
-}
+const giphy404 = 'https://giphy.com/embed/8L0Pky6C83SzkzU55a';
 
 export {
   messages,
@@ -105,7 +103,7 @@ export {
   loader,
   title,
   themePair,
+  giphy404,
   notifications,
   themes,
-  api,
-}
+};

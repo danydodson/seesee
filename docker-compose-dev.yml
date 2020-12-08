@@ -1,6 +1,14 @@
 version: '3.8'
 
 services:
+  nginx-ui:
+    image: schenkd/nginx-ui:latest
+    container_name: nginx-ui
+    ports:
+      - 8080:8080
+    volumes:
+      - nginx:/etc/nginx
+
   proxy:
     build:
       context: proxy
@@ -36,3 +44,4 @@ networks:
 
 volumes:
   users_nm:
+  nginx:

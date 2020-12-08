@@ -3,13 +3,7 @@
 		{
 			"name": "seese",
 			"path": ".."
-		},
-		// {
-		// 	"path": "../../Web/nginx-auth"
-		// },
-		// {
-		// 	"path": "../../Node/nginx-boilerplate"
-		// }
+		}
 	],
 	// 
 	"settings": {

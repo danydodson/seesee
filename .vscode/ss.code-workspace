@@ -1,0 +1,38 @@
+{
+	"folders": [
+		{
+			"name": "seese",
+			"path": ".."
+		},
+	],
+	// 
+	"settings": {
+		// 
+		"editor.tabSize": 4,
+		// 
+		"Lua.diagnostics.globals": [
+			"ngx",
+			"method",
+			"path",
+			"strSplit"
+		],
+		// 
+		"files.exclude": {
+			"**/.git": true,
+			"**/node_modules/*": true,
+			"**/.DS_Store": true,
+			"env*": true
+		},
+		// 
+		"files.watcherExclude": {
+			"**/.git/objects/**": true,
+			"**/.git/subtree-cache/**": true,
+			"**/node_modules/**": true,
+			"env-*": true
+		},
+		// 
+		"search.exclude": {
+			"**/node_modules": true
+		},
+	}
+}

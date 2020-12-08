@@ -3,11 +3,10 @@ version: '3.8'
 services:
   proxy:
     restart: always
-    image: danydodson/ss-proxy
+    build: ./proxy/Dockerfile.dev
     container_name: proxy
     ports:
       - 80:80
-      - 443:443
     volumes: 
       - ./proxy/nginx:/etc/nginx
       - ./proxy/certs:/etc/ssl/certs
@@ -19,7 +18,7 @@ services:
 
   users:
     restart: always
-    image: danydodson/ss-users
+    build: ./users/Dockerfile
     container_name: users
     volumes:
       - ./users:/home/node/app

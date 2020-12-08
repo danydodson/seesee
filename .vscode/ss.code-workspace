@@ -7,8 +7,14 @@
 	],
 	// 
 	"settings": {
-		// 
-		"editor.tabSize": 4,
+		"docker-compose.files": [
+			"docker-compose-dev.yml",
+			"docker-compose.yml"
+		],
+		//
+		"[NGINX]": {
+			"editor.tabSize": 4,
+		},
 		// 
 		"Lua.diagnostics.globals": [
 			"ngx",

@@ -2,16 +2,15 @@ version: '3.8'
 
 services:
   proxy:
-    restart: always
     build:
       context: proxy
       dockerfile: Dockerfile.dev
+    restart: always
     container_name: proxy
     ports:
       - 80:80
     volumes:
       - ./proxy/nginx:/etc/nginx
-      - ./proxy/certs:/etc/ssl/certs
       - ./proxy/lua:/usr/local/openresty/nginx/lua
     networks:
       - back-tier
@@ -19,14 +18,14 @@ services:
       - users
 
   users:
-    restart: always
     build:
       context: users
       dockerfile: Dockerfile.dev
+    restart: always
     container_name: users
     volumes:
       - ./users:/home/node/app
-      - users-nm:/home/node/app/node_modules
+      - users_nm:/home/node/app/node_modules
     networks:
       - back-tier
 
@@ -36,4 +35,4 @@ networks:
     name: back-tier
 
 volumes:
-  users-nm:
+  users_nm:

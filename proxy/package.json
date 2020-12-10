@@ -1,0 +1,14 @@
+{
+  "name": "proxy",
+  "version": "1.0.0",
+  "description": "proxy",
+  "main": "n/a",
+  "scripts": {
+    "beautify": "nginxbeautifier -s 2 -r nginx"
+  },
+  "dependencies": {
+    "nginxbeautifier": "^1.0.19"
+  },
+  "author": "Dany Dodson",
+  "license": "MIT"
+}

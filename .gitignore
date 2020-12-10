@@ -1,4 +1,8 @@
 
+tiny
+gateway
+status
+
 **/*/*.pem
 **/*/*.crt
 **/**/*.key

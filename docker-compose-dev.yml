@@ -11,7 +11,7 @@ services:
       - 80:80
     volumes:
       - ./proxy/nginx:/etc/nginx
-      - ./proxy/lua:/usr/local/openresty/nginx/lua
+      # - ./proxy/lua:/usr/local/openresty/nginx/lua
     networks:
       - back-tier
     depends_on:

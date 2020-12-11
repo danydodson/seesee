@@ -1,0 +1,16 @@
+{
+  "name": "seesee",
+  "version": "1.0.0",
+  "description": "seesee",
+  "main": "n/a",
+  "scripts": {
+    "build:dev": "docker-compose -f docker-compose-dev.yml build",
+    "start:dev": "docker-compose -f docker-compose-dev.yml up -d",
+    "stop:dev": "docker-compose -f docker-compose-dev.yml down --remove-orphans --volumes",
+    "reload:nginx": "docker exec -it proxy nginx -s reload",
+    "clean": "yes | docker system prune --volumes && yes | docker system prune --all"
+  },
+  "repository": "https://github.com/danydodson/seesee.git",
+  "author": "Dany Dodson <danydodsom@gmail.com>",
+  "license": "MIT"
+}

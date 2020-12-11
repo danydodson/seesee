@@ -4,58 +4,9 @@
 			"name": "seese",
 			"path": ".."
 		},
-		// {
-		// 	"name": "wok",
-		// 	"path": "../../wok"
-		// },
-		// {
-		// 	"name": "podium",
-		// 	"path": "../../podium"
-		// },
-		// {
-		// 	"name": "fast-gateway",
-		// 	"path": "../../../Node/fast-gateway"
-		// },
-		// {
-		// 	"name": "tiny-http",
-		// 	"path": "../../tiny-http"
-		// },
-		// {
-		// 	"name": "login-master",
-		// 	"path": "../../../Docker/login-master"
-		// },
-		// {
-		// 	"name": "video-chat",
-		// 	"path": "../../../Docker/video-chat"
-		// },
-		// {
-		// 	"name": "zuix-web",
-		// 	"path": "../../../Node/zuix-web"
-		// },
-		// {
-		// 	"name": "vscode-recipes",
-		// 	"path": "../../../Docker/vscode-recipes"
-		// },
-		// {
-		// 	"name": "health-check",
-		// 	"path": "../../../Node/health-check"
-		// },
-		// {
-		// 	"name": "web-rss",
-		// 	"path": "../../web-rss"
-		// },
-		// {
-		// 	"name": "nginx-beautifier",
-		// 	"path": "../../nginx-beautifier"
-		// },
-		// {
-		// 	"name": "crud-verify",
-		// 	"path": "../../../Docker/crud-verify"
-		// },
-		// {
-		// 	"name": "face-api-js",
-		// 	"path": "../../../Docker/face-api-js"
-		// }
+		{
+			"path": "../../../Nginx/openresty_dev"
+		}
 	],
 	// 
 	"settings": {

@@ -1,0 +1,9 @@
+{
+  "name": "basic",
+  "private": true,
+  "dependencies": {
+    "@tinyhttp/app": "workspace:*",
+    "@tinyhttp/logger": "workspace:*"
+  },
+  "type": "module"
+}

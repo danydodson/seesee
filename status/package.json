@@ -1,0 +1,18 @@
+{
+  "name": "filecheck",
+  "version": "0.0.1",
+  "description": "Simple http health check that passes if it successfully reads from a file",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robzhu/http-filecheck.git"
+  },
+  "author": "robzhu@gmail.com",
+  "bugs": {
+    "url": "https://github.com/robzhu/http-filecheck/issues"
+  },
+  "homepage": "https://github.com/robzhu/http-filecheck#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}

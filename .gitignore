@@ -1,7 +1,7 @@
 
-tiny
-gateway
-status
+# tiny
+# gateway
+# status
 
 **/*/*.pem
 **/*/*.crt

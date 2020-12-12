@@ -1,0 +1,11 @@
+{
+  "type": "module",
+  "name": "faunadb",
+  "private": true,
+  "dependencies": {
+    "@tinyhttp/app": "workspace:*",
+    "@tinyhttp/dotenv": "workspace:*",
+    "faunadb": "^3.0.1",
+    "milliparsec": "^1.0.0"
+  }
+}

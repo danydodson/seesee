@@ -1,0 +1,9 @@
+{
+  "name": "eta",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@tinyhttp/app": "workspace:*",
+    "eta": "^1.10.1"
+  }
+}

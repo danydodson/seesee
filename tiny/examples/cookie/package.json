@@ -1,0 +1,9 @@
+{
+  "name": "cookie",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@tinyhttp/app": "workspace:*",
+    "@tinyhttp/cookie-parser": "workspace:*"
+  }
+}

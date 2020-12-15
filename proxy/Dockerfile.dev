@@ -4,9 +4,8 @@ RUN apk add --no-cache git && \
   rm -rf /etc/nginx/* && \
   mkdir -p /var/log/nginx
 
-COPY nginx/* /etc/nginx/
+COPY data/* /etc/nginx/
 COPY lua/* /usr/local/openresty/nginx/lua/
-# COPY lua/* /usr/local/openresty/lualib/
 
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-cookie

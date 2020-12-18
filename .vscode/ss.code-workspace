@@ -11,12 +11,15 @@
 		"[NGINX]": {
 			"editor.tabSize": 2,
 		},
-		// 
+		//
+		"Lua.runtime.version": "LuaJIT",
 		"Lua.diagnostics.globals": [
 			"ngx",
 			"method",
 			"path",
-			"strSplit"
+			"strSplit",
+			"_ENV",
+			"process",
 		],
 		// 
 		"files.exclude": {

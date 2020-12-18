@@ -9,6 +9,8 @@ services:
     container_name: proxy
     ports:
       - 80:80
+    env_file: 
+      - ./proxy/.env
     volumes:
       - ./proxy/data:/etc/nginx
       - ./proxy/lua:/usr/local/openresty/nginx/lua

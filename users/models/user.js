@@ -3,12 +3,13 @@ const bcryptjs = require('bcryptjs')
 
 // User Schema
 const UserSchema = mongoose.Schema({
+  _id: { type: {}, required: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, required: true },
   username: { type: String, required: true },
   password: { type: String, required: true },
-  gender: { type: String, required: true },
+  gender: { type: String, required: true, default: 'na', },
   role: { type: String, default: 'user', enum: ['user', 'admin', 'super-admin'] },
   confirmed: { type: Boolean, default: false },
 })
@@ -23,8 +24,8 @@ module.exports.getUserById = (id, callback) => {
   User.findById(id, callback)
 }
 
-module.exports.getUserByUsername = (username, callback) => {
-  const query = { username: username }
+module.exports.getUserById = (userId, callback) => {
+  const query = { _id: userId }
   User.findOne(query, callback)
 }
 

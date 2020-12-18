@@ -9,7 +9,7 @@ const app = express()
 const users = require('./routes/users')
 
 const env = process.env.NODE_ENV
-const host = process.env.HOST
+const host = process.env.HOST || 'localhost'
 const port = process.env.PORT || 3100
 
 // MongoDB
@@ -39,6 +39,6 @@ app.use('/api/v1/users', users)
 
 // Start Server
 app.listen(port, () => {
-  console.log(`Auth API started in (${env}) at ${host}:${port}`)
+  console.log(`Users API started in (${env}) at ${host}:${port}`)
 })
 

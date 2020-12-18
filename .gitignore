@@ -1,5 +1,5 @@
 
-# tiny
+tiny
 # gateway
 # status
 
@@ -11,4 +11,4 @@
 !**/*/*.sample.env
 proxy/nginx/certs/dhparam/seesee.space.pem
 
-.vscode/wok
+# .vscode/

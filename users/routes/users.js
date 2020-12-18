@@ -3,9 +3,9 @@ const router = express.Router()
 
 const User = require('../models/user')
 
-// Get auth route
-router.get('/', (req, res, next) => {
-  return res.json({ success: true, msg: 'User / Route' })
+// user test route
+router.get('/test', (req, res, next) => {
+  return res.json({ success: true, msg: 'User test route working !' })
 })
 
 // Get auth user

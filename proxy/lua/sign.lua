@@ -13,6 +13,7 @@ local jwt_token = jwt:sign(
       sub = '1234567890',
       id = json['_id'],
       name = json['name'],
+      email = json['email'],
       role = json['role'],
       iss = 'http://www.seesee.space',
       exp = 604800, -- 1 week
